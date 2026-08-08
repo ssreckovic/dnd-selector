@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
+const isGithubActions = process.env.GITHUB_ACTIONS === "true";
+const repoName = "dnd-selector";
+
 const nextConfig: NextConfig = {
-  /* config options here */
+  output: "export",
+  basePath: isGithubActions ? `/${repoName}` : "",
 };
 
 export default nextConfig;
