@@ -70,4 +70,38 @@ describe("Wizard", () => {
 
     expect(await screen.findByText(/your concept has been submitted/i)).toBeInTheDocument();
   });
+
+  it("shows a retry option on submission failure and succeeds when retried", async () => {
+    const submitSpy = vi
+      .spyOn(submitModule, "submitConcept")
+      .mockResolvedValueOnce({ ok: false, error: "network error" });
+    render(<Wizard />);
+
+    await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /^human$/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /melee/i }));
+    await userEvent.click(screen.getByRole("button", { name: /^none$/i }));
+    await userEvent.click(screen.getByRole("button", { name: /loner/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /fighter/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /champion/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+
+    await userEvent.type(screen.getByLabelText(/character name/i), "Torren");
+    await userEvent.click(screen.getByRole("button", { name: /submit/i }));
+
+    const alert = await screen.findByRole("alert");
+    expect(alert).toHaveTextContent(/network error/i);
+
+    const submitButton = screen.getByRole("button", { name: /submit/i });
+    expect(submitButton).toBeEnabled();
+
+    submitSpy.mockResolvedValueOnce({ ok: true });
+    await userEvent.click(submitButton);
+
+    expect(await screen.findByText(/your concept has been submitted/i)).toBeInTheDocument();
+  });
 });
