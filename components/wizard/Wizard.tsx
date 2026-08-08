@@ -42,6 +42,26 @@ function canAdvance(step: Step, answers: WizardAnswers): boolean {
   }
 }
 
+function validationHint(step: Step, answers: WizardAnswers): string {
+  switch (step) {
+    case "welcome":
+      return "Enter your name to continue.";
+    case "race": {
+      const race = answers.raceId ? getRace(answers.raceId) : undefined;
+      if (!race) return "Choose a race to continue.";
+      return "Choose a lineage to continue.";
+    }
+    case "flavor":
+      return "Answer all three questions to continue.";
+    case "class":
+      return "Choose a class to continue.";
+    case "subclass":
+      return "Choose a subclass to continue.";
+    case "summary":
+      return "Enter a character name to continue.";
+  }
+}
+
 export function Wizard() {
   const [step, setStep] = useState<Step>("welcome");
   const [answers, setAnswers] = useState<WizardAnswers>(EMPTY_ANSWERS);
@@ -158,6 +178,10 @@ export function Wizard() {
         <p role="alert" className="text-red-600">
           Something went wrong submitting your concept: {errorMessage}. Please try again.
         </p>
+      )}
+
+      {!canAdvance(step, answers) && status !== "submitting" && (
+        <p className="text-sm text-zinc-500">{validationHint(step, answers)}</p>
       )}
 
       <div className="flex justify-between">

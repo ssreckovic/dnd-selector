@@ -10,8 +10,10 @@ type SubclassStepProps = {
 };
 
 export function SubclassStep({ classId, subclassId, onSelectSubclass }: SubclassStepProps) {
-  const [showAll, setShowAll] = useState(false);
   const cls = getClass(classId);
+  const [showAll, setShowAll] = useState(
+    () => subclassId !== null && !cls?.defaultSubclasses.some((s) => s.id === subclassId),
+  );
 
   if (!cls) {
     return null;

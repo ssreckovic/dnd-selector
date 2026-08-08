@@ -22,6 +22,13 @@ describe("SubclassStep", () => {
     expect(screen.getByRole("button", { name: /arcane archer/i })).toBeInTheDocument();
   });
 
+  it("shows all subclasses immediately when the selected subclass is not a default", () => {
+    render(
+      <SubclassStep classId="fighter" subclassId="arcane-archer" onSelectSubclass={vi.fn()} />,
+    );
+    expect(screen.getByRole("button", { name: /arcane archer/i })).toBeInTheDocument();
+  });
+
   it("reports the selected subclass", async () => {
     const onSelectSubclass = vi.fn();
     render(

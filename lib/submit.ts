@@ -1,4 +1,5 @@
 import type { WizardAnswers } from "@/lib/wizard-storage";
+import { getRace, getClass } from "@/lib/dnd-data";
 
 export type SubmitResult = { ok: true } | { ok: false; error: string };
 
@@ -10,6 +11,11 @@ export async function submitConcept(
     return { ok: false, error: "Submission endpoint is not configured." };
   }
 
+  const race = answers.raceId ? getRace(answers.raceId) : undefined;
+  const subrace = race?.subraces?.find((s) => s.id === answers.subraceId);
+  const cls = answers.classId ? getClass(answers.classId) : undefined;
+  const subclass = cls?.allSubclasses.find((s) => s.id === answers.subclassId);
+
   try {
     const response = await fetch(endpoint, {
       method: "POST",
@@ -19,10 +25,10 @@ export async function submitConcept(
       body: JSON.stringify({
         playerName: answers.playerName,
         characterName: answers.characterName,
-        race: answers.raceId,
-        subrace: answers.subraceId,
-        class: answers.classId,
-        subclass: answers.subclassId,
+        race: race?.name ?? null,
+        subrace: subrace?.name ?? null,
+        class: cls?.name ?? null,
+        subclass: subclass?.name ?? null,
       }),
     });
 

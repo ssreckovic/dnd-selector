@@ -38,10 +38,10 @@ describe("submitConcept", () => {
     expect(body).toEqual({
       playerName: "Sasha",
       characterName: "Thistle",
-      race: "halfling",
+      race: "Halfling",
       subrace: null,
-      class: "rogue",
-      subclass: "thief",
+      class: "Rogue",
+      subclass: "Thief",
     });
   });
 

@@ -25,6 +25,12 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+      - name: Verify required secret is set
+        run: |
+          if [ -z "${{ secrets.NEXT_PUBLIC_SHEETS_ENDPOINT }}" ]; then
+            echo "::error::NEXT_PUBLIC_SHEETS_ENDPOINT secret is not set. Set it under Settings > Secrets and variables > Actions."
+            exit 1
+          fi
       - run: npm run build
         env:
           NEXT_PUBLIC_SHEETS_ENDPOINT: ${{ secrets.NEXT_PUBLIC_SHEETS_ENDPOINT }}

@@ -3,6 +3,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Wizard } from "@/components/wizard/Wizard";
 import * as submitModule from "@/lib/submit";
+import { EMPTY_ANSWERS, saveAnswers } from "@/lib/wizard-storage";
 
 describe("Wizard", () => {
   beforeEach(() => {
@@ -16,6 +17,44 @@ describe("Wizard", () => {
 
     await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
     expect(screen.getByRole("button", { name: /next/i })).toBeEnabled();
+  });
+
+  it("shows an inline validation hint on Welcome until a name is entered", async () => {
+    render(<Wizard />);
+    expect(screen.getByText(/enter your name to continue/i)).toBeInTheDocument();
+
+    await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
+    expect(screen.queryByText(/enter your name to continue/i)).not.toBeInTheDocument();
+  });
+
+  it("restores answers saved in localStorage on mount", () => {
+    saveAnswers({ ...EMPTY_ANSWERS, playerName: "Restored" });
+    render(<Wizard />);
+    expect(screen.getByLabelText(/your name/i)).toHaveValue("Restored");
+  });
+
+  it("clears localStorage after a successful submission", async () => {
+    vi.spyOn(submitModule, "submitConcept").mockResolvedValue({ ok: true });
+    render(<Wizard />);
+
+    await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /^human$/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /melee/i }));
+    await userEvent.click(screen.getByRole("button", { name: /^none$/i }));
+    await userEvent.click(screen.getByRole("button", { name: /loner/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /fighter/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /champion/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+
+    await userEvent.type(screen.getByLabelText(/character name/i), "Torren");
+    await userEvent.click(screen.getByRole("button", { name: /submit/i }));
+
+    expect(await screen.findByText(/your concept has been submitted/i)).toBeInTheDocument();
+    expect(window.localStorage.getItem("dnd-concept-builder:answers")).toBeNull();
   });
 
   it("walks forward through race, flavor, class, and subclass to the summary, and back again", async () => {
