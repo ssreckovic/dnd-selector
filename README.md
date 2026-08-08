@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# D&D Character Concept Builder
 
-## Getting Started
+A small wizard app for a private D&D group: players answer flavor-first
+questions and land on a race, subrace, class, and subclass concept for a
+level 3 character. Submissions are appended to a Google Sheet so the GM can
+finish each player's full character sheet.
 
-First, run the development server:
+## Local development
 
 ```bash
+npm install
+cp .env.local.example .env.local   # fill in your Apps Script URL, see below
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Running tests
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm test          # single run
+npm run test:watch
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Google Sheets submission endpoint
 
-## Learn More
+See `google-apps-script/README.md` for deploying the Apps Script webhook
+that receives submissions and appends them (with a timestamp) to a sheet.
+Once deployed, set the resulting URL as `NEXT_PUBLIC_SHEETS_ENDPOINT`:
 
-To learn more about Next.js, take a look at the following resources:
+- Locally: in `.env.local`
+- In CI/deploy: as the `NEXT_PUBLIC_SHEETS_ENDPOINT` repository secret, used
+  by `.github/workflows/deploy.yml`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploying to GitHub Pages
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Push to `main` — the `deploy.yml` workflow builds a static export
+(`output: 'export'` in `next.config.ts`) and publishes it to GitHub Pages.
+Make sure GitHub Pages is set to the **GitHub Actions** source under
+Settings > Pages, and that the `NEXT_PUBLIC_SHEETS_ENDPOINT` secret is set
+under Settings > Secrets and variables > Actions.
