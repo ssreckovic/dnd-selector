@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import type {
   AbilityScoreGuidance,
   AbilityScoreMethod,
@@ -78,14 +77,6 @@ export function AbilityScoreStep({
   abilityScores,
   onChange,
 }: AbilityScoreStepProps) {
-  const [internalScores, setInternalScores] = useState<AbilityScores>(
-    abilityScores || EMPTY_SCORES,
-  );
-
-  useEffect(() => {
-    setInternalScores(abilityScores || EMPTY_SCORES);
-  }, [abilityScores]);
-
   const showMethods = abilityScoreGuidance === "manual" || abilityScoreGuidance === "guided";
   const showScores = showMethods && Boolean(abilityScoreMethod);
 
@@ -99,13 +90,12 @@ export function AbilityScoreStep({
 
   function setScore(key: keyof AbilityScores, raw: string) {
     const value = raw.trim() === "" ? null : Number(raw);
-    const newScores = {
-      ...internalScores,
-      [key]: value,
-    };
-    setInternalScores(newScores);
     onChange({
-      abilityScores: newScores,
+      abilityScores: {
+        ...EMPTY_SCORES,
+        ...abilityScores,
+        [key]: value,
+      },
     });
   }
 
@@ -166,7 +156,7 @@ export function AbilityScoreStep({
                   type="number"
                   aria-label={field.label}
                   className="rounded border border-zinc-300 px-2 py-1"
-                  value={internalScores[field.key] ?? ""}
+                  value={abilityScores?.[field.key] ?? ""}
                   onChange={(e) => setScore(field.key, e.target.value)}
                 />
               </label>
