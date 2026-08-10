@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { RACES, CLASSES, getRace, getClass } from "@/lib/dnd-data";
+import { RACES, CLASSES, getRace, getClass, classGrantsSpellcasting } from "@/lib/dnd-data";
 
 describe("dnd-data", () => {
   it("has exactly the Core 8 races", () => {
@@ -58,5 +58,52 @@ describe("dnd-data", () => {
     expect(getRace("nonexistent")).toBeUndefined();
     expect(getClass("wizard")?.name).toBe("Wizard");
     expect(getClass("nonexistent")).toBeUndefined();
+  });
+
+  it("flags exactly the base spellcasting classes", () => {
+    const expectedCasters = new Set([
+      "bard",
+      "cleric",
+      "druid",
+      "paladin",
+      "ranger",
+      "sorcerer",
+      "warlock",
+      "wizard",
+    ]);
+    for (const cls of CLASSES) {
+      expect(cls.baseSpellcasting).toBe(expectedCasters.has(cls.id));
+    }
+  });
+
+  it("flags only Eldritch Knight and Arcane Trickster as subclass-granted spellcasting", () => {
+    for (const cls of CLASSES) {
+      for (const subclass of cls.allSubclasses) {
+        const expected = subclass.id === "eldritch-knight" || subclass.id === "arcane-trickster";
+        expect(Boolean(subclass.hasSpellcasting)).toBe(expected);
+      }
+    }
+  });
+});
+
+describe("classGrantsSpellcasting", () => {
+  it("is true for a base spellcasting class regardless of subclass", () => {
+    expect(classGrantsSpellcasting("wizard", "evocation")).toBe(true);
+    expect(classGrantsSpellcasting("wizard", null)).toBe(true);
+  });
+
+  it("is true for a subclass that grants spellcasting on a non-caster base class", () => {
+    expect(classGrantsSpellcasting("fighter", "eldritch-knight")).toBe(true);
+    expect(classGrantsSpellcasting("rogue", "arcane-trickster")).toBe(true);
+  });
+
+  it("is false for a non-caster class with a non-spellcasting subclass", () => {
+    expect(classGrantsSpellcasting("fighter", "champion")).toBe(false);
+    expect(classGrantsSpellcasting("barbarian", "berserker")).toBe(false);
+  });
+
+  it("is false when classId is null or unknown", () => {
+    expect(classGrantsSpellcasting(null, null)).toBe(false);
+    expect(classGrantsSpellcasting("nonexistent", null)).toBe(false);
   });
 });

@@ -15,12 +15,14 @@ export type Subclass = {
   id: string;
   name: string;
   blurb: string;
+  hasSpellcasting?: boolean;
 };
 
 export type DndClass = {
   id: string;
   name: string;
   blurb: string;
+  baseSpellcasting: boolean;
   defaultSubclasses: Subclass[];
   allSubclasses: Subclass[];
 };
@@ -114,6 +116,7 @@ export const CLASSES: DndClass[] = [
     id: "barbarian",
     name: "Barbarian",
     blurb: "A relentless warrior who fights with raw fury and unmatched toughness.",
+    baseSpellcasting: false,
     defaultSubclasses: [
       { id: "berserker", name: "Path of the Berserker", blurb: "Channels rage into overwhelming, reckless offense." },
       { id: "totem-warrior", name: "Path of the Totem Warrior", blurb: "Draws on primal animal spirits for protection and power." },
@@ -130,6 +133,7 @@ export const CLASSES: DndClass[] = [
     id: "bard",
     name: "Bard",
     blurb: "A charming performer whose music and words can inspire, heal, or unravel enemies.",
+    baseSpellcasting: true,
     defaultSubclasses: [
       { id: "lore", name: "College of Lore", blurb: "A jack-of-all-trades who collects secrets and useful tricks." },
       { id: "valor", name: "College of Valor", blurb: "A battle-bard who inspires allies and fights alongside them." },
@@ -146,6 +150,7 @@ export const CLASSES: DndClass[] = [
     id: "cleric",
     name: "Cleric",
     blurb: "A divine champion who heals allies and channels the power of a god in battle.",
+    baseSpellcasting: true,
     defaultSubclasses: [
       { id: "life", name: "Life Domain", blurb: "The best healer of any cleric, keeping the whole party standing." },
       { id: "light", name: "Light Domain", blurb: "Wields fire and radiance to burn away darkness and evil." },
@@ -168,6 +173,7 @@ export const CLASSES: DndClass[] = [
     id: "druid",
     name: "Druid",
     blurb: "A guardian of nature who can shape-shift into animals and command the wild.",
+    baseSpellcasting: true,
     defaultSubclasses: [
       { id: "land", name: "Circle of the Land", blurb: "Draws deep magic from a chosen terrain, from forest to desert." },
       { id: "moon", name: "Circle of the Moon", blurb: "A fierce shapeshifter who becomes a powerful beast in combat." },
@@ -184,15 +190,16 @@ export const CLASSES: DndClass[] = [
     id: "fighter",
     name: "Fighter",
     blurb: "A master of weapons and tactics who can adapt to nearly any fight.",
+    baseSpellcasting: false,
     defaultSubclasses: [
       { id: "champion", name: "Champion", blurb: "A straightforward, hard-hitting warrior who excels at landing critical blows." },
       { id: "battle-master", name: "Battle Master", blurb: "A tactician who uses special combat maneuvers to control the battlefield." },
-      { id: "eldritch-knight", name: "Eldritch Knight", blurb: "A soldier who blends swordplay with a handful of arcane spells." },
+      { id: "eldritch-knight", name: "Eldritch Knight", blurb: "A soldier who blends swordplay with a handful of arcane spells.", hasSpellcasting: true },
     ],
     allSubclasses: [
       { id: "champion", name: "Champion", blurb: "A straightforward, hard-hitting warrior who excels at landing critical blows." },
       { id: "battle-master", name: "Battle Master", blurb: "A tactician who uses special combat maneuvers to control the battlefield." },
-      { id: "eldritch-knight", name: "Eldritch Knight", blurb: "A soldier who blends swordplay with a handful of arcane spells." },
+      { id: "eldritch-knight", name: "Eldritch Knight", blurb: "A soldier who blends swordplay with a handful of arcane spells.", hasSpellcasting: true },
       { id: "arcane-archer", name: "Arcane Archer", blurb: "A ranged specialist who fires magic-infused arrows." },
       { id: "cavalier", name: "Cavalier", blurb: "A mounted protector who guards allies and punishes those who ignore them." },
       { id: "samurai", name: "Samurai", blurb: "An unshakeable warrior fueled by fighting spirit and resolve." },
@@ -202,6 +209,7 @@ export const CLASSES: DndClass[] = [
     id: "monk",
     name: "Monk",
     blurb: "A disciplined martial artist who fights unarmed with incredible speed and precision.",
+    baseSpellcasting: false,
     defaultSubclasses: [
       { id: "open-hand", name: "Way of the Open Hand", blurb: "A master of unarmed combat who can stun, throw, and control opponents." },
       { id: "shadow", name: "Way of Shadow", blurb: "A stealthy monk who uses shadow magic to strike from darkness." },
@@ -219,6 +227,7 @@ export const CLASSES: DndClass[] = [
     id: "paladin",
     name: "Paladin",
     blurb: "A holy warrior bound by an oath, mixing martial power with divine magic.",
+    baseSpellcasting: true,
     defaultSubclasses: [
       { id: "devotion", name: "Oath of Devotion", blurb: "The classic, honor-bound knight who upholds justice and protects the weak." },
       { id: "vengeance", name: "Oath of Vengeance", blurb: "A grim paladin driven to punish those who commit great evil." },
@@ -235,6 +244,7 @@ export const CLASSES: DndClass[] = [
     id: "ranger",
     name: "Ranger",
     blurb: "A skilled hunter and tracker at home in the wild, fighting alongside nature.",
+    baseSpellcasting: true,
     defaultSubclasses: [
       { id: "hunter", name: "Hunter", blurb: "A versatile fighter honed to take down all manner of foes." },
       { id: "beast-master", name: "Beast Master", blurb: "Fights alongside a loyal animal companion." },
@@ -251,15 +261,16 @@ export const CLASSES: DndClass[] = [
     id: "rogue",
     name: "Rogue",
     blurb: "A cunning, skillful character who relies on precision, stealth, and wit over brute force.",
+    baseSpellcasting: false,
     defaultSubclasses: [
       { id: "thief", name: "Thief", blurb: "A nimble specialist in sleight of hand, locks, and climbing anything." },
       { id: "assassin", name: "Assassin", blurb: "A master of the element of surprise and the deadly first strike." },
-      { id: "arcane-trickster", name: "Arcane Trickster", blurb: "A rogue who mixes in a handful of illusion and trickery spells." },
+      { id: "arcane-trickster", name: "Arcane Trickster", blurb: "A rogue who mixes in a handful of illusion and trickery spells.", hasSpellcasting: true },
     ],
     allSubclasses: [
       { id: "thief", name: "Thief", blurb: "A nimble specialist in sleight of hand, locks, and climbing anything." },
       { id: "assassin", name: "Assassin", blurb: "A master of the element of surprise and the deadly first strike." },
-      { id: "arcane-trickster", name: "Arcane Trickster", blurb: "A rogue who mixes in a handful of illusion and trickery spells." },
+      { id: "arcane-trickster", name: "Arcane Trickster", blurb: "A rogue who mixes in a handful of illusion and trickery spells.", hasSpellcasting: true },
       { id: "inquisitive", name: "Inquisitive", blurb: "A sharp-eyed investigator who reads lies and finds what's hidden." },
       { id: "mastermind", name: "Mastermind", blurb: "A schemer who directs allies and manipulates from behind the scenes." },
       { id: "scout", name: "Scout", blurb: "A quick, wilderness-savvy skirmisher who strikes and moves." },
@@ -270,6 +281,7 @@ export const CLASSES: DndClass[] = [
     id: "sorcerer",
     name: "Sorcerer",
     blurb: "A spellcaster whose magic comes from an innate, often inherited, magical bloodline.",
+    baseSpellcasting: true,
     defaultSubclasses: [
       { id: "draconic-bloodline", name: "Draconic Bloodline", blurb: "Magic fueled by dragon ancestry, with tougher skin and elemental power." },
       { id: "wild-magic", name: "Wild Magic", blurb: "Unpredictable magic that can surge in surprising, chaotic ways." },
@@ -286,6 +298,7 @@ export const CLASSES: DndClass[] = [
     id: "warlock",
     name: "Warlock",
     blurb: "A spellcaster who traded a pact with a powerful otherworldly patron for magical power.",
+    baseSpellcasting: true,
     defaultSubclasses: [
       { id: "fiend", name: "The Fiend", blurb: "A pact with a devil or demon, favoring fire and destructive power." },
       { id: "archfey", name: "The Archfey", blurb: "A pact with a fey lord, favoring charm, illusion, and trickery." },
@@ -302,6 +315,7 @@ export const CLASSES: DndClass[] = [
     id: "wizard",
     name: "Wizard",
     blurb: "A scholarly spellcaster who studies magic from books and commands the widest variety of spells.",
+    baseSpellcasting: true,
     defaultSubclasses: [
       { id: "evocation", name: "School of Evocation", blurb: "Specializes in powerful, damaging blasts of elemental magic." },
       { id: "abjuration", name: "School of Abjuration", blurb: "Specializes in protective magic — shields, wards, and defense." },
@@ -325,4 +339,15 @@ export function getRace(id: string): Race | undefined {
 
 export function getClass(id: string): DndClass | undefined {
   return CLASSES.find((c) => c.id === id);
+}
+
+export function classGrantsSpellcasting(
+  classId: string | null,
+  subclassId: string | null,
+): boolean {
+  const dndClass = classId ? getClass(classId) : undefined;
+  if (!dndClass) return false;
+  if (dndClass.baseSpellcasting) return true;
+  const subclass = dndClass.allSubclasses.find((s) => s.id === subclassId);
+  return Boolean(subclass?.hasSpellcasting);
 }
