@@ -12,3 +12,5 @@
 7. The first submission will create a "Submissions" sheet tab with a header row automatically.
 
 If you ever change `Code.gs`, you must create a **new deployment version** (Deploy > Manage deployments > Edit > New version) for the change to take effect on the existing URL.
+
+If a "Submissions" tab already exists from before a `HEADER_ROW` change (e.g. the ability score / spell choice columns added later), you must update its header row manually — `getOrCreateSheet_()` only writes headers when it creates a brand-new sheet tab, so an existing tab won't pick up new columns automatically.

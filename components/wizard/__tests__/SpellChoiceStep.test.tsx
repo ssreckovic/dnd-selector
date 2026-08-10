@@ -23,8 +23,9 @@ describe("SpellChoiceStep", () => {
     render(
       <SpellChoiceStep spellChoiceMode="auto" onSelectSpellChoiceMode={vi.fn()} />,
     );
-    expect(screen.getByRole("button", { name: /pick my spells for me/i })).toHaveClass(
-      "border-amber-600",
+    expect(screen.getByRole("button", { name: /pick my spells for me/i })).toHaveAttribute(
+      "aria-pressed",
+      "true",
     );
   });
 });

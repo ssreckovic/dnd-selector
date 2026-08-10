@@ -29,6 +29,15 @@ export async function submitConcept(
         subrace: subrace?.name ?? null,
         class: cls?.name ?? null,
         subclass: subclass?.name ?? null,
+        abilityScoreGuidance: answers.abilityScoreGuidance ?? null,
+        abilityScoreMethod: answers.abilityScoreMethod ?? null,
+        abilityScoreStr: answers.abilityScores?.str ?? null,
+        abilityScoreDex: answers.abilityScores?.dex ?? null,
+        abilityScoreCon: answers.abilityScores?.con ?? null,
+        abilityScoreInt: answers.abilityScores?.int ?? null,
+        abilityScoreWis: answers.abilityScores?.wis ?? null,
+        abilityScoreCha: answers.abilityScores?.cha ?? null,
+        spellChoiceMode: answers.spellChoiceMode ?? null,
       }),
     });
 

@@ -169,7 +169,7 @@ Add read-only lines to `components/wizard/SummaryStep.tsx`:
   - Base-caster path (e.g. wizard) shows `"spell"`.
   - Subclass-caster paths (fighter → eldritch-knight, rogue → arcane-trickster) show `"spell"`; other subclasses of those same classes (e.g. fighter → champion) do not.
   - `"ability-scores"` gating: `"auto"` advances immediately; `"manual"`/`"guided"` require a method; number inputs are never required.
-- No changes needed to `lib/submit.ts` beyond it already forwarding the full `WizardAnswers` object.
+- `lib/submit.ts` and `google-apps-script/Code.gs` required updates to include the new ability score and spell choice fields in the submitted payload and sheet columns, per the final-review fix wave (see `.superpowers/sdd/2026-08-10-wizard-stats-and-spells/final-review-fix-report.md`).
 
 ## Out of scope
 

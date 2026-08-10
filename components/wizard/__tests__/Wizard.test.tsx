@@ -179,6 +179,51 @@ describe("Wizard", () => {
     expect(screen.getByRole("button", { name: /next/i })).toBeEnabled();
   });
 
+  it("clears a previously chosen spell choice mode when switching to a non-caster class", async () => {
+    render(<Wizard />);
+
+    await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /^human$/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /melee/i }));
+    await userEvent.click(screen.getByRole("button", { name: /^none$/i }));
+    await userEvent.click(screen.getByRole("button", { name: /loner/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+
+    // Pick a spellcasting class and choose a spell mode.
+    await userEvent.click(screen.getByRole("button", { name: /wizard/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /evocation/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(
+      screen.getByRole("button", { name: /i'll choose all my own spells/i }),
+    );
+
+    const stored = JSON.parse(
+      window.localStorage.getItem("dnd-concept-builder:answers") ?? "{}",
+    );
+    expect(stored.spellChoiceMode).toBe("own");
+
+    // Go back to the class step and switch to a non-caster class.
+    await userEvent.click(screen.getByRole("button", { name: /back/i }));
+    await userEvent.click(screen.getByRole("button", { name: /back/i }));
+    await userEvent.click(screen.getByRole("button", { name: /barbarian/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /berserker/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+
+    // The spell step should be skipped entirely for a non-caster.
+    expect(
+      screen.getByText(/how do you want to determine your ability scores/i),
+    ).toBeInTheDocument();
+
+    const storedAfter = JSON.parse(
+      window.localStorage.getItem("dnd-concept-builder:answers") ?? "{}",
+    );
+    expect(storedAfter.spellChoiceMode).toBeNull();
+  });
+
   it("submits the concept and shows a confirmation on success", async () => {
     vi.spyOn(submitModule, "submitConcept").mockResolvedValue({ ok: true });
     render(<Wizard />);

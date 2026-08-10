@@ -7,6 +7,15 @@ const HEADER_ROW = [
   "Subrace",
   "Class",
   "Subclass",
+  "Ability Score Guidance",
+  "Ability Score Method",
+  "STR",
+  "DEX",
+  "CON",
+  "INT",
+  "WIS",
+  "CHA",
+  "Spell Choice Mode",
 ];
 
 function getOrCreateSheet_() {
@@ -31,6 +40,15 @@ function doPost(e) {
     data.subrace || "",
     data.class || "",
     data.subclass || "",
+    data.abilityScoreGuidance || "",
+    data.abilityScoreMethod || "",
+    data.abilityScoreStr ?? "",
+    data.abilityScoreDex ?? "",
+    data.abilityScoreCon ?? "",
+    data.abilityScoreInt ?? "",
+    data.abilityScoreWis ?? "",
+    data.abilityScoreCha ?? "",
+    data.spellChoiceMode || "",
   ]);
 
   return ContentService.createTextOutput(

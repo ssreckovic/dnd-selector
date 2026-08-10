@@ -108,6 +108,7 @@ export function AbilityScoreStep({
             key={option.value}
             type="button"
             onClick={() => selectGuidance(option.value)}
+            aria-pressed={option.value === abilityScoreGuidance}
             className={`rounded border p-4 text-left transition-colors ${
               option.value === abilityScoreGuidance
                 ? "border-amber-600 bg-amber-50"
@@ -129,6 +130,7 @@ export function AbilityScoreStep({
                 key={option.value}
                 type="button"
                 onClick={() => onChange({ abilityScoreMethod: option.value })}
+                aria-pressed={option.value === abilityScoreMethod}
                 className={`rounded border p-4 text-left transition-colors ${
                   option.value === abilityScoreMethod
                     ? "border-amber-600 bg-amber-50"

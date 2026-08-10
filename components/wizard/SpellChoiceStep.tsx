@@ -38,6 +38,7 @@ export function SpellChoiceStep({ spellChoiceMode, onSelectSpellChoiceMode }: Sp
             key={option.value}
             type="button"
             onClick={() => onSelectSpellChoiceMode(option.value)}
+            aria-pressed={option.value === spellChoiceMode}
             className={`rounded border p-4 text-left transition-colors ${
               option.value === spellChoiceMode
                 ? "border-amber-600 bg-amber-50"

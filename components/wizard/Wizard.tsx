@@ -195,14 +195,27 @@ export function Wizard() {
         <ClassStep
           classId={answers.classId}
           flavorAnswers={flavorAnswers}
-          onSelectClass={(classId) => updateAnswers({ classId, subclassId: null })}
+          onSelectClass={(classId) =>
+            updateAnswers({
+              classId,
+              subclassId: null,
+              ...(classGrantsSpellcasting(classId, null) ? {} : { spellChoiceMode: null }),
+            })
+          }
         />
       )}
       {step === "subclass" && answers.classId && (
         <SubclassStep
           classId={answers.classId}
           subclassId={answers.subclassId}
-          onSelectSubclass={(subclassId) => updateAnswers({ subclassId })}
+          onSelectSubclass={(subclassId) =>
+            updateAnswers({
+              subclassId,
+              ...(classGrantsSpellcasting(answers.classId, subclassId)
+                ? {}
+                : { spellChoiceMode: null }),
+            })
+          }
         />
       )}
       {step === "spell" && classGrantsSpellcasting(answers.classId, answers.subclassId) && (

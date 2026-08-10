@@ -42,7 +42,47 @@ describe("submitConcept", () => {
       subrace: null,
       class: "Rogue",
       subclass: "Thief",
+      abilityScoreGuidance: null,
+      abilityScoreMethod: null,
+      abilityScoreStr: null,
+      abilityScoreDex: null,
+      abilityScoreCon: null,
+      abilityScoreInt: null,
+      abilityScoreWis: null,
+      abilityScoreCha: null,
+      spellChoiceMode: null,
     });
+  });
+
+  it("includes ability score and spell choice fields when set", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true, status: 200 });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const answersWithStats: WizardAnswers = {
+      ...answers,
+      abilityScoreGuidance: "manual",
+      abilityScoreMethod: "point-buy",
+      abilityScores: { str: 15, dex: 14, con: 13, int: 12, wis: 10, cha: 8 },
+      spellChoiceMode: "own",
+    };
+
+    const result = await submitConcept(answersWithStats);
+
+    expect(result).toEqual({ ok: true });
+    const body = JSON.parse(fetchMock.mock.calls[0][1].body as string);
+    expect(body).toEqual(
+      expect.objectContaining({
+        abilityScoreGuidance: "manual",
+        abilityScoreMethod: "point-buy",
+        abilityScoreStr: 15,
+        abilityScoreDex: 14,
+        abilityScoreCon: 13,
+        abilityScoreInt: 12,
+        abilityScoreWis: 10,
+        abilityScoreCha: 8,
+        spellChoiceMode: "own",
+      }),
+    );
   });
 
   it("returns an error result when the response is not ok", async () => {
