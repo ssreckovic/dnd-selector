@@ -5,6 +5,11 @@ import { Wizard } from "@/components/wizard/Wizard";
 import * as submitModule from "@/lib/submit";
 import { EMPTY_ANSWERS, saveAnswers } from "@/lib/wizard-storage";
 
+async function completeAbilityScoresWithAuto() {
+  await userEvent.click(screen.getByRole("button", { name: /choose my stats for me/i }));
+  await userEvent.click(screen.getByRole("button", { name: /next/i }));
+}
+
 describe("Wizard", () => {
   beforeEach(() => {
     window.localStorage.clear();
@@ -49,6 +54,7 @@ describe("Wizard", () => {
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /champion/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await completeAbilityScoresWithAuto();
 
     await userEvent.type(screen.getByLabelText(/character name/i), "Torren");
     await userEvent.click(screen.getByRole("button", { name: /submit/i }));
@@ -57,7 +63,7 @@ describe("Wizard", () => {
     expect(window.localStorage.getItem("dnd-concept-builder:answers")).toBeNull();
   });
 
-  it("walks forward through race, flavor, class, and subclass to the summary, and back again", async () => {
+  it("walks forward through race, flavor, class, subclass, and ability scores to the summary, and back again", async () => {
     render(<Wizard />);
 
     await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
@@ -77,14 +83,85 @@ describe("Wizard", () => {
     await userEvent.click(screen.getByRole("button", { name: /fighter/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
 
-    // Subclass step
+    // Subclass step (Champion doesn't cast, so the spell step should be skipped)
     await userEvent.click(screen.getByRole("button", { name: /champion/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    expect(
+      screen.getByText(/how do you want to determine your ability scores/i),
+    ).toBeInTheDocument();
 
+    await completeAbilityScoresWithAuto();
     expect(screen.getByText(/review your concept/i)).toBeInTheDocument();
 
     await userEvent.click(screen.getByRole("button", { name: /back/i }));
+    expect(
+      screen.getByText(/how do you want to determine your ability scores/i),
+    ).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole("button", { name: /back/i }));
     expect(screen.getByText(/choose your fighter subclass/i)).toBeInTheDocument();
+  });
+
+  it("shows the spell choice step for a base spellcasting class", async () => {
+    render(<Wizard />);
+
+    await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /^human$/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /melee/i }));
+    await userEvent.click(screen.getByRole("button", { name: /^none$/i }));
+    await userEvent.click(screen.getByRole("button", { name: /loner/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /wizard/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /evocation/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+
+    expect(screen.getByText(/how do you want to handle your spells/i)).toBeInTheDocument();
+    expect(screen.getByText(/silvery barbs/i)).toBeInTheDocument();
+  });
+
+  it("shows the spell choice step for a fighter who picks the spellcasting Eldritch Knight subclass", async () => {
+    render(<Wizard />);
+
+    await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /^human$/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /melee/i }));
+    await userEvent.click(screen.getByRole("button", { name: /^none$/i }));
+    await userEvent.click(screen.getByRole("button", { name: /loner/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /fighter/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /eldritch knight/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+
+    expect(screen.getByText(/how do you want to handle your spells/i)).toBeInTheDocument();
+  });
+
+  it("requires a method before advancing past ability scores unless choosing 'for me'", async () => {
+    render(<Wizard />);
+
+    await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /^human$/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /melee/i }));
+    await userEvent.click(screen.getByRole("button", { name: /^none$/i }));
+    await userEvent.click(screen.getByRole("button", { name: /loner/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /fighter/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /champion/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+
+    await userEvent.click(screen.getByRole("button", { name: /build my own/i }));
+    expect(screen.getByRole("button", { name: /next/i })).toBeDisabled();
+
+    await userEvent.click(screen.getByRole("button", { name: /standard array/i }));
+    expect(screen.getByRole("button", { name: /next/i })).toBeEnabled();
   });
 
   it("submits the concept and shows a confirmation on success", async () => {
@@ -103,6 +180,7 @@ describe("Wizard", () => {
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /champion/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await completeAbilityScoresWithAuto();
 
     await userEvent.type(screen.getByLabelText(/character name/i), "Torren");
     await userEvent.click(screen.getByRole("button", { name: /submit/i }));
@@ -128,6 +206,7 @@ describe("Wizard", () => {
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /champion/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await completeAbilityScoresWithAuto();
 
     await userEvent.type(screen.getByLabelText(/character name/i), "Torren");
     await userEvent.click(screen.getByRole("button", { name: /submit/i }));

@@ -6,8 +6,10 @@ import { RaceStep } from "@/components/wizard/RaceStep";
 import { FlavorStep } from "@/components/wizard/FlavorStep";
 import { ClassStep } from "@/components/wizard/ClassStep";
 import { SubclassStep } from "@/components/wizard/SubclassStep";
+import { SpellChoiceStep } from "@/components/wizard/SpellChoiceStep";
+import { AbilityScoreStep } from "@/components/wizard/AbilityScoreStep";
 import { SummaryStep } from "@/components/wizard/SummaryStep";
-import { getRace } from "@/lib/dnd-data";
+import { getRace, classGrantsSpellcasting } from "@/lib/dnd-data";
 import {
   EMPTY_ANSWERS,
   loadAnswers,
@@ -17,7 +19,16 @@ import {
 } from "@/lib/wizard-storage";
 import { submitConcept } from "@/lib/submit";
 
-const STEPS = ["welcome", "race", "flavor", "class", "subclass", "summary"] as const;
+const STEPS = [
+  "welcome",
+  "race",
+  "flavor",
+  "class",
+  "subclass",
+  "spell",
+  "ability-scores",
+  "summary",
+] as const;
 type Step = (typeof STEPS)[number];
 
 function canAdvance(step: Step, answers: WizardAnswers): boolean {
@@ -37,6 +48,11 @@ function canAdvance(step: Step, answers: WizardAnswers): boolean {
       return Boolean(answers.classId);
     case "subclass":
       return Boolean(answers.subclassId);
+    case "spell":
+      return Boolean(answers.spellChoiceMode);
+    case "ability-scores":
+      if (answers.abilityScoreGuidance === "auto") return true;
+      return Boolean(answers.abilityScoreGuidance && answers.abilityScoreMethod);
     case "summary":
       return answers.characterName.trim().length > 0;
   }
@@ -57,9 +73,31 @@ function validationHint(step: Step, answers: WizardAnswers): string {
       return "Choose a class to continue.";
     case "subclass":
       return "Choose a subclass to continue.";
+    case "spell":
+      return "Choose how you'd like to handle spell selection to continue.";
+    case "ability-scores":
+      if (!answers.abilityScoreGuidance) {
+        return "Choose how you'd like to determine your ability scores.";
+      }
+      return "Choose a method to continue.";
     case "summary":
       return "Enter a character name to continue.";
   }
+}
+
+function isStepVisible(step: Step, answers: WizardAnswers): boolean {
+  if (step === "spell") {
+    return classGrantsSpellcasting(answers.classId, answers.subclassId);
+  }
+  return true;
+}
+
+function nextVisibleIndex(startIndex: number, direction: 1 | -1, answers: WizardAnswers): number {
+  let i = startIndex;
+  while (i > 0 && i < STEPS.length - 1 && !isStepVisible(STEPS[i], answers)) {
+    i += direction;
+  }
+  return i;
 }
 
 export function Wizard() {
@@ -88,7 +126,7 @@ export function Wizard() {
 
   function goBack() {
     if (stepIndex > 0) {
-      setStep(STEPS[stepIndex - 1]);
+      setStep(STEPS[nextVisibleIndex(stepIndex - 1, -1, answers)]);
     }
   }
 
@@ -107,7 +145,7 @@ export function Wizard() {
       return;
     }
     if (stepIndex < STEPS.length - 1) {
-      setStep(STEPS[stepIndex + 1]);
+      setStep(STEPS[nextVisibleIndex(stepIndex + 1, 1, answers)]);
     }
   }
 
@@ -165,6 +203,20 @@ export function Wizard() {
           classId={answers.classId}
           subclassId={answers.subclassId}
           onSelectSubclass={(subclassId) => updateAnswers({ subclassId })}
+        />
+      )}
+      {step === "spell" && classGrantsSpellcasting(answers.classId, answers.subclassId) && (
+        <SpellChoiceStep
+          spellChoiceMode={answers.spellChoiceMode}
+          onSelectSpellChoiceMode={(spellChoiceMode) => updateAnswers({ spellChoiceMode })}
+        />
+      )}
+      {step === "ability-scores" && (
+        <AbilityScoreStep
+          abilityScoreGuidance={answers.abilityScoreGuidance}
+          abilityScoreMethod={answers.abilityScoreMethod}
+          abilityScores={answers.abilityScores}
+          onChange={(partial) => updateAnswers(partial)}
         />
       )}
       {step === "summary" && (
