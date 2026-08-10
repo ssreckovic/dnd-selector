@@ -22,9 +22,20 @@ describe("wizard-storage", () => {
       playerName: "Sasha",
       raceId: "elf",
       subraceId: "wood-elf",
+      abilityScoreGuidance: "guided",
+      abilityScoreMethod: "point-buy",
+      abilityScores: { str: 14, dex: 12, con: 13, int: 10, wis: 8, cha: 15 },
+      spellChoiceMode: "suggestions",
     };
     saveAnswers(answers);
     expect(loadAnswers()).toEqual(answers);
+  });
+
+  it("defaults the new ability-score and spell fields to null", () => {
+    expect(EMPTY_ANSWERS.abilityScoreGuidance).toBeNull();
+    expect(EMPTY_ANSWERS.abilityScoreMethod).toBeNull();
+    expect(EMPTY_ANSWERS.abilityScores).toBeNull();
+    expect(EMPTY_ANSWERS.spellChoiceMode).toBeNull();
   });
 
   it("clearAnswers removes stored answers", () => {
