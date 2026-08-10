@@ -120,6 +120,21 @@ describe("Wizard", () => {
 
     expect(screen.getByText(/how do you want to handle your spells/i)).toBeInTheDocument();
     expect(screen.getByText(/silvery barbs/i)).toBeInTheDocument();
+
+    expect(screen.getByRole("button", { name: /next/i })).toBeDisabled();
+
+    await userEvent.click(
+      screen.getByRole("button", { name: /i'll choose all my own spells/i }),
+    );
+    expect(screen.getByRole("button", { name: /next/i })).toBeEnabled();
+
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    expect(
+      screen.getByText(/how do you want to determine your ability scores/i),
+    ).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole("button", { name: /back/i }));
+    expect(screen.getByText(/how do you want to handle your spells/i)).toBeInTheDocument();
   });
 
   it("shows the spell choice step for a fighter who picks the spellcasting Eldritch Knight subclass", async () => {
