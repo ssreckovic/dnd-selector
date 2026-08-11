@@ -2,6 +2,7 @@
 
 import { CLASSES } from "@/lib/dnd-data";
 import { scoreClasses, type FlavorAnswers } from "@/lib/scoring";
+import { InfoCard } from "@/components/wizard/InfoCard";
 
 type ClassStepProps = {
   classId: string | null;
@@ -26,26 +27,21 @@ export function ClassStep({ classId, flavorAnswers, onSelectClass }: ClassStepPr
       <h2 className="text-xl font-semibold">Choose your class</h2>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {orderedClasses.map((cls) => (
-          <button
+          <InfoCard
             key={cls.id}
-            type="button"
-            onClick={() => onSelectClass(cls.id)}
-            className={`rounded border p-4 text-left transition-colors ${
-              cls.id === classId
-                ? "border-amber-600 bg-amber-50"
-                : "border-zinc-300 hover:bg-zinc-50"
-            }`}
-          >
-            <div className="flex items-center gap-2">
-              <span className="font-medium">{cls.name}</span>
-              {recommendedIds.has(cls.id) && (
+            name={cls.name}
+            blurb={cls.blurb}
+            detail={cls.detail}
+            selected={cls.id === classId}
+            onSelect={() => onSelectClass(cls.id)}
+            badge={
+              recommendedIds.has(cls.id) && (
                 <span className="rounded-full bg-amber-600 px-2 py-0.5 text-xs text-white">
                   Recommended for you
                 </span>
-              )}
-            </div>
-            <div className="text-sm text-zinc-600">{cls.blurb}</div>
-          </button>
+              )
+            }
+          />
         ))}
       </div>
     </div>
