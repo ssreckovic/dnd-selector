@@ -8,7 +8,7 @@ describe("ClassStep", () => {
     render(
       <ClassStep classId={null} flavorAnswers={null} onSelectClass={vi.fn()} />,
     );
-    expect(screen.getAllByRole("button")).toHaveLength(12);
+    expect(screen.getAllByRole("button", { name: /show info/i })).toHaveLength(12);
   });
 
   it("marks the top-matching classes as recommended when flavor answers are present", () => {

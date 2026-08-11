@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { getClass } from "@/lib/dnd-data";
+import { InfoCard } from "@/components/wizard/InfoCard";
 
 type SubclassStepProps = {
   classId: string;
@@ -26,19 +27,14 @@ export function SubclassStep({ classId, subclassId, onSelectSubclass }: Subclass
       <h2 className="text-xl font-semibold">Choose your {cls.name} subclass</h2>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {subclasses.map((subclass) => (
-          <button
+          <InfoCard
             key={subclass.id}
-            type="button"
-            onClick={() => onSelectSubclass(subclass.id)}
-            className={`rounded border p-4 text-left transition-colors ${
-              subclass.id === subclassId
-                ? "border-amber-600 bg-amber-50"
-                : "border-zinc-300 hover:bg-zinc-50"
-            }`}
-          >
-            <div className="font-medium">{subclass.name}</div>
-            <div className="text-sm text-zinc-600">{subclass.blurb}</div>
-          </button>
+            name={subclass.name}
+            blurb={subclass.blurb}
+            detail={subclass.detail}
+            selected={subclass.id === subclassId}
+            onSelect={() => onSelectSubclass(subclass.id)}
+          />
         ))}
       </div>
       {!showAll && (
