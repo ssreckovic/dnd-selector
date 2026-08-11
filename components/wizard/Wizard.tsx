@@ -31,7 +31,7 @@ const STEPS = [
 ] as const;
 type Step = (typeof STEPS)[number];
 
-function canAdvance(step: Step, answers: WizardAnswers): boolean {
+function isStepComplete(step: Step, answers: WizardAnswers): boolean {
   switch (step) {
     case "welcome":
       return answers.playerName.trim().length > 0;
@@ -245,7 +245,7 @@ export function Wizard() {
         </p>
       )}
 
-      {!canAdvance(step, answers) && status !== "submitting" && (
+      {!isStepComplete(step, answers) && status !== "submitting" && (
         <p className="text-sm text-zinc-500">{validationHint(step, answers)}</p>
       )}
 
@@ -261,7 +261,7 @@ export function Wizard() {
         <button
           type="button"
           onClick={goNext}
-          disabled={!canAdvance(step, answers) || status === "submitting"}
+          disabled={status === "submitting"}
           className="rounded bg-amber-600 px-4 py-2 text-white disabled:opacity-40"
         >
           {step === "summary" ? (status === "submitting" ? "Submitting…" : "Submit") : "Next"}

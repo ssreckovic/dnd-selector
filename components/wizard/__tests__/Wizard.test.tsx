@@ -16,9 +16,9 @@ describe("Wizard", () => {
     vi.restoreAllMocks();
   });
 
-  it("blocks advancing past Welcome until a player name is entered", async () => {
+  it("allows advancing past Welcome even without a player name entered", async () => {
     render(<Wizard />);
-    expect(screen.getByRole("button", { name: /next/i })).toBeDisabled();
+    expect(screen.getByRole("button", { name: /next/i })).toBeEnabled();
 
     await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
     expect(screen.getByRole("button", { name: /next/i })).toBeEnabled();
@@ -121,7 +121,10 @@ describe("Wizard", () => {
     expect(screen.getByText(/how do you want to handle your spells/i)).toBeInTheDocument();
     expect(screen.getByText(/silvery barbs/i)).toBeInTheDocument();
 
-    expect(screen.getByRole("button", { name: /next/i })).toBeDisabled();
+    expect(screen.getByRole("button", { name: /next/i })).toBeEnabled();
+    expect(
+      screen.getByText(/choose how you'd like to handle spell selection to continue/i),
+    ).toBeInTheDocument();
 
     await userEvent.click(
       screen.getByRole("button", { name: /i'll choose all my own spells/i }),
@@ -156,7 +159,7 @@ describe("Wizard", () => {
     expect(screen.getByText(/how do you want to handle your spells/i)).toBeInTheDocument();
   });
 
-  it("requires a method before advancing past ability scores unless choosing 'for me'", async () => {
+  it("shows a hint but still allows advancing past ability scores before a method is chosen", async () => {
     render(<Wizard />);
 
     await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
@@ -173,7 +176,8 @@ describe("Wizard", () => {
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
 
     await userEvent.click(screen.getByRole("button", { name: /build my own/i }));
-    expect(screen.getByRole("button", { name: /next/i })).toBeDisabled();
+    expect(screen.getByRole("button", { name: /next/i })).toBeEnabled();
+    expect(screen.getByText(/choose a method to continue/i)).toBeInTheDocument();
 
     await userEvent.click(screen.getByRole("button", { name: /standard array/i }));
     expect(screen.getByRole("button", { name: /next/i })).toBeEnabled();
