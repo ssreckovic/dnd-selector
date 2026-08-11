@@ -5,7 +5,7 @@ import { useState, type ReactNode } from "react";
 type InfoCardProps = {
   name: string;
   blurb: string;
-  detail: string;
+  detail: string[];
   selected: boolean;
   onSelect: () => void;
   badge?: ReactNode;
@@ -45,9 +45,11 @@ export function InfoCard({
         {showInfo ? "Hide info" : "Show info"}
       </button>
       {showInfo && (
-        <div className="mt-2 border-t border-zinc-200 pt-2 text-sm text-zinc-700">
-          {detail}
-        </div>
+        <ul className="mt-2 list-disc border-t border-zinc-200 pl-4 pt-2 text-sm text-zinc-700">
+          {detail.map((point) => (
+            <li key={point}>{point}</li>
+          ))}
+        </ul>
       )}
     </div>
   );

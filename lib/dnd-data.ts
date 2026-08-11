@@ -2,14 +2,14 @@ export type Subrace = {
   id: string;
   name: string;
   blurb: string;
-  detail: string;
+  detail: string[];
 };
 
 export type Race = {
   id: string;
   name: string;
   blurb: string;
-  detail: string;
+  detail: string[];
   subraces?: Subrace[];
 };
 
@@ -17,7 +17,7 @@ export type Subclass = {
   id: string;
   name: string;
   blurb: string;
-  detail: string;
+  detail: string[];
   hasSpellcasting?: boolean;
 };
 
@@ -25,7 +25,7 @@ export type DndClass = {
   id: string;
   name: string;
   blurb: string;
-  detail: string;
+  detail: string[];
   baseSpellcasting: boolean;
   defaultSubclasses: Subclass[];
   allSubclasses: Subclass[];
@@ -37,40 +37,50 @@ export const RACES: Race[] = [
     name: "Human",
     blurb:
       "Adaptable and ambitious, humans are the most common folk in most worlds — quick to learn any path and comfortable anywhere.",
-    detail:
-      "Humans favor flexibility over any one specialty — most classes, feats, and skill combinations work well for them, making them an easy pick when you want to focus on class over race mechanics.",
+    detail: ["+1 to every ability score", "One extra language of your choice"],
   },
   {
     id: "elf",
     name: "Elf",
     blurb:
       "Graceful and long-lived, elves are deeply attuned to magic and the natural world.",
-    detail:
-      "Elves get proficiency in Perception and are immune to being put to magical sleep, a good fit for characters who lean on keen senses and subtlety.",
+    detail: [
+      "Darkvision out to 60 feet",
+      "Fey Ancestry: advantage on saves vs. being charmed, immune to magical sleep",
+      "Trance: needs only 4 hours of rest instead of 8",
+      "Keen Senses: proficiency in Perception",
+    ],
     subraces: [
       {
         id: "high-elf",
         name: "High Elf",
         blurb:
           "Studious and magically inclined, drawn to arcane knowledge and old traditions.",
-        detail:
-          "Gains a free wizard cantrip and an extra language, leaning into arcane curiosity even outside the Wizard class.",
+        detail: [
+          "Knows one wizard cantrip of choice (Intelligence-based)",
+          "One extra language of your choice",
+        ],
       },
       {
         id: "wood-elf",
         name: "Wood Elf",
         blurb:
           "At home in forests and wild places, quick on their feet and quiet as the trees.",
-        detail:
-          "Trades some of the high elf's magic for extra speed and stealth in natural terrain, ideal for skirmishers and scouts.",
+        detail: [
+          "Base walking speed increased to 35 feet",
+          "Mask of the Wild: can attempt to hide when lightly obscured by natural phenomena",
+        ],
       },
       {
         id: "drow",
         name: "Drow",
         blurb:
           "Raised in the Underdark's shadow, drow are keen-eyed and comfortable in darkness.",
-        detail:
-          "Superior darkvision and innate minor illusion magic, but sunlight can leave them at a disadvantage above ground.",
+        detail: [
+          "Superior Darkvision out to 120 feet",
+          "Drow Magic: learns Dancing Lights, later Faerie Fire and Darkness",
+          "Sunlight Sensitivity: disadvantage on attacks and Perception in direct sunlight",
+        ],
       },
     ],
   },
@@ -79,23 +89,25 @@ export const RACES: Race[] = [
     name: "Dwarf",
     blurb:
       "Sturdy and steadfast, dwarves value craft, clan, and endurance above all.",
-    detail:
-      "Dwarves are hardy, with resistance to poison and darkvision, plus proficiency with certain weapons and tools tied to their clan traditions.",
+    detail: [
+      "Darkvision out to 60 feet",
+      "Dwarven Resilience: advantage on saves vs. poison, resistance to poison damage",
+      "Dwarven Combat Training: proficiency with battleaxe, handaxe, light hammer, warhammer",
+      "Stonecunning: double proficiency bonus on History checks about stonework",
+    ],
     subraces: [
       {
         id: "hill-dwarf",
         name: "Hill Dwarf",
         blurb:
           "Wise and resilient, with an uncanny toughness that shrugs off harm.",
-        detail:
-          "Extra hit points at every level make hill dwarves resilient front-liners even outside heavily armored classes.",
+        detail: ["Dwarven Toughness: +1 hit point per level"],
       },
       {
         id: "mountain-dwarf",
         name: "Mountain Dwarf",
         blurb: "Strong and battle-ready, raised for the forge and the front line.",
-        detail:
-          "Armor proficiency and a strength bonus make mountain dwarves natural fits for front-line fighters and paladins.",
+        detail: ["Dwarven Armor Training: proficiency with light and medium armor"],
       },
     ],
   },
@@ -104,884 +116,250 @@ export const RACES: Race[] = [
     name: "Halfling",
     blurb:
       "Small, lucky, and unassuming, halflings get by on nerve, wit, and good fortune.",
-    detail:
-      "Halflings can reroll natural 1s on key rolls and slip past the space of larger creatures, favoring nimble, evasive characters.",
+    detail: [
+      "Lucky: reroll any natural 1 on an attack, ability check, or save",
+      "Brave: advantage on saves vs. being frightened",
+      "Halfling Nimbleness: can move through the space of a larger creature",
+    ],
   },
   {
     id: "half-elf",
     name: "Half-Elf",
     blurb:
       "Caught between two worlds, half-elves blend human drive with elven grace.",
-    detail:
-      "Combines a human's flexibility with an elf's magical resistance and darkvision, plus bonus skill proficiencies of their own choosing.",
+    detail: [
+      "Darkvision out to 60 feet",
+      "Fey Ancestry: advantage on saves vs. being charmed, immune to magical sleep",
+      "Skill Versatility: proficiency in two skills of your choice",
+    ],
   },
   {
     id: "tiefling",
     name: "Tiefling",
     blurb:
       "Marked by an infernal bloodline, tieflings are often misunderstood but fiercely self-reliant.",
-    detail:
-      "Innate resistance to fire and a bit of natural magic reflect their infernal heritage, along with darkvision suited to often-unwelcoming surroundings.",
+    detail: [
+      "Darkvision out to 60 feet",
+      "Hellish Resistance: resistance to fire damage",
+      "Infernal Legacy: knows the Thaumaturgy cantrip, gains more infernal spells later",
+    ],
   },
   {
     id: "half-orc",
     name: "Half-Orc",
     blurb:
       "Powerful and relentless, half-orcs channel raw strength and a fierce will to survive.",
-    detail:
-      "Relentless Endurance lets them shrug off a killing blow once per rest, and their savage critical hits make them formidable melee combatants.",
+    detail: [
+      "Darkvision out to 60 feet",
+      "Relentless Endurance: drop to 1 HP instead of 0 once per long rest",
+      "Savage Attacks: roll an extra weapon damage die on a critical hit",
+    ],
   },
   {
     id: "dragonborn",
     name: "Dragonborn",
     blurb:
       "Proud and honor-bound, dragonborn are descended from dragons and carry a bit of that power in their blood.",
-    detail:
-      "Draconic ancestry grants a breath weapon and damage resistance tied to their dragon type, giving them a built-in ranged option from level one.",
+    detail: [
+      "Draconic Ancestry determines your breath weapon and damage resistance",
+      "Breath Weapon: an area attack usable a few times per day",
+      "Damage Resistance to the type tied to your draconic ancestry",
+    ],
   },
 ];
+
+const berserker: Subclass = { id: "berserker", name: "Path of the Berserker", blurb: "Channels rage into overwhelming, reckless offense.", detail: ["Frenzy: extra attack while raging, at the cost of exhaustion afterward", "Mindless Rage: can't be charmed or frightened while raging"] };
+const totemWarrior: Subclass = { id: "totem-warrior", name: "Path of the Totem Warrior", blurb: "Draws on primal animal spirits for protection and power.", detail: ["Spirit Seeker: ritual casting of Beast Sense and Speak with Animals", "Totem Spirit: choose an animal spirit (Bear, Eagle, or Wolf) for a bonus"] };
+const ancestralGuardian: Subclass = { id: "ancestral-guardian", name: "Path of the Ancestral Guardian", blurb: "Calls on protective spirits to shield allies from harm.", detail: ["Ancestral Protectors: spectral warriors hinder enemies who hit your allies", "Halves damage dealt to allies within 30 feet while raging"] };
+const stormHerald: Subclass = { id: "storm-herald", name: "Path of the Storm Herald", blurb: "Surrounds themself with an aura of elemental fury.", detail: ["Storm Aura: a persistent elemental aura (desert, sea, or tundra) while raging", "Storm Soul: minor resistances and utility tied to the chosen aura"] };
+const zealot: Subclass = { id: "zealot", name: "Path of the Zealot", blurb: "Fights with the fearless conviction of a holy crusader.", detail: ["Divine Fury: extra necrotic or radiant damage on your first hit each turn", "Warrior of the Gods: easier to bring back from death"] };
+
+const lore: Subclass = { id: "lore", name: "College of Lore", blurb: "A jack-of-all-trades who collects secrets and useful tricks.", detail: ["Bonus Proficiencies: three extra skill proficiencies", "Cutting Words: spend Bardic Inspiration to subtract from an enemy's roll"] };
+const valor: Subclass = { id: "valor", name: "College of Valor", blurb: "A battle-bard who inspires allies and fights alongside them.", detail: ["Combat Inspiration: Bardic Inspiration die can boost damage or AC", "Extra Attack: attack twice when you take the Attack action"] };
+const glamour: Subclass = { id: "glamour", name: "College of Glamour", blurb: "Uses fey-touched charm to captivate and command a room.", detail: ["Mantle of Inspiration: grants temporary HP and free movement to allies", "Enthralling Performance: can charm an audience after performing"] };
+const swords: Subclass = { id: "swords", name: "College of Swords", blurb: "A blade-dancing performer who fights with flair.", detail: ["Fighting Style plus Blade Flourish: extra effects when you attack with a bonus action", "Bonus Proficiency: gains proficiency with medium armor and scimitars"] };
+const whispers: Subclass = { id: "whispers", name: "College of Whispers", blurb: "Uses fear and secrets as instruments, in the shadows of the stage.", detail: ["Psychic Blades: extra psychic damage on a hit using Bardic Inspiration", "Words of Terror: can plant creeping fear in a conversation partner"] };
+
+const life: Subclass = { id: "life", name: "Life Domain", blurb: "The best healer of any cleric, keeping the whole party standing.", detail: ["Disciple of Life: healing spells restore extra hit points", "Bonus Proficiency: heavy armor"] };
+const light: Subclass = { id: "light", name: "Light Domain", blurb: "Wields fire and radiance to burn away darkness and evil.", detail: ["Warding Flare: impose disadvantage on an attacker's roll", "Bonus Cantrip: Light"] };
+const war: Subclass = { id: "war", name: "War Domain", blurb: "A martial cleric blessed for combat, fighting alongside their faith.", detail: ["War Priest: bonus attack a number of times per day", "Bonus Proficiency: martial weapons and heavy armor"] };
+const knowledge: Subclass = { id: "knowledge", name: "Knowledge Domain", blurb: "A scholar-priest who values secrets and hidden lore.", detail: ["Blessings of Knowledge: two extra languages and skill proficiencies", "Knowledge of the Ages: temporary proficiency in any skill or tool"] };
+const nature: Subclass = { id: "nature", name: "Nature Domain", blurb: "A cleric of the wild, blending nature magic with divine power.", detail: ["Acolyte of Nature: a bonus cantrip and skill proficiency", "Bonus Proficiency: heavy armor"] };
+const tempest: Subclass = { id: "tempest", name: "Tempest Domain", blurb: "Commands storms and thunder in the name of a stormy god.", detail: ["Wrath of the Storm: retaliate with thunder or lightning damage when struck", "Bonus Proficiency: martial weapons and heavy armor"] };
+const trickery: Subclass = { id: "trickery", name: "Trickery Domain", blurb: "A mischievous cleric who values deception as much as devotion.", detail: ["Blessing of the Trickster: grants an ally advantage on Stealth checks", "Invoke Duplicity: creates an illusory duplicate of yourself"] };
+const death: Subclass = { id: "death", name: "Death Domain", blurb: "A grim cleric attuned to the power of death and decay.", detail: ["Reaper: extra necromancy cantrip options and range", "Bonus Proficiency: martial weapons"] };
+const forge: Subclass = { id: "forge", name: "Forge Domain", blurb: "A cleric of craft and fire, at home at the anvil and in battle.", detail: ["Blessing of the Forge: magically enhance a weapon or armor for an hour", "Bonus Proficiency: heavy armor"] };
+const grave: Subclass = { id: "grave", name: "Grave Domain", blurb: "A guardian against undeath, easing the passage between life and death.", detail: ["Circle of Mortality: maximizes healing dice on creatures at 0 HP", "Eyes of the Grave: sense undead nearby"] };
+
+const land: Subclass = { id: "land", name: "Circle of the Land", blurb: "Draws deep magic from a chosen terrain, from forest to desert.", detail: ["Natural Recovery: regain some spell slots on a short rest", "Bonus cantrip and circle spells tied to your chosen terrain"] };
+const moon: Subclass = { id: "moon", name: "Circle of the Moon", blurb: "A fierce shapeshifter who becomes a powerful beast in combat.", detail: ["Combat Wild Shape: shift as a bonus action and heal by spending spell slots", "Can wild shape into more dangerous beasts earlier"] };
+const dreams: Subclass = { id: "dreams", name: "Circle of Dreams", blurb: "Channels the gentle, healing magic of the Feywild.", detail: ["Balm of the Summer Court: a pool of healing dice for allies", "Extra Feywild-flavored spells"] };
+const shepherd: Subclass = { id: "shepherd", name: "Circle of the Shepherd", blurb: "A protector of beasts and spirits, leading them into battle.", detail: ["Speech of the Woods: communicate with beasts and some fey", "Spirit Totem: summon a totem that buffs nearby allies"] };
+const spores: Subclass = { id: "spores", name: "Circle of Spores", blurb: "Embraces decay and fungal magic to wither foes and rise again.", detail: ["Halo of Spores: damages enemies who end their turn nearby", "Symbiotic Entity: temporary HP and boosted unarmed strikes"] };
+
+const champion: Subclass = { id: "champion", name: "Champion", blurb: "A straightforward, hard-hitting warrior who excels at landing critical blows.", detail: ["Improved Critical: scores a critical hit on a roll of 19 or 20", "Remarkable Athlete: bonus to Strength/Dexterity/Constitution checks"] };
+const battleMaster: Subclass = { id: "battle-master", name: "Battle Master", blurb: "A tactician who uses special combat maneuvers to control the battlefield.", detail: ["Combat Superiority: superiority dice fuel combat maneuvers like Trip Attack and Parry", "Student of War: bonus proficiency with one artisan's tool"] };
+const eldritchKnight: Subclass = { id: "eldritch-knight", name: "Eldritch Knight", blurb: "A soldier who blends swordplay with a handful of arcane spells.", hasSpellcasting: true, detail: ["Spellcasting: learns wizard spells, mostly from the abjuration and evocation schools", "Weapon Bond: bond with a weapon so it can't be disarmed and can be summoned"] };
+const arcaneArcher: Subclass = { id: "arcane-archer", name: "Arcane Archer", blurb: "A ranged specialist who fires magic-infused arrows.", detail: ["Arcane Shot: infuse arrows with effects like Banishing or Seeking", "Magic Arrow: your nonmagical ammunition counts as magical"] };
+const cavalier: Subclass = { id: "cavalier", name: "Cavalier", blurb: "A mounted protector who guards allies and punishes those who ignore them.", detail: ["Born to the Saddle: near-unshakeable mounted combat", "Unwavering Mark: punishes foes who attack someone else instead of you"] };
+const samurai: Subclass = { id: "samurai", name: "Samurai", blurb: "An unshakeable warrior fueled by fighting spirit and resolve.", detail: ["Fighting Spirit: bonus action grants temporary HP and advantage on attacks", "Bonus Proficiency: one extra language or skill"] };
+
+const openHand: Subclass = { id: "open-hand", name: "Way of the Open Hand", blurb: "A master of unarmed combat who can stun, throw, and control opponents.", detail: ["Open Hand Technique: added effects when you land Flurry of Blows", "Wholeness of Body: heal yourself using ki"] };
+const shadow: Subclass = { id: "shadow", name: "Way of Shadow", blurb: "A stealthy monk who uses shadow magic to strike from darkness.", detail: ["Shadow Arts: cast Darkness, Darkvision, Pass without Trace, or Silence using ki", "Shadow Step: teleport between shadows as a bonus action"] };
+const fourElements: Subclass = { id: "four-elements", name: "Way of the Four Elements", blurb: "Channels elemental magic — fire, water, earth, air — through martial arts.", detail: ["Elemental Attunement: minor elemental utility tricks", "Learns elemental disciplines cast by spending ki points"] };
+const drunkenMaster: Subclass = { id: "drunken-master", name: "Way of the Drunken Master", blurb: "An unpredictable, stumbling fighting style that's harder to hit than it looks.", detail: ["Drunken Technique: Flurry of Blows grants extra movement without opportunity attacks", "Tipsy Sway: swap places with a target after a miss"] };
+const kensei: Subclass = { id: "kensei", name: "Way of the Kensei", blurb: "Treats weapons as an extension of the body, blending them with monk technique.", detail: ["Kensei Weapons: chosen weapons count as monk weapons", "Agile Parry: extra AC and unarmed strike after an attack"] };
+const sunSoul: Subclass = { id: "sun-soul", name: "Way of the Sun Soul", blurb: "Channels inner energy into blasts of radiant light.", detail: ["Radiant Sun Bolt: ranged unarmed strikes made of searing light", "Later gains a searing sunburst area attack"] };
+
+const devotion: Subclass = { id: "devotion", name: "Oath of Devotion", blurb: "The classic, honor-bound knight who upholds justice and protects the weak.", detail: ["Sacred Weapon: channel divinity to make your weapon magical and glowing", "Turn the Unholy: channel divinity to repel fiends and undead"] };
+const vengeance: Subclass = { id: "vengeance", name: "Oath of Vengeance", blurb: "A grim paladin driven to punish those who commit great evil.", detail: ["Abjure Enemy: channel divinity to frighten a foe", "Vow of Enmity: channel divinity for advantage on attacks against one target"] };
+const ancients: Subclass = { id: "ancients", name: "Oath of the Ancients", blurb: "A paladin sworn to protect nature, light, and joy against the dark.", detail: ["Nature's Wrath: channel divinity to magically restrain a creature", "Turn the Faithless: channel divinity to repel fey and fiends"] };
+const conquest: Subclass = { id: "conquest", name: "Oath of Conquest", blurb: "Rules through fear, crushing enemies beneath an iron will.", detail: ["Conquering Presence: channel divinity to frighten nearby foes", "Guided Strike: channel divinity for a guaranteed hit"] };
+const redemption: Subclass = { id: "redemption", name: "Oath of Redemption", blurb: "Seeks to turn enemies from violence rather than destroy them.", detail: ["Emissary of Peace: channel divinity for a lasting bonus to persuasion", "Rebuke the Violent: channel divinity to punish an attacker with their own damage"] };
+
+const hunter: Subclass = { id: "hunter", name: "Hunter", blurb: "A versatile fighter honed to take down all manner of foes.", detail: ["Hunter's Prey: choose a combat trick like Colossus Slayer or Horde Breaker", "Later gains Defensive Tactics and Multiattack options"] };
+const beastMaster: Subclass = { id: "beast-master", name: "Beast Master", blurb: "Fights alongside a loyal animal companion.", detail: ["Ranger's Companion: gain a loyal beast companion that fights at your command", "Can share some of your commands with it as a bonus action"] };
+const gloomStalker: Subclass = { id: "gloom-stalker", name: "Gloom Stalker", blurb: "An ambush hunter who strikes hardest from darkness and shadow.", detail: ["Dread Ambusher: extra speed and a bonus attack on the first turn of combat", "Umbral Sight: darkvision, and invisible to darkvision while in darkness"] };
+const horizonWalker: Subclass = { id: "horizon-walker", name: "Horizon Walker", blurb: "Guards the world against planar threats, stepping briefly between dimensions.", detail: ["Detect Portal: sense nearby planar portals", "Planar Warrior: teleport-infused strikes that deal force damage"] };
+const monsterSlayer: Subclass = { id: "monster-slayer", name: "Monster Slayer", blurb: "A dedicated hunter of magical and supernatural horrors.", detail: ["Hunter's Sense: learn a creature's damage resistances/immunities on sight", "Slayer's Prey: extra damage against a marked target"] };
+
+const thief: Subclass = { id: "thief", name: "Thief", blurb: "A nimble specialist in sleight of hand, locks, and climbing anything.", detail: ["Fast Hands: use Cunning Action for Sleight of Hand, tools, or objects", "Second-Story Work: better climbing and jumping distance"] };
+const assassin: Subclass = { id: "assassin", name: "Assassin", blurb: "A master of the element of surprise and the deadly first strike.", detail: ["Assassinate: advantage vs. surprised targets and an automatic critical hit", "Bonus Proficiency: disguise kit and poisoner's kit"] };
+const arcaneTrickster: Subclass = { id: "arcane-trickster", name: "Arcane Trickster", blurb: "A rogue who mixes in a handful of illusion and trickery spells.", hasSpellcasting: true, detail: ["Spellcasting: learns illusion and enchantment spells", "Mage Hand Legerdemain: a subtle, invisible Mage Hand for tricks"] };
+const inquisitive: Subclass = { id: "inquisitive", name: "Inquisitive", blurb: "A sharp-eyed investigator who reads lies and finds what's hidden.", detail: ["Ear for Deceit: near-guaranteed sense for when someone is lying", "Eye for Detail: quick spot checks for hidden details and disguises"] };
+const mastermind: Subclass = { id: "mastermind", name: "Mastermind", blurb: "A schemer who directs allies and manipulates from behind the scenes.", detail: ["Master of Intrigue: mimic dialects and disguise your speech", "Master of Tactics: grant Help as a bonus action at range"] };
+const scout: Subclass = { id: "scout", name: "Scout", blurb: "A quick, wilderness-savvy skirmisher who strikes and moves.", detail: ["Skirmisher: move away from approaching enemies as a reaction", "Survivalist: bonus proficiency in Nature and Survival"] };
+const swashbuckler: Subclass = { id: "swashbuckler", name: "Swashbuckler", blurb: "A flashy duelist who charms and outmaneuvers single foes.", detail: ["Fancy Footwork: a foe you attack in melee can't make opportunity attacks on you", "Rakish Audacity: bonus to initiative and Sneak Attack without an ally nearby"] };
+
+const draconicBloodline: Subclass = { id: "draconic-bloodline", name: "Draconic Bloodline", blurb: "Magic fueled by dragon ancestry, with tougher skin and elemental power.", detail: ["Draconic Resilience: extra hit points and AC without armor", "Spells of your draconic damage type deal extra damage"] };
+const wildMagic: Subclass = { id: "wild-magic", name: "Wild Magic", blurb: "Unpredictable magic that can surge in surprising, chaotic ways.", detail: ["Wild Magic Surge: casting a spell can trigger a random magical effect", "Tides of Chaos: gain advantage on a roll at the cost of a future surge"] };
+const divineSoul: Subclass = { id: "divine-soul", name: "Divine Soul", blurb: "Magic with a celestial or divine spark, blending sorcery with healing.", detail: ["Divine Magic: can learn spells from the cleric list as well", "Favored by the Gods: add a bonus roll to a failed attack or save"] };
+const shadowMagic: Subclass = { id: "shadow-magic", name: "Shadow Magic", blurb: "Magic touched by the Shadowfell, at home with darkness and fear.", detail: ["Eyes of the Dark: darkvision and can cast Darkness using sorcery points", "Strength of the Grave: chance to shrug off a killing blow"] };
+const stormSorcery: Subclass = { id: "storm-sorcery", name: "Storm Sorcery", blurb: "Magic drawn from storms and wind, favoring mobility and elemental power.", detail: ["Tempestuous Magic: fly briefly as a bonus action after casting a spell", "Heart of the Storm: resistance to lightning/thunder, and a stormy aura when casting"] };
+
+const fiend: Subclass = { id: "fiend", name: "The Fiend", blurb: "A pact with a devil or demon, favoring fire and destructive power.", detail: ["Dark One's Blessing: gain temporary hit points when you reduce a foe to 0 HP", "Dark One's Own Luck: add a bonus to an ability check or save"] };
+const archfey: Subclass = { id: "archfey", name: "The Archfey", blurb: "A pact with a fey lord, favoring charm, illusion, and trickery.", detail: ["Fey Presence: charm or frighten creatures in a burst around you", "Misty Escape: teleport away in mist after taking damage"] };
+const greatOldOne: Subclass = { id: "great-old-one", name: "The Great Old One", blurb: "A pact with an alien, incomprehensible being from beyond the stars.", detail: ["Awakened Mind: telepathic communication with nearby creatures", "Entropic Ward: impose disadvantage on an attacker, with a reaction benefit if it misses"] };
+const celestial: Subclass = { id: "celestial", name: "The Celestial", blurb: "A pact with a being of the upper planes, granting healing and radiant power.", detail: ["Healing Light: a pool of d6s you can spend to heal", "Bonus Cantrips: Light and Sacred Flame"] };
+const hexblade: Subclass = { id: "hexblade", name: "The Hexblade", blurb: "A pact with a sentient weapon from the Shadowfell, favoring melee combat.", detail: ["Hexblade's Curse: curse a target for extra damage and crit range", "Hex Warrior: use Charisma for attack and damage with a chosen weapon"] };
+
+const evocation: Subclass = { id: "evocation", name: "School of Evocation", blurb: "Specializes in powerful, damaging blasts of elemental magic.", detail: ["Sculpt Spells: shield allies from your own area-of-effect spells", "Later deals extra damage with evocation spells"] };
+const abjuration: Subclass = { id: "abjuration", name: "School of Abjuration", blurb: "Specializes in protective magic — shields, wards, and defense.", detail: ["Arcane Ward: a shield of magical energy that absorbs damage", "Ward can be recharged by casting abjuration spells"] };
+const conjuration: Subclass = { id: "conjuration", name: "School of Conjuration", blurb: "Specializes in summoning creatures and objects from thin air.", detail: ["Minor Conjuration: conjure a harmless inanimate object", "Benign Transposition: teleport yourself or swap with a willing creature"] };
+const divination: Subclass = { id: "divination", name: "School of Divination", blurb: "Specializes in foresight, information, and bending fate slightly.", detail: ["Portent: roll dice at dawn and swap them in for any roll later", "Later can force disadvantage on an attack roll against you"] };
+const enchantment: Subclass = { id: "enchantment", name: "School of Enchantment", blurb: "Specializes in charming and controlling the minds of others.", detail: ["Hypnotic Gaze: lightly incapacitate a creature with your stare", "Later can instantly charm a creature you damage"] };
+const illusion: Subclass = { id: "illusion", name: "School of Illusion", blurb: "Specializes in tricking the senses with false sights and sounds.", detail: ["Improved Minor Illusion: learn Minor Illusion and add sound and image together", "Later illusions can seem real when interacted with"] };
+const necromancy: Subclass = { id: "necromancy", name: "School of Necromancy", blurb: "Specializes in the magic of life, death, and the undead.", detail: ["Grim Harvest: heal by killing creatures with spells", "Undead you create are tougher and hit harder"] };
+const warMagic: Subclass = { id: "war-magic", name: "School of War Magic", blurb: "A battle-ready wizard who blends spellcasting with combat tactics.", detail: ["Arcane Deflection: bonus to AC or a save at the cost of your next spell", "Tactical Wit: add Intelligence modifier to initiative"] };
 
 export const CLASSES: DndClass[] = [
   {
     id: "barbarian",
     name: "Barbarian",
     blurb: "A relentless warrior who fights with raw fury and unmatched toughness.",
-    detail:
-      "Rage grants damage resistance and bonus melee damage while active, and Barbarians can go without armor and still keep a high AC using Unarmored Defense. Best suited to players who want simple, powerful choices in combat over complex spell lists.",
+    detail: ["Rage: bonus damage and resistance to physical damage", "Unarmored Defense: AC from Constitution while not wearing armor"],
     baseSpellcasting: false,
-    defaultSubclasses: [
-      {
-        id: "berserker",
-        name: "Path of the Berserker",
-        blurb: "Channels rage into overwhelming, reckless offense.",
-        detail:
-          "Frenzy lets you make a bonus attack while raging at the cost of exhaustion afterward, embodying reckless, damage-focused rage.",
-      },
-      {
-        id: "totem-warrior",
-        name: "Path of the Totem Warrior",
-        blurb: "Draws on primal animal spirits for protection and power.",
-        detail:
-          "Choose a totem spirit at each tier for defensive, mobility, or utility bonuses, blending primal magic into the rage.",
-      },
-    ],
-    allSubclasses: [
-      {
-        id: "berserker",
-        name: "Path of the Berserker",
-        blurb: "Channels rage into overwhelming, reckless offense.",
-        detail:
-          "Frenzy lets you make a bonus attack while raging at the cost of exhaustion afterward, embodying reckless, damage-focused rage.",
-      },
-      {
-        id: "totem-warrior",
-        name: "Path of the Totem Warrior",
-        blurb: "Draws on primal animal spirits for protection and power.",
-        detail:
-          "Choose a totem spirit at each tier for defensive, mobility, or utility bonuses, blending primal magic into the rage.",
-      },
-      {
-        id: "ancestral-guardian",
-        name: "Path of the Ancestral Guardian",
-        blurb: "Calls on protective spirits to shield allies from harm.",
-        detail:
-          "Spectral warriors punish enemies who ignore you and redirect damage away from allies, turning rage into a protective tool.",
-      },
-      {
-        id: "storm-herald",
-        name: "Path of the Storm Herald",
-        blurb: "Surrounds themself with an aura of elemental fury.",
-        detail:
-          "A constant elemental aura (desert, sea, or tundra) damages or debuffs nearby enemies every turn you're raging.",
-      },
-      {
-        id: "zealot",
-        name: "Path of the Zealot",
-        blurb: "Fights with the fearless conviction of a holy crusader.",
-        detail:
-          "Deals bonus necrotic or radiant damage while raging and can be difficult to keep down, fitting a fearless holy-warrior theme.",
-      },
-    ],
+    defaultSubclasses: [berserker, totemWarrior],
+    allSubclasses: [berserker, totemWarrior, ancestralGuardian, stormHerald, zealot],
   },
   {
     id: "bard",
     name: "Bard",
     blurb: "A charming performer whose music and words can inspire, heal, or unravel enemies.",
-    detail:
-      "Bardic Inspiration lets you hand out bonus dice to boost allies' rolls, and bards learn spells from any school, making them the most flexible spellcasting class. Expertise and a wide skill list also make bards strong out-of-combat problem solvers.",
+    detail: ["Bardic Inspiration: give allies a die to boost a roll", "Spellcasting: a flexible list drawn from any class's spells"],
     baseSpellcasting: true,
-    defaultSubclasses: [
-      {
-        id: "lore",
-        name: "College of Lore",
-        blurb: "A jack-of-all-trades who collects secrets and useful tricks.",
-        detail:
-          "Gains extra magical secrets from any class's spell list and can weaken enemies' rolls with Cutting Words, the ultimate generalist bard.",
-      },
-      {
-        id: "valor",
-        name: "College of Valor",
-        blurb: "A battle-bard who inspires allies and fights alongside them.",
-        detail:
-          "Trades some utility for combat training, extra attacks, and the ability to share bardic inspiration as a defensive boost mid-fight.",
-      },
-    ],
-    allSubclasses: [
-      {
-        id: "lore",
-        name: "College of Lore",
-        blurb: "A jack-of-all-trades who collects secrets and useful tricks.",
-        detail:
-          "Gains extra magical secrets from any class's spell list and can weaken enemies' rolls with Cutting Words, the ultimate generalist bard.",
-      },
-      {
-        id: "valor",
-        name: "College of Valor",
-        blurb: "A battle-bard who inspires allies and fights alongside them.",
-        detail:
-          "Trades some utility for combat training, extra attacks, and the ability to share bardic inspiration as a defensive boost mid-fight.",
-      },
-      {
-        id: "glamour",
-        name: "College of Glamour",
-        blurb: "Uses fey-touched charm to captivate and command a room.",
-        detail:
-          "Captivates crowds with an aura that can charm or embolden, leaning hard into the performer-as-power-broker fantasy.",
-      },
-      {
-        id: "swords",
-        name: "College of Swords",
-        blurb: "A blade-dancing performer who fights with flair.",
-        detail:
-          "Gains extra attacks and flourishes that let you trip, redirect, or defend using Bardic Inspiration dice in melee.",
-      },
-      {
-        id: "whispers",
-        name: "College of Whispers",
-        blurb: "Uses fear and secrets as instruments, in the shadows of the stage.",
-        detail:
-          "Deals bonus psychic damage and can implant lingering psychic terror, playing the bard as an unsettling manipulator.",
-      },
-    ],
+    defaultSubclasses: [lore, valor],
+    allSubclasses: [lore, valor, glamour, swords, whispers],
   },
   {
     id: "cleric",
     name: "Cleric",
     blurb: "A divine champion who heals allies and channels the power of a god in battle.",
-    detail:
-      "Clerics choose a Domain that shapes both their spell list and a suite of extra features, from radiant damage to healing. They're the most reliable healers in most parties, but also viable as durable, spell-backed melee fighters depending on domain.",
+    detail: ["Spellcasting: draws on the full cleric spell list", "Divine Domain: grants extra spells and features tied to your god"],
     baseSpellcasting: true,
-    defaultSubclasses: [
-      {
-        id: "life",
-        name: "Life Domain",
-        blurb: "The best healer of any cleric, keeping the whole party standing.",
-        detail:
-          "Healing spells restore extra hit points and you gain bonus healer's abilities, making Life the strongest pure-support domain.",
-      },
-      {
-        id: "light",
-        name: "Light Domain",
-        blurb: "Wields fire and radiance to burn away darkness and evil.",
-        detail:
-          "Gains fire and radiant spells plus a bonus damage effect on cantrips, playing more like a blaster than a healer.",
-      },
-      {
-        id: "war",
-        name: "War Domain",
-        blurb: "A martial cleric blessed for combat, fighting alongside their faith.",
-        detail:
-          "Grants a bonus attack via Channel Divinity and better weapon proficiency, letting you fight in melee like a paladin-lite.",
-      },
-    ],
-    allSubclasses: [
-      {
-        id: "life",
-        name: "Life Domain",
-        blurb: "The best healer of any cleric, keeping the whole party standing.",
-        detail:
-          "Healing spells restore extra hit points and you gain bonus healer's abilities, making Life the strongest pure-support domain.",
-      },
-      {
-        id: "light",
-        name: "Light Domain",
-        blurb: "Wields fire and radiance to burn away darkness and evil.",
-        detail:
-          "Gains fire and radiant spells plus a bonus damage effect on cantrips, playing more like a blaster than a healer.",
-      },
-      {
-        id: "war",
-        name: "War Domain",
-        blurb: "A martial cleric blessed for combat, fighting alongside their faith.",
-        detail:
-          "Grants a bonus attack via Channel Divinity and better weapon proficiency, letting you fight in melee like a paladin-lite.",
-      },
-      {
-        id: "knowledge",
-        name: "Knowledge Domain",
-        blurb: "A scholar-priest who values secrets and hidden lore.",
-        detail:
-          "Grants bonus languages and skills plus the ability to read surface thoughts, ideal for an investigative or scholarly cleric.",
-      },
-      {
-        id: "nature",
-        name: "Nature Domain",
-        blurb: "A cleric of the wild, blending nature magic with divine power.",
-        detail:
-          "Adds nature spells to your list and grants an animal-handling bonus, blending divine and primal magic themes.",
-      },
-      {
-        id: "tempest",
-        name: "Tempest Domain",
-        blurb: "Commands storms and thunder in the name of a stormy god.",
-        detail:
-          "Channel Divinity adds bonus lightning or thunder damage to weapon attacks, making Tempest a strong melee-caster hybrid.",
-      },
-      {
-        id: "trickery",
-        name: "Trickery Domain",
-        blurb: "A mischievous cleric who values deception as much as devotion.",
-        detail:
-          "Can create illusory duplicates of yourself and grants advantage on deception, favoring a cunning, morally gray cleric.",
-      },
-      {
-        id: "death",
-        name: "Death Domain",
-        blurb: "A grim cleric attuned to the power of death and decay.",
-        detail:
-          "Gains necrotic spells and empowers necrotic damage rolls, a grim domain most suited to darker campaigns.",
-      },
-      {
-        id: "forge",
-        name: "Forge Domain",
-        blurb: "A cleric of craft and fire, at home at the anvil and in battle.",
-        detail:
-          "Can magically create or enhance weapons and armor, and gains fire resistance, fitting a smith-priest concept.",
-      },
-      {
-        id: "grave",
-        name: "Grave Domain",
-        blurb: "A guardian against undeath, easing the passage between life and death.",
-        detail:
-          "Can sense the presence of undeath and add extra damage to already-doomed enemies, standing guard between life and death.",
-      },
-    ],
+    defaultSubclasses: [life, light, war],
+    allSubclasses: [life, light, war, knowledge, nature, tempest, trickery, death, forge, grave],
   },
   {
     id: "druid",
     name: "Druid",
     blurb: "A guardian of nature who can shape-shift into animals and command the wild.",
-    detail:
-      "Wild Shape lets druids transform into beasts for exploration, utility, or combat, stacking with a strong nature-themed spell list. Circle choice determines whether you lean into shapeshifting combat or land-based spellcasting.",
+    detail: ["Druidic: a secret language of druids", "Spellcasting, and later Wild Shape to turn into a beast"],
     baseSpellcasting: true,
-    defaultSubclasses: [
-      {
-        id: "land",
-        name: "Circle of the Land",
-        blurb: "Draws deep magic from a chosen terrain, from forest to desert.",
-        detail:
-          "Gains bonus spells tied to a chosen terrain and extra spell slots for rituals, the most spell-list-focused circle.",
-      },
-      {
-        id: "moon",
-        name: "Circle of the Moon",
-        blurb: "A fierce shapeshifter who becomes a powerful beast in combat.",
-        detail:
-          "Wild Shape into much tougher combat beasts and regain hit points when shifting, making it the strongest shapeshifting combat option.",
-      },
-    ],
-    allSubclasses: [
-      {
-        id: "land",
-        name: "Circle of the Land",
-        blurb: "Draws deep magic from a chosen terrain, from forest to desert.",
-        detail:
-          "Gains bonus spells tied to a chosen terrain and extra spell slots for rituals, the most spell-list-focused circle.",
-      },
-      {
-        id: "moon",
-        name: "Circle of the Moon",
-        blurb: "A fierce shapeshifter who becomes a powerful beast in combat.",
-        detail:
-          "Wild Shape into much tougher combat beasts and regain hit points when shifting, making it the strongest shapeshifting combat option.",
-      },
-      {
-        id: "dreams",
-        name: "Circle of Dreams",
-        blurb: "Channels the gentle, healing magic of the Feywild.",
-        detail:
-          "Can heal and comfort allies through a Feywild-touched hearth, and later travel the party through dreams over long distances.",
-      },
-      {
-        id: "shepherd",
-        name: "Circle of the Shepherd",
-        blurb: "A protector of beasts and spirits, leading them into battle.",
-        detail:
-          "Summoned and Wild Shape'd creatures gain spectral guardian bonuses, turning the druid into a commander of allies and beasts.",
-      },
-      {
-        id: "spores",
-        name: "Circle of Spores",
-        blurb: "Embraces decay and fungal magic to wither foes and rise again.",
-        detail:
-          "Wreathed in a cloud of toxic fungus that damages nearby enemies, and can briefly reanimate after dying, embracing decay directly.",
-      },
-    ],
+    defaultSubclasses: [land, moon],
+    allSubclasses: [land, moon, dreams, shepherd, spores],
   },
   {
     id: "fighter",
     name: "Fighter",
     blurb: "A master of weapons and tactics who can adapt to nearly any fight.",
-    detail:
-      "Fighters get more attacks per turn than any other class as they level and access unique subclass mechanics, from maneuvers to a handful of spells. Simple to play but effective in almost any combat scenario.",
+    detail: ["Fighting Style: a permanent combat specialty (Archery, Defense, Dueling, etc.)", "Second Wind: bonus action to heal a bit once per short rest"],
     baseSpellcasting: false,
-    defaultSubclasses: [
-      {
-        id: "champion",
-        name: "Champion",
-        blurb: "A straightforward, hard-hitting warrior who excels at landing critical blows.",
-        detail:
-          "Widens your critical hit range and boosts athletic skills, a straightforward option that rewards simple, consistent damage.",
-      },
-      {
-        id: "battle-master",
-        name: "Battle Master",
-        blurb: "A tactician who uses special combat maneuvers to control the battlefield.",
-        detail:
-          "Learns combat maneuvers (trip, disarm, riposte, and more) fueled by superiority dice, adding tactical options to every attack.",
-      },
-      {
-        id: "eldritch-knight",
-        name: "Eldritch Knight",
-        blurb: "A soldier who blends swordplay with a handful of arcane spells.",
-        detail:
-          "Learns a handful of wizard spells, mostly abjuration and evocation, to support a sword-and-spell playstyle.",
-        hasSpellcasting: true,
-      },
-    ],
-    allSubclasses: [
-      {
-        id: "champion",
-        name: "Champion",
-        blurb: "A straightforward, hard-hitting warrior who excels at landing critical blows.",
-        detail:
-          "Widens your critical hit range and boosts athletic skills, a straightforward option that rewards simple, consistent damage.",
-      },
-      {
-        id: "battle-master",
-        name: "Battle Master",
-        blurb: "A tactician who uses special combat maneuvers to control the battlefield.",
-        detail:
-          "Learns combat maneuvers (trip, disarm, riposte, and more) fueled by superiority dice, adding tactical options to every attack.",
-      },
-      {
-        id: "eldritch-knight",
-        name: "Eldritch Knight",
-        blurb: "A soldier who blends swordplay with a handful of arcane spells.",
-        detail:
-          "Learns a handful of wizard spells, mostly abjuration and evocation, to support a sword-and-spell playstyle.",
-        hasSpellcasting: true,
-      },
-      {
-        id: "arcane-archer",
-        name: "Arcane Archer",
-        blurb: "A ranged specialist who fires magic-infused arrows.",
-        detail:
-          "Infuses arrows with magical arcane shot effects like extra damage, forced movement, or teleportation.",
-      },
-      {
-        id: "cavalier",
-        name: "Cavalier",
-        blurb: "A mounted protector who guards allies and punishes those who ignore them.",
-        detail:
-          "Can mark enemies to punish them for attacking others and has better control over movement in melee, a strong front-line protector.",
-      },
-      {
-        id: "samurai",
-        name: "Samurai",
-        blurb: "An unshakeable warrior fueled by fighting spirit and resolve.",
-        detail:
-          "Fighting Spirit grants temporary hit points and advantage on attacks in a pinch, embodying unshakeable martial resolve.",
-      },
-    ],
+    defaultSubclasses: [champion, battleMaster, eldritchKnight],
+    allSubclasses: [champion, battleMaster, eldritchKnight, arcaneArcher, cavalier, samurai],
   },
   {
     id: "monk",
     name: "Monk",
     blurb: "A disciplined martial artist who fights unarmed with incredible speed and precision.",
-    detail:
-      "Monks fight unarmed or with simple weapons, using Ki points to fuel special techniques like extra attacks, stunning strikes, and deflecting projectiles. High mobility and unarmored defense make them tough to pin down.",
+    detail: ["Unarmored Defense: AC from Wisdom while not wearing armor", "Martial Arts: bonus unarmed strikes and Dexterity-based combat"],
     baseSpellcasting: false,
-    defaultSubclasses: [
-      {
-        id: "open-hand",
-        name: "Way of the Open Hand",
-        blurb: "A master of unarmed combat who can stun, throw, and control opponents.",
-        detail:
-          "Can stun, knock prone, or shove enemies as part of a flurry of blows, the most combat-control-focused monk path.",
-      },
-      {
-        id: "shadow",
-        name: "Way of Shadow",
-        blurb: "A stealthy monk who uses shadow magic to strike from darkness.",
-        detail:
-          "Can cast minor illusion and darkness spells using ki, and teleport between shadows, favoring a stealthy, sneaky monk.",
-      },
-    ],
-    allSubclasses: [
-      {
-        id: "open-hand",
-        name: "Way of the Open Hand",
-        blurb: "A master of unarmed combat who can stun, throw, and control opponents.",
-        detail:
-          "Can stun, knock prone, or shove enemies as part of a flurry of blows, the most combat-control-focused monk path.",
-      },
-      {
-        id: "shadow",
-        name: "Way of Shadow",
-        blurb: "A stealthy monk who uses shadow magic to strike from darkness.",
-        detail:
-          "Can cast minor illusion and darkness spells using ki, and teleport between shadows, favoring a stealthy, sneaky monk.",
-      },
-      {
-        id: "four-elements",
-        name: "Way of the Four Elements",
-        blurb: "Channels elemental magic — fire, water, earth, air — through martial arts.",
-        detail:
-          "Spends ki to cast elemental spell-like effects such as fireball or a wave of water, blending martial arts with elemental magic.",
-      },
-      {
-        id: "drunken-master",
-        name: "Way of the Drunken Master",
-        blurb: "An unpredictable, stumbling fighting style that's harder to hit than it looks.",
-        detail:
-          "Can stumble away from attacks and redirect enemies mid-fight, using an unpredictable, off-balance fighting style.",
-      },
-      {
-        id: "kensei",
-        name: "Way of the Kensei",
-        blurb: "Treats weapons as an extension of the body, blending them with monk technique.",
-        detail:
-          "Can apply monk features to chosen weapons and briefly empower them, making weapon-based monks viable.",
-      },
-      {
-        id: "sun-soul",
-        name: "Way of the Sun Soul",
-        blurb: "Channels inner energy into blasts of radiant light.",
-        detail:
-          "Can fire bolts of radiant energy at range using ki, giving monks a ranged option without needing a bow.",
-      },
-    ],
+    defaultSubclasses: [openHand, shadow],
+    allSubclasses: [openHand, shadow, fourElements, drunkenMaster, kensei, sunSoul],
   },
   {
     id: "paladin",
     name: "Paladin",
     blurb: "A holy warrior bound by an oath, mixing martial power with divine magic.",
-    detail:
-      "Paladins combine heavy armor and martial prowess with divine spells and Divine Smite, letting them burst down single targets with radiant damage. Their Oath determines both flavor and a set of powerful aura and channel divinity options.",
+    detail: ["Divine Sense: detect celestials, fiends, and undead nearby", "Lay on Hands: a pool of healing you can touch onto allies"],
     baseSpellcasting: true,
-    defaultSubclasses: [
-      {
-        id: "devotion",
-        name: "Oath of Devotion",
-        blurb: "The classic, honor-bound knight who upholds justice and protects the weak.",
-        detail:
-          "Channel Divinity can turn undead and sear fiends with holy light, embodying the classic honorable knight.",
-      },
-      {
-        id: "vengeance",
-        name: "Oath of Vengeance",
-        blurb: "A grim paladin driven to punish those who commit great evil.",
-        detail:
-          "Can curse a target for extra damage and gains bonus mobility to chase them down, playing the paladin as a relentless punisher.",
-      },
-    ],
-    allSubclasses: [
-      {
-        id: "devotion",
-        name: "Oath of Devotion",
-        blurb: "The classic, honor-bound knight who upholds justice and protects the weak.",
-        detail:
-          "Channel Divinity can turn undead and sear fiends with holy light, embodying the classic honorable knight.",
-      },
-      {
-        id: "vengeance",
-        name: "Oath of Vengeance",
-        blurb: "A grim paladin driven to punish those who commit great evil.",
-        detail:
-          "Can curse a target for extra damage and gains bonus mobility to chase them down, playing the paladin as a relentless punisher.",
-      },
-      {
-        id: "ancients",
-        name: "Oath of the Ancients",
-        blurb: "A paladin sworn to protect nature, light, and joy against the dark.",
-        detail:
-          "Channel Divinity to ward allies against damage, gaining nature-tinged holy power that protects growth and life.",
-      },
-      {
-        id: "conquest",
-        name: "Oath of Conquest",
-        blurb: "Rules through fear, crushing enemies beneath an iron will.",
-        detail:
-          "Can frighten enemies just by approaching and gains bonus damage against frightened foes, ruling the battlefield through fear.",
-      },
-      {
-        id: "redemption",
-        name: "Oath of Redemption",
-        blurb: "Seeks to turn enemies from violence rather than destroy them.",
-        detail:
-          "Can redirect attacks meant for others onto yourself and try to talk enemies down instead of fighting, favoring a pacifistic approach.",
-      },
-    ],
+    defaultSubclasses: [devotion, vengeance],
+    allSubclasses: [devotion, vengeance, ancients, conquest, redemption],
   },
   {
     id: "ranger",
     name: "Ranger",
     blurb: "A skilled hunter and tracker at home in the wild, fighting alongside nature.",
-    detail:
-      "Rangers mix martial combat with a nature-themed spell list and favored enemy/terrain features, making them strong at tracking, survival, and ranged or two-weapon combat. Beast Master rangers gain a companion that fights alongside them.",
+    detail: ["Favored Enemy: bonus knowledge and tracking against a chosen enemy type", "Natural Explorer: expertise moving through a favored terrain"],
     baseSpellcasting: true,
-    defaultSubclasses: [
-      {
-        id: "hunter",
-        name: "Hunter",
-        blurb: "A versatile fighter honed to take down all manner of foes.",
-        detail:
-          "Chooses a combat style bonus against a type of enemy (hordes, single big threats, and more), the most straightforward combat ranger.",
-      },
-      {
-        id: "beast-master",
-        name: "Beast Master",
-        blurb: "Fights alongside a loyal animal companion.",
-        detail:
-          "Gains a beast companion that fights, moves, and grows alongside you, playing the ranger as a small-scale commander.",
-      },
-    ],
-    allSubclasses: [
-      {
-        id: "hunter",
-        name: "Hunter",
-        blurb: "A versatile fighter honed to take down all manner of foes.",
-        detail:
-          "Chooses a combat style bonus against a type of enemy (hordes, single big threats, and more), the most straightforward combat ranger.",
-      },
-      {
-        id: "beast-master",
-        name: "Beast Master",
-        blurb: "Fights alongside a loyal animal companion.",
-        detail:
-          "Gains a beast companion that fights, moves, and grows alongside you, playing the ranger as a small-scale commander.",
-      },
-      {
-        id: "gloom-stalker",
-        name: "Gloom Stalker",
-        blurb: "An ambush hunter who strikes hardest from darkness and shadow.",
-        detail:
-          "Gains bonus initiative, an extra attack on the first turn, and better darkvision, excelling at ambushes from darkness.",
-      },
-      {
-        id: "horizon-walker",
-        name: "Horizon Walker",
-        blurb: "Guards the world against planar threats, stepping briefly between dimensions.",
-        detail:
-          "Can briefly step into the Ethereal Plane and deal bonus force damage, standing guard against planar incursions.",
-      },
-      {
-        id: "monster-slayer",
-        name: "Monster Slayer",
-        blurb: "A dedicated hunter of magical and supernatural horrors.",
-        detail:
-          "Can magically sense a target's resistances and impose disadvantage on their attacks against you, specializing in hunting one dangerous foe at a time.",
-      },
-    ],
+    defaultSubclasses: [hunter, beastMaster],
+    allSubclasses: [hunter, beastMaster, gloomStalker, horizonWalker, monsterSlayer],
   },
   {
     id: "rogue",
     name: "Rogue",
     blurb: "A cunning, skillful character who relies on precision, stealth, and wit over brute force.",
-    detail:
-      "Sneak Attack lets rogues deal big bonus damage once per turn when they have advantage or a nearby ally, rewarding stealth and positioning. Expertise and a wide skill list also make rogues the best skill-monkeys in most parties.",
+    detail: ["Expertise: double proficiency bonus on two chosen skills", "Sneak Attack: extra damage once per turn when you have advantage or an ally nearby"],
     baseSpellcasting: false,
-    defaultSubclasses: [
-      {
-        id: "thief",
-        name: "Thief",
-        blurb: "A nimble specialist in sleight of hand, locks, and climbing anything.",
-        detail:
-          "Gains an extra item-use action and can climb or balance without penalty, the most versatile, gadget-friendly rogue.",
-      },
-      {
-        id: "assassin",
-        name: "Assassin",
-        blurb: "A master of the element of surprise and the deadly first strike.",
-        detail:
-          "Automatically critical hits surprised targets and can disguise their identity, built entirely around the first devastating strike.",
-      },
-      {
-        id: "arcane-trickster",
-        name: "Arcane Trickster",
-        blurb: "A rogue who mixes in a handful of illusion and trickery spells.",
-        detail:
-          "Learns a handful of illusion and enchantment spells, including a spell that can be cast as part of a Sneak Attack.",
-        hasSpellcasting: true,
-      },
-    ],
-    allSubclasses: [
-      {
-        id: "thief",
-        name: "Thief",
-        blurb: "A nimble specialist in sleight of hand, locks, and climbing anything.",
-        detail:
-          "Gains an extra item-use action and can climb or balance without penalty, the most versatile, gadget-friendly rogue.",
-      },
-      {
-        id: "assassin",
-        name: "Assassin",
-        blurb: "A master of the element of surprise and the deadly first strike.",
-        detail:
-          "Automatically critical hits surprised targets and can disguise their identity, built entirely around the first devastating strike.",
-      },
-      {
-        id: "arcane-trickster",
-        name: "Arcane Trickster",
-        blurb: "A rogue who mixes in a handful of illusion and trickery spells.",
-        detail:
-          "Learns a handful of illusion and enchantment spells, including a spell that can be cast as part of a Sneak Attack.",
-        hasSpellcasting: true,
-      },
-      {
-        id: "inquisitive",
-        name: "Inquisitive",
-        blurb: "A sharp-eyed investigator who reads lies and finds what's hidden.",
-        detail:
-          "Can spot lies and see through disguises with uncanny accuracy, playing the rogue as a sharp-eyed detective.",
-      },
-      {
-        id: "mastermind",
-        name: "Mastermind",
-        blurb: "A schemer who directs allies and manipulates from behind the scenes.",
-        detail:
-          "Can grant allies a bonus attack via Help as a bonus action and briefly speak any language, coordinating from behind the scenes.",
-      },
-      {
-        id: "scout",
-        name: "Scout",
-        blurb: "A quick, wilderness-savvy skirmisher who strikes and moves.",
-        detail:
-          "Gains a free move before combat starts and bonus damage when flanking, favoring a mobile skirmisher playstyle.",
-      },
-      {
-        id: "swashbuckler",
-        name: "Swashbuckler",
-        blurb: "A flashy duelist who charms and outmaneuvers single foes.",
-        detail:
-          "Can duel one target without provoking opportunity attacks and charm crowds outside of combat, playing the rogue as a flashy, charismatic duelist.",
-      },
-    ],
+    defaultSubclasses: [thief, assassin, arcaneTrickster],
+    allSubclasses: [thief, assassin, arcaneTrickster, inquisitive, mastermind, scout, swashbuckler],
   },
   {
     id: "sorcerer",
     name: "Sorcerer",
     blurb: "A spellcaster whose magic comes from an innate, often inherited, magical bloodline.",
-    detail:
-      "Sorcery Points let sorcerers twist their limited spell list with Metamagic — quickening, twinning, or subtly casting spells for surprising tactical options. Fewer spells known than a wizard, but far more ways to bend the ones they have.",
+    detail: ["Spellcasting fueled by a small, flexible spell list", "Sorcerous Origin: grants extra spells and features tied to your bloodline"],
     baseSpellcasting: true,
-    defaultSubclasses: [
-      {
-        id: "draconic-bloodline",
-        name: "Draconic Bloodline",
-        blurb: "Magic fueled by dragon ancestry, with tougher skin and elemental power.",
-        detail:
-          "Gains resistance to a damage type and thicker skin (extra hit points), reflecting a literal dragon ancestor.",
-      },
-      {
-        id: "wild-magic",
-        name: "Wild Magic",
-        blurb: "Unpredictable magic that can surge in surprising, chaotic ways.",
-        detail:
-          "Can trigger random magical surges when casting spells, for players who enjoy chaos and unpredictability.",
-      },
-    ],
-    allSubclasses: [
-      {
-        id: "draconic-bloodline",
-        name: "Draconic Bloodline",
-        blurb: "Magic fueled by dragon ancestry, with tougher skin and elemental power.",
-        detail:
-          "Gains resistance to a damage type and thicker skin (extra hit points), reflecting a literal dragon ancestor.",
-      },
-      {
-        id: "wild-magic",
-        name: "Wild Magic",
-        blurb: "Unpredictable magic that can surge in surprising, chaotic ways.",
-        detail:
-          "Can trigger random magical surges when casting spells, for players who enjoy chaos and unpredictability.",
-      },
-      {
-        id: "divine-soul",
-        name: "Divine Soul",
-        blurb: "Magic with a celestial or divine spark, blending sorcery with healing.",
-        detail:
-          "Gains access to cleric spells and a healing option, blending sorcery with a celestial or divine origin.",
-      },
-      {
-        id: "shadow-magic",
-        name: "Shadow Magic",
-        blurb: "Magic touched by the Shadowfell, at home with darkness and fear.",
-        detail:
-          "Gains resistance to necrotic damage and can see in magical darkness, reflecting a touch of the Shadowfell.",
-      },
-      {
-        id: "storm-sorcery",
-        name: "Storm Sorcery",
-        blurb: "Magic drawn from storms and wind, favoring mobility and elemental power.",
-        detail:
-          "Can fly briefly when casting spells with a level of movement, and control which allies get hit by area spells.",
-      },
-    ],
+    defaultSubclasses: [draconicBloodline, wildMagic],
+    allSubclasses: [draconicBloodline, wildMagic, divineSoul, shadowMagic, stormSorcery],
   },
   {
     id: "warlock",
     name: "Warlock",
     blurb: "A spellcaster who traded a pact with a powerful otherworldly patron for magical power.",
-    detail:
-      "Warlocks recover spell slots on a short rest instead of a long one, letting them cast their strongest spells far more often than other casters. Invocations and their Pact Boon (blade, chain, or tome) let you customize the class heavily.",
+    detail: ["Otherworldly Patron: grants extra spells and features tied to your patron", "Pact Magic: a small number of spell slots that recharge on a short rest"],
     baseSpellcasting: true,
-    defaultSubclasses: [
-      {
-        id: "fiend",
-        name: "The Fiend",
-        blurb: "A pact with a devil or demon, favoring fire and destructive power.",
-        detail:
-          "Gains temporary hit points whenever you defeat an enemy, rewarding an aggressive, destructive playstyle.",
-      },
-      {
-        id: "archfey",
-        name: "The Archfey",
-        blurb: "A pact with a fey lord, favoring charm, illusion, and trickery.",
-        detail:
-          "Can vanish in a flash of light to escape danger, favoring charm and trickery over raw destruction.",
-      },
-    ],
-    allSubclasses: [
-      {
-        id: "fiend",
-        name: "The Fiend",
-        blurb: "A pact with a devil or demon, favoring fire and destructive power.",
-        detail:
-          "Gains temporary hit points whenever you defeat an enemy, rewarding an aggressive, destructive playstyle.",
-      },
-      {
-        id: "archfey",
-        name: "The Archfey",
-        blurb: "A pact with a fey lord, favoring charm, illusion, and trickery.",
-        detail:
-          "Can vanish in a flash of light to escape danger, favoring charm and trickery over raw destruction.",
-      },
-      {
-        id: "great-old-one",
-        name: "The Great Old One",
-        blurb: "A pact with an alien, incomprehensible being from beyond the stars.",
-        detail:
-          "Can telepathically communicate and briefly stun a mind with alien whispers, leaning into cosmic-horror flavor.",
-      },
-      {
-        id: "celestial",
-        name: "The Celestial",
-        blurb: "A pact with a being of the upper planes, granting healing and radiant power.",
-        detail:
-          "Gains bonus healing on spells and a radiant damage option, blending warlock power with angelic themes.",
-      },
-      {
-        id: "hexblade",
-        name: "The Hexblade",
-        blurb: "A pact with a sentient weapon from the Shadowfell, favoring melee combat.",
-        detail:
-          "Can use Charisma for weapon attacks and briefly curse a target for bonus damage, making warlocks viable in melee.",
-      },
-    ],
+    defaultSubclasses: [fiend, archfey],
+    allSubclasses: [fiend, archfey, greatOldOne, celestial, hexblade],
   },
   {
     id: "wizard",
     name: "Wizard",
     blurb: "A scholarly spellcaster who studies magic from books and commands the widest variety of spells.",
-    detail:
-      "Wizards learn spells from a spellbook and can prepare a new set each day, giving them the largest effective spell list of any class. Their School specialization grants bonus features that reinforce a chosen play style, from blasting to summoning.",
+    detail: ["Spellcasting from a spellbook, with the widest spell list of any class", "Arcane Recovery: recover some spent spell slots once per day"],
     baseSpellcasting: true,
-    defaultSubclasses: [
-      {
-        id: "evocation",
-        name: "School of Evocation",
-        blurb: "Specializes in powerful, damaging blasts of elemental magic.",
-        detail:
-          "Can shape damaging spells to avoid hitting allies and adds bonus damage to evocation spells, the archetypal blaster wizard.",
-      },
-      {
-        id: "abjuration",
-        name: "School of Abjuration",
-        blurb: "Specializes in protective magic — shields, wards, and defense.",
-        detail:
-          "Can create a temporary hit point shield around allies and is naturally resistant to having spells magically dispelled.",
-      },
-    ],
-    allSubclasses: [
-      {
-        id: "evocation",
-        name: "School of Evocation",
-        blurb: "Specializes in powerful, damaging blasts of elemental magic.",
-        detail:
-          "Can shape damaging spells to avoid hitting allies and adds bonus damage to evocation spells, the archetypal blaster wizard.",
-      },
-      {
-        id: "abjuration",
-        name: "School of Abjuration",
-        blurb: "Specializes in protective magic — shields, wards, and defense.",
-        detail:
-          "Can create a temporary hit point shield around allies and is naturally resistant to having spells magically dispelled.",
-      },
-      {
-        id: "conjuration",
-        name: "School of Conjuration",
-        blurb: "Specializes in summoning creatures and objects from thin air.",
-        detail:
-          "Can teleport short distances at will and summon duplicates of objects, favoring battlefield control through summons and positioning.",
-      },
-      {
-        id: "divination",
-        name: "School of Divination",
-        blurb: "Specializes in foresight, information, and bending fate slightly.",
-        detail:
-          "Can reroll key dice rolls using Portent, effectively rewriting fate a couple of times per day.",
-      },
-      {
-        id: "enchantment",
-        name: "School of Enchantment",
-        blurb: "Specializes in charming and controlling the minds of others.",
-        detail:
-          "Can charm creatures more easily and redirect a charmed creature's allies to ignore you, favoring social and mind-affecting magic.",
-      },
-      {
-        id: "illusion",
-        name: "School of Illusion",
-        blurb: "Specializes in tricking the senses with false sights and sounds.",
-        detail:
-          "Illusions can become partially real for a moment and are harder for enemies to disbelieve, favoring misdirection over direct damage.",
-      },
-      {
-        id: "necromancy",
-        name: "School of Necromancy",
-        blurb: "Specializes in the magic of life, death, and the undead.",
-        detail:
-          "Can add extra necrotic damage to spells and briefly reanimate slain creatures as loyal skeletons, embracing life-and-death magic.",
-      },
-      {
-        id: "war-magic",
-        name: "School of War Magic",
-        blurb: "A battle-ready wizard who blends spellcasting with combat tactics.",
-        detail:
-          "Can add spell attack bonuses to AC or saving throws and redirect attacks made against you, blending battlefield awareness with spellcasting.",
-      },
-    ],
+    defaultSubclasses: [evocation, abjuration],
+    allSubclasses: [evocation, abjuration, conjuration, divination, enchantment, illusion, necromancy, warMagic],
   },
 ];
 

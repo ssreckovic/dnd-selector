@@ -9,7 +9,7 @@ describe("InfoCard", () => {
       <InfoCard
         name="Wizard"
         blurb="A scholarly spellcaster."
-        detail="Learns spells from a spellbook."
+        detail={["Learns spells from a spellbook."]}
         selected={false}
         onSelect={vi.fn()}
       />,
@@ -18,12 +18,12 @@ describe("InfoCard", () => {
     expect(screen.queryByText("Learns spells from a spellbook.")).not.toBeInTheDocument();
   });
 
-  it("reveals the detail when Show info is clicked, and hides it again on toggle", async () => {
+  it("reveals the detail as a bullet list when Show info is clicked, and hides it again on toggle", async () => {
     render(
       <InfoCard
         name="Wizard"
         blurb="A scholarly spellcaster."
-        detail="Learns spells from a spellbook."
+        detail={["Learns spells from a spellbook.", "Arcane Recovery restores spell slots."]}
         selected={false}
         onSelect={vi.fn()}
       />,
@@ -31,6 +31,7 @@ describe("InfoCard", () => {
 
     await userEvent.click(screen.getByRole("button", { name: /show info/i }));
     expect(screen.getByText("Learns spells from a spellbook.")).toBeInTheDocument();
+    expect(screen.getByText("Arcane Recovery restores spell slots.")).toBeInTheDocument();
 
     await userEvent.click(screen.getByRole("button", { name: /hide info/i }));
     expect(screen.queryByText("Learns spells from a spellbook.")).not.toBeInTheDocument();
@@ -42,7 +43,7 @@ describe("InfoCard", () => {
       <InfoCard
         name="Wizard"
         blurb="A scholarly spellcaster."
-        detail="Learns spells from a spellbook."
+        detail={["Learns spells from a spellbook."]}
         selected={false}
         onSelect={onSelect}
       />,
