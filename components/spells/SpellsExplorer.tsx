@@ -52,25 +52,33 @@ export function SpellsExplorer () {
 					<div className="flex flex-col gap-4 col-span-3">
 						<h2 className="text-xl font-semibold">{selectedClass.name} spells</h2>
 						{LEVEL_SECTIONS.map((section) => (
-							<div key={section.key} className="flex flex-col gap-2">
-								<h3 className="font-medium">{section.label}</h3>
+							<details key={section.key}>
+								<summary className="cursor-pointer font-medium">{section.label}</summary>
 								{spellList[section.key].length > 0 ? (
-									<div className="flex flex-col gap-2">
+									<div className="mt-2 flex flex-col gap-2">
 										{spellList[section.key].map((spell) => (
 											<details key={spell.name} className="rounded border border-zinc-200 p-2">
 												<summary className="cursor-pointer text-sm font-medium">
 													{spell.name}
 													<span className="ml-2 font-normal text-zinc-500">{spell.school}</span>
 												</summary>
-												<dl className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-zinc-600 sm:grid-cols-4">
-													<dt className="font-medium">Cast time</dt>
-													<dd>{spell.castTime}</dd>
-													<dt className="font-medium">Range</dt>
-													<dd>{spell.range}</dd>
-													<dt className="font-medium">Duration</dt>
-													<dd>{spell.duration}</dd>
-													<dt className="font-medium">Components</dt>
-													<dd>{spell.components}</dd>
+												<dl className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2 text-xs text-zinc-600 sm:grid-cols-4">
+													<div>
+														<dt className="font-medium">Cast time</dt>
+														<dd>{spell.castTime}</dd>
+													</div>
+													<div>
+														<dt className="font-medium">Range</dt>
+														<dd>{spell.range}</dd>
+													</div>
+													<div>
+														<dt className="font-medium">Duration</dt>
+														<dd>{spell.duration}</dd>
+													</div>
+													<div>
+														<dt className="font-medium">Components</dt>
+														<dd>{spell.components}</dd>
+													</div>
 												</dl>
 												<p className="mt-2 whitespace-pre-line text-sm text-zinc-700">
 													{spell.description}
@@ -79,9 +87,9 @@ export function SpellsExplorer () {
 										))}
 									</div>
 								) : (
-									<p className="text-sm text-zinc-500">None yet at this level.</p>
+									<p className="mt-2 text-sm text-zinc-500">None yet at this level.</p>
 								)}
-							</div>
+							</details>
 						))}
 					</div>
 				)}
