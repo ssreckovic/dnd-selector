@@ -8,12 +8,13 @@ import { SubclassStep } from "@/components/wizard/SubclassStep";
 import { SpellChoiceStep } from "@/components/wizard/SpellChoiceStep";
 import { AbilityScoreStep } from "@/components/wizard/AbilityScoreStep";
 import { SummaryStep } from "@/components/wizard/SummaryStep";
-import { getRace, classGrantsSpellcasting } from "@/lib/dnd-data";
+import { getClass, getRace, classGrantsSpellcasting } from "@/lib/dnd-data";
 import {
   EMPTY_ANSWERS,
   loadAnswers,
   saveAnswers,
   clearAnswers,
+  type EffortLevel,
   type WizardAnswers,
 } from "@/lib/wizard-storage";
 import { submitConcept } from "@/lib/submit";
@@ -32,7 +33,7 @@ type Step = (typeof STEPS)[number];
 function isStepComplete(step: Step, answers: WizardAnswers): boolean {
   switch (step) {
     case "welcome":
-      return answers.playerName.trim().length > 0;
+      return answers.playerName.trim().length > 0 && answers.effortLevel !== null;
     case "race": {
       const race = answers.raceId ? getRace(answers.raceId) : undefined;
       if (!race) return false;
@@ -55,7 +56,7 @@ function isStepComplete(step: Step, answers: WizardAnswers): boolean {
 function validationHint(step: Step, answers: WizardAnswers): string {
   switch (step) {
     case "welcome":
-      return "Enter your name to continue.";
+      return "Enter your name and choose how much you'd like to build yourself to continue.";
     case "race": {
       const race = answers.raceId ? getRace(answers.raceId) : undefined;
       if (!race) return "Choose a race to continue.";
@@ -78,8 +79,14 @@ function validationHint(step: Step, answers: WizardAnswers): string {
 }
 
 function isStepVisible(step: Step, answers: WizardAnswers): boolean {
+  if (step === "subclass" || step === "ability-scores") {
+    return answers.effortLevel !== "minimal";
+  }
   if (step === "spell") {
-    return classGrantsSpellcasting(answers.classId, answers.subclassId);
+    return (
+      classGrantsSpellcasting(answers.classId, answers.subclassId) &&
+      answers.effortLevel !== "minimal"
+    );
   }
   return true;
 }
@@ -90,6 +97,27 @@ function nextVisibleIndex(startIndex: number, direction: 1 | -1, answers: Wizard
     i += direction;
   }
   return i;
+}
+
+function applyEffortLevel(
+  effortLevel: EffortLevel,
+  answers: WizardAnswers,
+): Partial<WizardAnswers> {
+  if (effortLevel === "all") {
+    return { effortLevel, abilityScoreGuidance: null, spellChoiceMode: null };
+  }
+  const cls = answers.classId ? getClass(answers.classId) : undefined;
+  const subclassId =
+    effortLevel === "minimal"
+      ? answers.subclassId ?? cls?.defaultSubclasses[0]?.id ?? null
+      : answers.subclassId;
+  const isCaster = classGrantsSpellcasting(answers.classId, subclassId);
+  return {
+    effortLevel,
+    subclassId,
+    abilityScoreGuidance: effortLevel === "minimal" ? "auto" : answers.abilityScoreGuidance,
+    spellChoiceMode: isCaster ? "auto" : answers.spellChoiceMode,
+  };
 }
 
 export function Wizard() {
@@ -156,6 +184,8 @@ export function Wizard() {
         <WelcomeStep
           playerName={answers.playerName}
           onPlayerNameChange={(playerName) => updateAnswers({ playerName })}
+          effortLevel={answers.effortLevel}
+          onSelectEffort={(effortLevel) => updateAnswers(applyEffortLevel(effortLevel, answers))}
         />
       )}
       {step === "race" && (
@@ -169,13 +199,15 @@ export function Wizard() {
       {step === "class" && (
         <ClassStep
           classId={answers.classId}
-          onSelectClass={(classId) =>
+          onSelectClass={(classId) => {
+            const reset: WizardAnswers = { ...answers, classId, subclassId: null, spellChoiceMode: null };
             updateAnswers({
               classId,
               subclassId: null,
-              ...(classGrantsSpellcasting(classId, null) ? {} : { spellChoiceMode: null }),
-            })
-          }
+              spellChoiceMode: null,
+              ...(answers.effortLevel ? applyEffortLevel(answers.effortLevel, reset) : {}),
+            });
+          }}
         />
       )}
       {step === "subclass" && answers.classId && (
@@ -196,6 +228,7 @@ export function Wizard() {
         <SpellChoiceStep
           spellChoiceMode={answers.spellChoiceMode}
           onSelectSpellChoiceMode={(spellChoiceMode) => updateAnswers({ spellChoiceMode })}
+          effortLevel={answers.effortLevel}
         />
       )}
       {step === "ability-scores" && (

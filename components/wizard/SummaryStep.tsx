@@ -5,6 +5,7 @@ import type {
   AbilityScoreGuidance,
   AbilityScoreMethod,
   AbilityScores,
+  EffortLevel,
   SpellChoiceMode,
   WizardAnswers,
 } from "@/lib/wizard-storage";
@@ -32,6 +33,12 @@ const SPELL_CHOICE_LABELS: Record<SpellChoiceMode, string> = {
   auto: "Having spells picked for me",
 };
 
+const EFFORT_LABELS: Record<EffortLevel, string> = {
+  minimal: "Minimal",
+  some: "Some",
+  all: "All",
+};
+
 const ABILITY_FIELD_ORDER: (keyof AbilityScores)[] = ["str", "dex", "con", "int", "wis", "cha"];
 const ABILITY_FIELD_LABELS: Record<keyof AbilityScores, string> = {
   str: "STR",
@@ -57,6 +64,8 @@ export function SummaryStep({ answers, onCharacterNameChange }: SummaryStepProps
     <div className="flex flex-col gap-4">
       <h2 className="text-xl font-semibold">Review your concept</h2>
       <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2">
+        <dt className="font-medium">Effort level</dt>
+        <dd>{answers.effortLevel ? EFFORT_LABELS[answers.effortLevel] : "—"}</dd>
         <dt className="font-medium">Race</dt>
         <dd>{subrace ? `${subrace.name} (${race?.name})` : race?.name ?? "—"}</dd>
         <dt className="font-medium">Class</dt>

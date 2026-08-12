@@ -24,6 +24,7 @@ export async function submitConcept(
       headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify({
         playerName: answers.playerName,
+        effortLevel: answers.effortLevel ?? null,
         characterName: answers.characterName,
         race: race?.name ?? null,
         subrace: subrace?.name ?? null,

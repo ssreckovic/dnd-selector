@@ -24,12 +24,21 @@ describe("Wizard", () => {
     expect(screen.getByRole("button", { name: /next/i })).toBeEnabled();
   });
 
-  it("shows an inline validation hint on Welcome until a name is entered", async () => {
+  it("shows an inline validation hint on Welcome until a name and effort level are entered", async () => {
     render(<Wizard />);
-    expect(screen.getByText(/enter your name to continue/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/enter your name and choose how much you'd like to build yourself/i),
+    ).toBeInTheDocument();
 
     await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
-    expect(screen.queryByText(/enter your name to continue/i)).not.toBeInTheDocument();
+    expect(
+      screen.getByText(/enter your name and choose how much you'd like to build yourself/i),
+    ).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole("button", { name: /^all\b/i }));
+    expect(
+      screen.queryByText(/enter your name and choose how much you'd like to build yourself/i),
+    ).not.toBeInTheDocument();
   });
 
   it("restores answers saved in localStorage on mount", () => {
@@ -251,5 +260,58 @@ describe("Wizard", () => {
     await userEvent.click(submitButton);
 
     expect(await screen.findByText(/your concept has been submitted/i)).toBeInTheDocument();
+  });
+
+  it("at minimal effort, skips subclass/spell/ability-scores and auto-fills them", async () => {
+    render(<Wizard />);
+
+    await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
+    await userEvent.click(screen.getByRole("button", { name: /^minimal\b/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+
+    await userEvent.click(screen.getByRole("button", { name: /^human$/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+
+    await userEvent.click(screen.getByRole("button", { name: /wizard/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+
+    // Subclass, spell, and ability-scores steps are all skipped for a caster class.
+    expect(screen.getByText(/review your concept/i)).toBeInTheDocument();
+
+    const stored = JSON.parse(
+      window.localStorage.getItem("dnd-concept-builder:answers") ?? "{}",
+    );
+    expect(stored.subclassId).toBe("evocation");
+    expect(stored.abilityScoreGuidance).toBe("auto");
+    expect(stored.spellChoiceMode).toBe("auto");
+  });
+
+  it("at some effort, still shows subclass and ability-scores, and pre-selects auto spell choice", async () => {
+    render(<Wizard />);
+
+    await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
+    await userEvent.click(screen.getByRole("button", { name: /^some\b/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+
+    await userEvent.click(screen.getByRole("button", { name: /^human$/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+
+    await userEvent.click(screen.getByRole("button", { name: /wizard/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+
+    expect(screen.getByText(/choose your wizard subclass/i)).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: /evocation/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+
+    expect(screen.getByText(/how do you want to handle your spells/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /pick my spells for me/i }),
+    ).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByText(/defaulted to picking spells for you/i)).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    expect(
+      screen.getByText(/how do you want to determine your ability scores/i),
+    ).toBeInTheDocument();
   });
 });

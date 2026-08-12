@@ -37,6 +37,7 @@ describe("submitConcept", () => {
     const body = JSON.parse(fetchMock.mock.calls[0][1].body as string);
     expect(body).toEqual({
       playerName: "Sasha",
+      effortLevel: null,
       characterName: "Thistle",
       race: "Halfling",
       subrace: null,
@@ -60,6 +61,7 @@ describe("submitConcept", () => {
 
     const answersWithStats: WizardAnswers = {
       ...answers,
+      effortLevel: "all",
       abilityScoreGuidance: "manual",
       abilityScoreMethod: "point-buy",
       abilityScores: { str: 15, dex: 14, con: 13, int: 12, wis: 10, cha: 8 },
@@ -72,6 +74,7 @@ describe("submitConcept", () => {
     const body = JSON.parse(fetchMock.mock.calls[0][1].body as string);
     expect(body).toEqual(
       expect.objectContaining({
+        effortLevel: "all",
         abilityScoreGuidance: "manual",
         abilityScoreMethod: "point-buy",
         abilityScoreStr: 15,

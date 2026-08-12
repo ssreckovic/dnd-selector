@@ -1,6 +1,7 @@
 export type AbilityScoreGuidance = "auto" | "manual" | "guided";
 export type AbilityScoreMethod = "standard-array" | "roll" | "point-buy";
 export type SpellChoiceMode = "own" | "suggestions" | "auto";
+export type EffortLevel = "minimal" | "some" | "all";
 
 export type AbilityScores = {
   str: number | null;
@@ -13,6 +14,7 @@ export type AbilityScores = {
 
 export type WizardAnswers = {
   playerName: string;
+  effortLevel: EffortLevel | null;
   raceId: string | null;
   subraceId: string | null;
   classId: string | null;
@@ -26,6 +28,7 @@ export type WizardAnswers = {
 
 export const EMPTY_ANSWERS: WizardAnswers = {
   playerName: "",
+  effortLevel: null,
   raceId: null,
   subraceId: null,
   classId: null,

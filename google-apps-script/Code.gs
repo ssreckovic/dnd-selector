@@ -2,6 +2,7 @@ const SHEET_NAME = "Submissions";
 const HEADER_ROW = [
   "Timestamp",
   "Player Name",
+  "Effort Level",
   "Character Name",
   "Race",
   "Subrace",
@@ -35,6 +36,7 @@ function doPost(e) {
   sheet.appendRow([
     new Date(),
     data.playerName || "",
+    data.effortLevel || "",
     data.characterName || "",
     data.race || "",
     data.subrace || "",

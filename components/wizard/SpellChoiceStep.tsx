@@ -1,10 +1,11 @@
 "use client";
 
-import type { SpellChoiceMode } from "@/lib/wizard-storage";
+import type { EffortLevel, SpellChoiceMode } from "@/lib/wizard-storage";
 
 type SpellChoiceStepProps = {
   spellChoiceMode: SpellChoiceMode | null;
   onSelectSpellChoiceMode: (mode: SpellChoiceMode) => void;
+  effortLevel: EffortLevel | null;
 };
 
 const SPELL_CHOICE_OPTIONS: { value: SpellChoiceMode; label: string; blurb: string }[] = [
@@ -25,13 +26,23 @@ const SPELL_CHOICE_OPTIONS: { value: SpellChoiceMode; label: string; blurb: stri
   },
 ];
 
-export function SpellChoiceStep({ spellChoiceMode, onSelectSpellChoiceMode }: SpellChoiceStepProps) {
+export function SpellChoiceStep({
+  spellChoiceMode,
+  onSelectSpellChoiceMode,
+  effortLevel,
+}: SpellChoiceStepProps) {
   return (
     <div className="flex flex-col gap-4">
       <h2 className="text-xl font-semibold">How do you want to handle your spells?</h2>
       <p className="rounded border border-amber-600 bg-amber-50 p-3 text-sm">
         House rule: <strong>Silvery Barbs</strong> is not an allowed spell in this game.
       </p>
+      {effortLevel === "some" && (
+        <p className="text-sm text-zinc-600">
+          We&apos;ve defaulted to picking spells for you and sending a shortlist — choose one of
+          the options below if you&apos;d like to do it yourself instead.
+        </p>
+      )}
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         {SPELL_CHOICE_OPTIONS.map((option) => (
           <button
