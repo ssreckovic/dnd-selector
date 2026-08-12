@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { WelcomeStep } from "@/components/wizard/WelcomeStep";
 import { RaceStep } from "@/components/wizard/RaceStep";
-import { FlavorStep } from "@/components/wizard/FlavorStep";
 import { ClassStep } from "@/components/wizard/ClassStep";
 import { SubclassStep } from "@/components/wizard/SubclassStep";
 import { SpellChoiceStep } from "@/components/wizard/SpellChoiceStep";
@@ -22,7 +21,6 @@ import { submitConcept } from "@/lib/submit";
 const STEPS = [
   "welcome",
   "race",
-  "flavor",
   "class",
   "subclass",
   "spell",
@@ -40,10 +38,6 @@ function isStepComplete(step: Step, answers: WizardAnswers): boolean {
       if (!race) return false;
       return race.subraces ? Boolean(answers.subraceId) : true;
     }
-    case "flavor":
-      return Boolean(
-        answers.combatRole && answers.magicInterest && answers.socialStyle,
-      );
     case "class":
       return Boolean(answers.classId);
     case "subclass":
@@ -67,8 +61,6 @@ function validationHint(step: Step, answers: WizardAnswers): string {
       if (!race) return "Choose a race to continue.";
       return "Choose a lineage to continue.";
     }
-    case "flavor":
-      return "Answer all three questions to continue.";
     case "class":
       return "Choose a class to continue.";
     case "subclass":
@@ -158,15 +150,6 @@ export function Wizard() {
     );
   }
 
-  const flavorAnswers =
-    answers.combatRole && answers.magicInterest && answers.socialStyle
-      ? {
-          combatRole: answers.combatRole,
-          magicInterest: answers.magicInterest,
-          socialStyle: answers.socialStyle,
-        }
-      : null;
-
   return (
     <div className="flex flex-col gap-6">
       {step === "welcome" && (
@@ -183,18 +166,9 @@ export function Wizard() {
           onSelectSubrace={(subraceId) => updateAnswers({ subraceId })}
         />
       )}
-      {step === "flavor" && (
-        <FlavorStep
-          combatRole={answers.combatRole}
-          magicInterest={answers.magicInterest}
-          socialStyle={answers.socialStyle}
-          onChange={(partial) => updateAnswers(partial)}
-        />
-      )}
       {step === "class" && (
         <ClassStep
           classId={answers.classId}
-          flavorAnswers={flavorAnswers}
           onSelectClass={(classId) =>
             updateAnswers({
               classId,
