@@ -30,6 +30,22 @@ const BASE_CASTER_CLASS_IDS = [
   "wizard",
 ];
 
+export type SpellLimits = {
+  cantrips: number;
+  spells: number;
+};
+
+export const SPELL_LIMITS: Record<string, SpellLimits> = {
+  wizard: { cantrips: 3, spells: 7 },
+  bard: { cantrips: 2, spells: 6 },
+  warlock: { cantrips: 2, spells: 4 },
+  druid: { cantrips: 2, spells: 7 },
+  cleric: { cantrips: 3, spells: 7 },
+  sorcerer: { cantrips: 4, spells: 4 },
+  paladin: { cantrips: 0, spells: 3 },
+  ranger: { cantrips: 0, spells: 3 },
+};
+
 export const SPELLS: Spell[] = [
   {
     "name": "Acid Splash",

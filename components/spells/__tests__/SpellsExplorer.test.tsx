@@ -34,9 +34,9 @@ describe("SpellsExplorer", () => {
     currentSearchParams = new URLSearchParams({ class: "wizard" });
     render(<SpellsExplorer />);
     expect(screen.getByText(/wizard spells/i)).toBeInTheDocument();
-    expect(screen.getByText("Cantrips")).toBeInTheDocument();
-    expect(screen.getByText("Level 1")).toBeInTheDocument();
-    expect(screen.getByText("Level 2")).toBeInTheDocument();
+    expect(screen.getByText(/^Cantrips/, { selector: "summary" })).toBeInTheDocument();
+    expect(screen.getByText(/^Level 1/, { selector: "summary" })).toBeInTheDocument();
+    expect(screen.getByText(/^Level 2/, { selector: "summary" })).toBeInTheDocument();
     expect(screen.getByText("Fire Bolt")).toBeInTheDocument();
   });
 
