@@ -3,7 +3,7 @@ import { SpellsExplorer } from "@/components/spells/SpellsExplorer";
 
 export default function SpellsPage() {
   return (
-    <main className="mx-auto flex min-h-screen max-w-2xl flex-col gap-8 px-4 py-12">
+    <main className="mx-auto flex min-h-screen container flex-col gap-8 px-4 py-12">
       <Suspense fallback={null}>
         <SpellsExplorer />
       </Suspense>

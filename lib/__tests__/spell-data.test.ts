@@ -19,7 +19,7 @@ describe("spell-data", () => {
   });
 
   it("getClassSpellList returns the matching list", () => {
-    expect(getClassSpellList("wizard")?.cantrips).toContain("Fire Bolt");
+    expect(getClassSpellList("wizard")?.cantrips.map((s) => s.name)).toContain("Fire Bolt");
     expect(getClassSpellList("nonexistent")).toBeUndefined();
   });
 
