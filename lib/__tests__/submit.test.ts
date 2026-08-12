@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { submitConcept } from "@/lib/submit";
+import { submitConcept, submitSpellList } from "@/lib/submit";
 import { EMPTY_ANSWERS, WizardAnswers } from "@/lib/wizard-storage";
 
 const answers: WizardAnswers = {
@@ -114,6 +114,70 @@ describe("submitConcept", () => {
     delete process.env.NEXT_PUBLIC_SHEETS_ENDPOINT;
 
     const result = await submitConcept(answers);
+
+    expect(result.ok).toBe(false);
+  });
+});
+
+describe("submitSpellList", () => {
+  const originalEndpoint = process.env.NEXT_PUBLIC_SHEETS_ENDPOINT;
+
+  beforeEach(() => {
+    process.env.NEXT_PUBLIC_SHEETS_ENDPOINT = "https://example.com/exec";
+  });
+
+  afterEach(() => {
+    process.env.NEXT_PUBLIC_SHEETS_ENDPOINT = originalEndpoint;
+    vi.unstubAllGlobals();
+  });
+
+  it("posts the spell list tagged with its type and returns ok on success", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true, status: 200 });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const result = await submitSpellList({
+      playerName: "Sasha",
+      className: "Wizard",
+      cantrips: ["Fire Bolt", "Mage Hand"],
+      spells: ["Burning Hands"],
+    });
+
+    expect(result).toEqual({ ok: true });
+    const body = JSON.parse(fetchMock.mock.calls[0][1].body as string);
+    expect(body).toEqual({
+      type: "spellList",
+      playerName: "Sasha",
+      class: "Wizard",
+      cantrips: ["Fire Bolt", "Mage Hand"],
+      spells: ["Burning Hands"],
+    });
+  });
+
+  it("returns an error result when the response is not ok", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({ ok: false, status: 500 }),
+    );
+
+    const result = await submitSpellList({
+      playerName: "Sasha",
+      className: "Wizard",
+      cantrips: [],
+      spells: [],
+    });
+
+    expect(result.ok).toBe(false);
+  });
+
+  it("returns an error result when the endpoint is not configured", async () => {
+    delete process.env.NEXT_PUBLIC_SHEETS_ENDPOINT;
+
+    const result = await submitSpellList({
+      playerName: "Sasha",
+      className: "Wizard",
+      cantrips: [],
+      spells: [],
+    });
 
     expect(result.ok).toBe(false);
   });

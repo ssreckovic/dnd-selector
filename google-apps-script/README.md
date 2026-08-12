@@ -9,7 +9,7 @@
    - Who has access: **Anyone** (required for the static site to POST to it without Google auth)
 5. Click **Deploy**, authorize the script when prompted, and copy the resulting **Web app URL**.
 6. Set that URL as the `NEXT_PUBLIC_SHEETS_ENDPOINT` value (see the main README for where this is configured for local dev and for the GitHub Actions build).
-7. The first submission will create a "Submissions" sheet tab with a header row automatically.
+7. The first submission will create a "Submissions" sheet tab with a header row automatically. Spell list exports from the spells page create a separate "Spell Lists" tab the same way.
 
 If you ever change `Code.gs`, you must create a **new deployment version** (Deploy > Manage deployments > Edit > New version) for the change to take effect on the existing URL.
 

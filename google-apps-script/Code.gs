@@ -1,5 +1,5 @@
-const SHEET_NAME = "Submissions";
-const HEADER_ROW = [
+const SUBMISSIONS_SHEET_NAME = "Submissions";
+const SUBMISSIONS_HEADER_ROW = [
   "Timestamp",
   "Player Name",
   "Effort Level",
@@ -19,20 +19,27 @@ const HEADER_ROW = [
   "Spell Choice Mode",
 ];
 
-function getOrCreateSheet_() {
+const SPELL_LISTS_SHEET_NAME = "Spell Lists";
+const SPELL_LISTS_HEADER_ROW = [
+  "Timestamp",
+  "Player Name",
+  "Class",
+  "Cantrips",
+  "Spells",
+];
+
+function getOrCreateSheet_(name, headerRow) {
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  let sheet = spreadsheet.getSheetByName(SHEET_NAME);
+  let sheet = spreadsheet.getSheetByName(name);
   if (!sheet) {
-    sheet = spreadsheet.insertSheet(SHEET_NAME);
-    sheet.appendRow(HEADER_ROW);
+    sheet = spreadsheet.insertSheet(name);
+    sheet.appendRow(headerRow);
   }
   return sheet;
 }
 
-function doPost(e) {
-  const sheet = getOrCreateSheet_();
-  const data = JSON.parse(e.postData.contents);
-
+function appendSubmission_(data) {
+  const sheet = getOrCreateSheet_(SUBMISSIONS_SHEET_NAME, SUBMISSIONS_HEADER_ROW);
   sheet.appendRow([
     new Date(),
     data.playerName || "",
@@ -52,6 +59,27 @@ function doPost(e) {
     data.abilityScoreCha ?? "",
     data.spellChoiceMode || "",
   ]);
+}
+
+function appendSpellList_(data) {
+  const sheet = getOrCreateSheet_(SPELL_LISTS_SHEET_NAME, SPELL_LISTS_HEADER_ROW);
+  sheet.appendRow([
+    new Date(),
+    data.playerName || "",
+    data.class || "",
+    (data.cantrips || []).join(", "),
+    (data.spells || []).join(", "),
+  ]);
+}
+
+function doPost(e) {
+  const data = JSON.parse(e.postData.contents);
+
+  if (data.type === "spellList") {
+    appendSpellList_(data);
+  } else {
+    appendSubmission_(data);
+  }
 
   return ContentService.createTextOutput(
     JSON.stringify({ ok: true }),

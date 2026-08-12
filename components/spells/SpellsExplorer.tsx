@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CLASSES, getClass } from "@/lib/dnd-data";
 import { getClassSpellList, SPELL_LIMITS } from "@/lib/spell-data";
+import { decodeSpellList, encodeSpellList } from "@/lib/spell-list-share";
+import { submitSpellList } from "@/lib/submit";
 
 const CASTER_CLASSES = CLASSES.filter((cls) => cls.baseSpellcasting);
 
@@ -34,11 +36,25 @@ export function SpellsExplorer () {
 	const limits = classId ? SPELL_LIMITS[classId] : undefined;
 
 	const [selections, setSelections] = useState<Record<string, string[]>>({});
+	const [copyState, setCopyState] = useState<"idle" | "copied">("idle");
+	const [sheetsState, setSheetsState] = useState<"idle" | "sending" | "sent" | "error">("idle");
+	const [playerName, setPlayerName] = useState("");
 	const hydrated = useRef(false);
 
 	useEffect(() => {
-		setSelections(loadSelections());
+		const loaded = loadSelections();
+		const sharedClassId = searchParams.get("class");
+		const encodedList = searchParams.get("list");
+		if (sharedClassId && encodedList) {
+			const shared = decodeSpellList(encodedList);
+			if (shared && shared.classId === sharedClassId) {
+				loaded[sharedClassId] = shared.spells;
+			}
+		}
+		setSelections(loaded);
 		hydrated.current = true;
+		// Only apply the shared/persisted list once, on the initial load.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
@@ -75,6 +91,35 @@ export function SpellsExplorer () {
 		setSelections((prev) => ({ ...prev, [classId]: [] }));
 	}
 
+	function copyShareLink () {
+		if (!classId) return;
+		const encoded = encodeSpellList(classId, selected);
+		const url = new URL(window.location.href);
+		url.searchParams.set("class", classId);
+		url.searchParams.set("list", encoded);
+		navigator.clipboard.writeText(url.toString()).then(() => {
+			setCopyState("copied");
+			setTimeout(() => setCopyState("idle"), 2000);
+		});
+	}
+
+	async function sendToSheets () {
+		if (!classId || !selectedClass || !playerName.trim()) return;
+		setSheetsState("sending");
+		const result = await submitSpellList({
+			playerName: playerName.trim(),
+			className: selectedClass.name,
+			cantrips: cantripsSelected,
+			spells: spellsSelected,
+		});
+		if (result.ok) {
+			setSheetsState("sent");
+			setTimeout(() => setSheetsState("idle"), 2000);
+		} else {
+			setSheetsState("error");
+		}
+	}
+
 	return (
 		<div className="flex flex-col gap-6">
 			<h1 className="text-2xl font-semibold">Class spells</h1>
@@ -107,17 +152,50 @@ export function SpellsExplorer () {
 							<div className="rounded border border-amber-200 bg-amber-50 p-3">
 								<div className="flex items-center justify-between">
 									<h3 className="font-medium">Your spell list</h3>
-									<button
-										type="button"
-										onClick={clearSelections}
-										className="text-xs text-zinc-500 underline hover:text-zinc-700"
-									>
-										Clear
-									</button>
+									<div className="flex items-center gap-3">
+										<button
+											type="button"
+											onClick={copyShareLink}
+											className="text-xs text-zinc-500 underline hover:text-zinc-700"
+										>
+											{copyState === "copied" ? "Link copied!" : "Copy shareable link"}
+										</button>
+										<button
+											type="button"
+											onClick={sendToSheets}
+											disabled={sheetsState === "sending" || !playerName.trim()}
+											className="text-xs text-zinc-500 underline hover:text-zinc-700 disabled:opacity-50"
+										>
+											{sheetsState === "sending"
+												? "Sending…"
+												: sheetsState === "sent"
+													? "Sent!"
+													: sheetsState === "error"
+														? "Failed, retry?"
+														: "Send to Sasha"}
+										</button>
+										<button
+											type="button"
+											onClick={clearSelections}
+											className="text-xs text-zinc-500 underline hover:text-zinc-700"
+										>
+											Clear
+										</button>
+									</div>
 								</div>
 								<p className="text-sm text-zinc-600">
 									Cantrips {cantripsSelected.length}/{limits.cantrips} - Spells {spellsSelected.length}/{limits.spells}
 								</p>
+								<label className="mt-2 flex flex-col gap-1 text-xs text-zinc-600">
+									Your name (for export to Sasha)
+									<input
+										type="text"
+										value={playerName}
+										onChange={(e) => setPlayerName(e.target.value)}
+										placeholder="Name"
+										className="rounded border border-zinc-300 px-2 py-1 text-sm text-zinc-900"
+									/>
+								</label>
 								{selected.length > 0 && (
 									<ul className="mt-2 flex flex-wrap gap-2">
 										{selected.map((name) => (
@@ -127,7 +205,7 @@ export function SpellsExplorer () {
 													onClick={() => toggleSpell(name, cantripNames.has(name))}
 													className="rounded-full border border-zinc-300 bg-white px-2 py-1 text-xs hover:bg-zinc-100"
 												>
-													{name} {} x
+													{name} x
 												</button>
 											</li>
 										))}
