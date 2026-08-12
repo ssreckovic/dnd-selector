@@ -1,9 +1,9 @@
 # D&D Character Concept Builder
 
-A small wizard app for a private D&D group: players answer flavor-first
-questions and land on a race, subrace, class, and subclass concept for a
-level 3 character. Submissions are appended to a Google Sheet so the GM can
-finish each player's full character sheet.
+A small wizard app for a private D&D group: players pick a race, subrace,
+class, and subclass concept for a level 3 character. Submissions are
+appended to a Google Sheet so the GM can finish each player's full
+character sheet.
 
 ## Local development
 

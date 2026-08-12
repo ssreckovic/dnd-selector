@@ -46,10 +46,6 @@ describe("Wizard", () => {
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /^human$/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
-    await userEvent.click(screen.getByRole("button", { name: /melee/i }));
-    await userEvent.click(screen.getByRole("button", { name: /^none$/i }));
-    await userEvent.click(screen.getByRole("button", { name: /loner/i }));
-    await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /fighter/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /champion/i }));
@@ -63,7 +59,7 @@ describe("Wizard", () => {
     expect(window.localStorage.getItem("dnd-concept-builder:answers")).toBeNull();
   });
 
-  it("walks forward through race, flavor, class, subclass, and ability scores to the summary, and back again", async () => {
+  it("walks forward through race, class, subclass, and ability scores to the summary, and back again", async () => {
     render(<Wizard />);
 
     await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
@@ -71,12 +67,6 @@ describe("Wizard", () => {
 
     // Race step: human has no subrace, so Next should be enabled right after picking it.
     await userEvent.click(screen.getByRole("button", { name: /^human$/i }));
-    await userEvent.click(screen.getByRole("button", { name: /next/i }));
-
-    // Flavor step
-    await userEvent.click(screen.getByRole("button", { name: /melee/i }));
-    await userEvent.click(screen.getByRole("button", { name: /^none$/i }));
-    await userEvent.click(screen.getByRole("button", { name: /loner/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
 
     // Class step
@@ -108,10 +98,6 @@ describe("Wizard", () => {
     await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /^human$/i }));
-    await userEvent.click(screen.getByRole("button", { name: /next/i }));
-    await userEvent.click(screen.getByRole("button", { name: /melee/i }));
-    await userEvent.click(screen.getByRole("button", { name: /^none$/i }));
-    await userEvent.click(screen.getByRole("button", { name: /loner/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /wizard/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
@@ -147,10 +133,6 @@ describe("Wizard", () => {
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /^human$/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
-    await userEvent.click(screen.getByRole("button", { name: /melee/i }));
-    await userEvent.click(screen.getByRole("button", { name: /^none$/i }));
-    await userEvent.click(screen.getByRole("button", { name: /loner/i }));
-    await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /fighter/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /eldritch knight/i }));
@@ -165,10 +147,6 @@ describe("Wizard", () => {
     await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /^human$/i }));
-    await userEvent.click(screen.getByRole("button", { name: /next/i }));
-    await userEvent.click(screen.getByRole("button", { name: /melee/i }));
-    await userEvent.click(screen.getByRole("button", { name: /^none$/i }));
-    await userEvent.click(screen.getByRole("button", { name: /loner/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /fighter/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
@@ -189,10 +167,6 @@ describe("Wizard", () => {
     await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /^human$/i }));
-    await userEvent.click(screen.getByRole("button", { name: /next/i }));
-    await userEvent.click(screen.getByRole("button", { name: /melee/i }));
-    await userEvent.click(screen.getByRole("button", { name: /^none$/i }));
-    await userEvent.click(screen.getByRole("button", { name: /loner/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
 
     // Pick a spellcasting class and choose a spell mode.
@@ -236,10 +210,6 @@ describe("Wizard", () => {
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /^human$/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
-    await userEvent.click(screen.getByRole("button", { name: /melee/i }));
-    await userEvent.click(screen.getByRole("button", { name: /^none$/i }));
-    await userEvent.click(screen.getByRole("button", { name: /loner/i }));
-    await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /fighter/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /champion/i }));
@@ -261,10 +231,6 @@ describe("Wizard", () => {
     await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /^human$/i }));
-    await userEvent.click(screen.getByRole("button", { name: /next/i }));
-    await userEvent.click(screen.getByRole("button", { name: /melee/i }));
-    await userEvent.click(screen.getByRole("button", { name: /^none$/i }));
-    await userEvent.click(screen.getByRole("button", { name: /loner/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /fighter/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));

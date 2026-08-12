@@ -1,5 +1,3 @@
-import type { CombatRole, MagicInterest, SocialStyle } from "@/lib/scoring";
-
 export type AbilityScoreGuidance = "auto" | "manual" | "guided";
 export type AbilityScoreMethod = "standard-array" | "roll" | "point-buy";
 export type SpellChoiceMode = "own" | "suggestions" | "auto";
@@ -17,9 +15,6 @@ export type WizardAnswers = {
   playerName: string;
   raceId: string | null;
   subraceId: string | null;
-  combatRole: CombatRole | null;
-  magicInterest: MagicInterest | null;
-  socialStyle: SocialStyle | null;
   classId: string | null;
   subclassId: string | null;
   abilityScoreGuidance: AbilityScoreGuidance | null;
@@ -33,9 +28,6 @@ export const EMPTY_ANSWERS: WizardAnswers = {
   playerName: "",
   raceId: null,
   subraceId: null,
-  combatRole: null,
-  magicInterest: null,
-  socialStyle: null,
   classId: null,
   subclassId: null,
   abilityScoreGuidance: null,

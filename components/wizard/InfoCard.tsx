@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useState } from "react";
 
 type InfoCardProps = {
   name: string;
@@ -8,7 +8,6 @@ type InfoCardProps = {
   detail: string[];
   selected: boolean;
   onSelect: () => void;
-  badge?: ReactNode;
   padding?: "sm" | "md";
 };
 
@@ -18,7 +17,6 @@ export function InfoCard({
   detail,
   selected,
   onSelect,
-  badge,
   padding = "md",
 }: InfoCardProps) {
   const [showInfo, setShowInfo] = useState(false);
@@ -32,7 +30,6 @@ export function InfoCard({
       <button type="button" onClick={onSelect} aria-label={name} className="block w-full text-left">
         <div className="flex items-center gap-2">
           <span className="font-medium">{name}</span>
-          {badge}
         </div>
         <div className="text-sm text-zinc-600">{blurb}</div>
       </button>
