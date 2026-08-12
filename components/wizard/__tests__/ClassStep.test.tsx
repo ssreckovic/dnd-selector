@@ -35,4 +35,16 @@ describe("ClassStep", () => {
     render(<ClassStep classId="fighter" onSelectClass={vi.fn()} />);
     expect(screen.queryByText(/more rules to track in play/i)).not.toBeInTheDocument();
   });
+
+  it("shows a spells link for base spellcasting classes, pointing at the right class", () => {
+    render(<ClassStep classId={null} onSelectClass={vi.fn()} />);
+    const link = screen.getByRole("link", { name: /see wizard spells/i });
+    expect(link).toHaveAttribute("href", "/spells?class=wizard");
+    expect(link).toHaveAttribute("target", "_blank");
+  });
+
+  it("shows no spells link for a non-caster class", () => {
+    render(<ClassStep classId={null} onSelectClass={vi.fn()} />);
+    expect(screen.queryByRole("link", { name: /see barbarian spells/i })).not.toBeInTheDocument();
+  });
 });

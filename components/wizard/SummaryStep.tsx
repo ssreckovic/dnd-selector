@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { classGrantsSpellcasting, getClass, getRace } from "@/lib/dnd-data";
 import type {
   AbilityScoreGuidance,
@@ -88,6 +89,15 @@ export function SummaryStep({ answers, onCharacterNameChange }: SummaryStepProps
           </>
         )}
       </dl>
+      {isCaster && answers.classId && (
+        <Link
+          href={`/spells?class=${answers.classId}`}
+          target="_blank"
+          className="self-start text-sm font-medium text-amber-700 underline"
+        >
+          See spell options
+        </Link>
+      )}
       <label className="flex flex-col gap-1" htmlFor="character-name">
         <span className="font-medium">Character name</span>
         <input

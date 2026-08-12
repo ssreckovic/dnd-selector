@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { CLASSES, getClass } from "@/lib/dnd-data";
 import { InfoCard } from "@/components/wizard/InfoCard";
 
@@ -23,6 +24,18 @@ export function ClassStep({ classId, onSelectClass }: ClassStepProps) {
             detail={cls.detail}
             selected={cls.id === classId}
             onSelect={() => onSelectClass(cls.id)}
+            footer={
+              cls.baseSpellcasting && (
+                <Link
+                  href={`/spells?class=${cls.id}`}
+                  target="_blank"
+                  onClick={(e) => e.stopPropagation()}
+                  className="mt-2 block text-xs font-medium text-amber-700 underline"
+                >
+                  See {cls.name} spells
+                </Link>
+              )
+            }
           />
         ))}
       </div>

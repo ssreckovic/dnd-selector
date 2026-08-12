@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 
 type InfoCardProps = {
   name: string;
@@ -9,6 +9,7 @@ type InfoCardProps = {
   selected: boolean;
   onSelect: () => void;
   padding?: "sm" | "md";
+  footer?: ReactNode;
 };
 
 export function InfoCard({
@@ -18,6 +19,7 @@ export function InfoCard({
   selected,
   onSelect,
   padding = "md",
+  footer,
 }: InfoCardProps) {
   const [showInfo, setShowInfo] = useState(false);
 
@@ -48,6 +50,7 @@ export function InfoCard({
           ))}
         </ul>
       )}
+      {footer}
     </div>
   );
 }

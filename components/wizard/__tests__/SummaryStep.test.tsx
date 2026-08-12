@@ -75,6 +75,10 @@ describe("SummaryStep", () => {
     );
     expect(screen.getByText(/getting a list of suggestions/i)).toBeInTheDocument();
     expect(screen.getByText(/silvery barbs/i)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /see spell options/i })).toHaveAttribute(
+      "href",
+      "/spells?class=wizard",
+    );
 
     rerender(
       <SummaryStep
@@ -88,5 +92,6 @@ describe("SummaryStep", () => {
       />,
     );
     expect(screen.queryByText(/silvery barbs/i)).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /see spell options/i })).not.toBeInTheDocument();
   });
 });
