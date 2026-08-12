@@ -2062,8 +2062,8 @@ export const SPELLS: Spell[] = [
     "classes": [
       "bard",
       "cleric",
-      "paladin",
-      "ranger"
+      // "paladin",
+      // "ranger"
     ]
   },
   {
@@ -2092,7 +2092,7 @@ export const SPELLS: Spell[] = [
     "classes": [
       "bard",
       "druid",
-      "ranger"
+      // "ranger"
     ]
   },
   {
@@ -2149,7 +2149,7 @@ export const SPELLS: Spell[] = [
     "description": "You touch a willing creature. Until the spell ends, the target’s skin has a rough, bark-like appearance, and the target’s AC can’t be less than 16, regardless of what kind of armor it is wearing.",
     "classes": [
       "druid",
-      "ranger"
+      // "ranger"
     ]
   },
   {
@@ -2163,7 +2163,7 @@ export const SPELLS: Spell[] = [
     "description": "You touch a willing beast. For the duration of the spell, you can use your action to see through the beast’s eyes and hear what it hears, and continue to do so until you use your action to return to your normal senses.",
     "classes": [
       "druid",
-      "ranger"
+      // "ranger"
     ]
   },
   {
@@ -2206,7 +2206,7 @@ export const SPELLS: Spell[] = [
     "components": "V",
     "description": "The next time you hit a creature with a weapon attack before this spell ends, the weapon gleams with astral radiance as you strike. The attack deals an extra 2d6 radiant damage to the target, which becomes visible if it is invisible, and the target sheds dim light in a 5-foot radius and can’t become invisible until the spell ends.\n\nAt Higher Levels. When you cast this spell using a spell slot of 3rd level or higher, the extra damage increases by 1d6 for each slot level above 2nd.",
     "classes": [
-      "paladin"
+      // "paladin"
     ]
   },
   {
@@ -2264,7 +2264,7 @@ export const SPELLS: Spell[] = [
     "components": "V, S, M (four or more arrows or bolts)",
     "description": "You plant four pieces of nonmagical ammunition – arrows or crossbow bolts – in the ground within range and lay magic upon them to protect an area. Until the spell ends, whenever a creature other than you comes within 30 feet of the ammunition for the first time on a turn or ends its turn there, one piece of ammunition flies up to strike it. The creature must succeed on a Dexterity saving throw or take 1d6 piercing damage. The piece of ammunition is then destroyed. The spell ends when no ammunition remains.\n\nWhen you cast this spell, you can designate any creatures you choose, and the spell ignores them.\n\nAt Higher Levels. When you cast this spell using a spell slot of 3rd level or higher, the amount of ammunition that can be affected increases by two for each slot level above 2nd.",
     "classes": [
-      "ranger"
+      // "ranger"
     ]
   },
   {
@@ -2309,7 +2309,7 @@ export const SPELLS: Spell[] = [
     "description": "You touch a willing creature to grant it the ability to see in the dark. For the duration, that creature has darkvision out to a range of 60 feet.",
     "classes": [
       "druid",
-      "ranger",
+      // "ranger",
       "sorcerer",
       "wizard"
     ]
@@ -2402,7 +2402,7 @@ export const SPELLS: Spell[] = [
       "bard",
       "cleric",
       "druid",
-      "ranger",
+      // "ranger",
       "sorcerer",
       "wizard"
     ]
@@ -2447,7 +2447,7 @@ export const SPELLS: Spell[] = [
     "components": "V, S",
     "description": "You summon a spirit that assumes the form of an unusually intelligent, strong, and loyal steed, creating a long-lasting bond with it. Appearing in an unoccupied space within range, the steed takes on a form that you choose: a warhorse, a pony, a camel, an elk, or a mastiff. (Your DM might allow other animals to be summoned as steeds.) The steed has the statistics of the chosen form, though it is a celestial, fey, or fiend (your choice) instead of its normal type. Additionally, if your steed has an Intelligence of 5 or less, its Intelligence becomes 6, and it gains the ability to understand one language of your choice that you speak.\n\nYour steed serves you as a mount, both in combat and out, and you have an instinctive bond with it that allows you to fight as a seamless unit. While mounted on your steed, you can make any spell you cast that targets only you also target your steed.\n\nWhen the steed drops to 0 hit points, it disappears, leaving behind no physical form. You can also dismiss your steed at any time as an action, causing it to disappear. In either case, casting this spell again summons the same steed, restored to its hit point maximum.\n\nWhile your steed is within 1 mile of you, you can communicate with it telepathically. You can’t have more than one steed bonded by this spell at a time. As an action, you can release the steed from its bond at any time, causing it to disappear.",
     "classes": [
-      "paladin"
+      // "paladin"
     ]
   },
   {
@@ -2462,7 +2462,7 @@ export const SPELLS: Spell[] = [
     "classes": [
       "cleric",
       "druid",
-      "ranger"
+      // "ranger"
     ]
   },
   {
@@ -2475,7 +2475,7 @@ export const SPELLS: Spell[] = [
     "components": "V, S",
     "description": "You summon a spirit that assumes the form of a nonmilitary land vehicle of your choice, appearing in an unoccupied space within range. The vehicle has the statistics of a normal vehicle of its sort, though it is celestial, fey, or fiendish (your choice in origin). The physical characteristics of the vehicle reflect its origin to some degree. For example, a fiendish SUV might be jet black in color, with tinted windows and a sinister-looking front grille.\n\nYou have a supernatural bond with the conjured vehicle that allows you to drive beyond your normal ability. While driving the conjured vehicle, you are considered proficient with vehicles of its type, and you add double your proficiency bonus to ability checks related to driving the vehicle. While driving the vehicle, you can make any spell you cast that targets only you also target the vehicle.\n\nIf the vehicle drops to 0 hit points, it disappears, leaving behind no physical form. You can also dismiss the vehicle at any time as an action, causing it to disappear.\n\nYou can't have more than one vehicle bonded by this spell at a time. As an action, you can release the vehicle from its bond at any time, causing it to disappear.\n\nAt Higher Levels. When you cast this spell using a spell slot of 3rd level or higher, you can conjure a nonmilitary water vehicle large enough to carry six Medium creatures. When you cast this spell using a spell slot of 5th level or higher, you can conjure a nonmilitary air vehicle large enough to carry ten Medium creatures. When you cast this spell using a spell slot of 7th level or higher, you can conjure any type of vehicle, subject to the DM's approval.",
     "classes": [
-      "paladin",
+      // "paladin",
       "sorcerer",
       "warlock",
       "wizard"
@@ -2548,7 +2548,7 @@ export const SPELLS: Spell[] = [
     "description": "You touch a corpse or other remains. For the duration, the target is protected from decay and can’t become undead.\n\nThe spell also effectively extends the time limit on raising the target from the dead, since days spent under the influence of this spell don’t count against the time limit of spells such as raise dead.",
     "classes": [
       "cleric",
-      "paladin",
+      // "paladin",
       "wizard"
     ]
   },
@@ -2577,7 +2577,7 @@ export const SPELLS: Spell[] = [
     "description": "A line of strong wind 60 feet long and 10 feet wide blasts from you in a direction you choose for the spell’s duration. Each creature that starts its turn in the line must succeed on a Strength saving throw or be pushed 15 feet away from you in a direction following the line.\n\nAny creature in the line must spend 2 feet of movement for every 1 foot it moves when moving closer to you.\n\nThe gust disperses gas or vapor, and it extinguishes candles, torches, and similar unprotected flames in the area. It causes protected flames, such as those of lanterns, to dance wildly and has a 50 percent chance to extinguish them.\n\nAs a bonus action on each of your turns before the spell ends, you can change the direction in which the line blasts from you.",
     "classes": [
       "druid",
-      "ranger",
+      // "ranger",
       "sorcerer",
       "wizard"
     ]
@@ -2593,7 +2593,7 @@ export const SPELLS: Spell[] = [
     "description": "You call forth a nature spirit to soothe the wounded. The intangible spirit appears in a space that is a 5-foot cube you can see within range. The spirit looks like a transparent beast or fey (your choice). Until the spell ends, whenever you or a creature you can see moves into the spirits space for the first time on a turn or starts its turn there, you can cause the spirit to restore 1d6 hit points to that creature (no action required). The spirit can’t heal constructs or undead. As a bonus action on your turn, you can move the Spirit up to 30 feet to a space you can see. The spirit can heal a number of times equal to 1 + your spellcasting ability modifier (minimum of twice). After healing that number of times, the spirit disappears.\n\nAt Higher Levels. When you cast this spell using a spell slot of 3rd level or higher, the healing increases 1d6 for each slot level above 2nd.",
     "classes": [
       "druid",
-      "ranger"
+      // "ranger"
     ]
   },
   {
@@ -2712,8 +2712,8 @@ export const SPELLS: Spell[] = [
       "bard",
       "cleric",
       "druid",
-      "paladin",
-      "ranger"
+      // "paladin",
+      // "ranger"
     ]
   },
   {
@@ -2742,7 +2742,7 @@ export const SPELLS: Spell[] = [
     "classes": [
       "bard",
       "druid",
-      "ranger"
+      // "ranger"
     ]
   },
   {
@@ -2758,8 +2758,8 @@ export const SPELLS: Spell[] = [
       "bard",
       "cleric",
       "druid",
-      "paladin",
-      "ranger",
+      // "paladin",
+      // "ranger",
       "wizard"
     ]
   },
@@ -2787,8 +2787,8 @@ export const SPELLS: Spell[] = [
     "components": "V, S",
     "description": "You touch a nonmagical weapon. Until the spell ends, that weapon becomes a magic weapon with a +1 bonus to attack rolls and damage rolls.\n\nAt Higher Levels. When you cast this spell using a spell slot of 4th level or higher, the bonus increases to +2. When you use a spell slot of 6th level or higher, the bonus increases to +3.",
     "classes": [
-      "paladin",
-      "ranger",
+      // "paladin",
+      // "ranger",
       "sorcerer",
       "wizard"
     ]
@@ -2948,7 +2948,7 @@ export const SPELLS: Spell[] = [
     "description": "A veil of shadows and silence radiates from you, masking you and your companions from detection. For the duration, each creature you choose within 30 feet of you (including you) has a +10 bonus to Dexterity (Stealth) checks and can’t be tracked except by magical means. A creature that receives this bonus leaves behind no tracks or other traces of its passage.",
     "classes": [
       "druid",
-      "ranger"
+      // "ranger"
     ]
   },
   {
@@ -2977,7 +2977,7 @@ export const SPELLS: Spell[] = [
     "description": "Up to six creatures of your choice that you can see within range each regain hit points equal to 2d8 + your spellcasting ability modifier. This spell has no effect on undead or constructs.\n\nAt Higher Levels. When you cast this spell using a spell slot of 3rd level or higher, the healing increases by 1d8 for each slot level above 2nd.",
     "classes": [
       "cleric",
-      "paladin"
+      // "paladin"
     ]
   },
   {
@@ -2992,8 +2992,8 @@ export const SPELLS: Spell[] = [
     "classes": [
       "cleric",
       "druid",
-      "paladin",
-      "ranger"
+      // "paladin",
+      // "ranger"
     ]
   },
   {
@@ -3110,7 +3110,7 @@ export const SPELLS: Spell[] = [
     "classes": [
       "bard",
       "cleric",
-      "ranger"
+      // "ranger"
     ]
   },
   {
@@ -3168,7 +3168,7 @@ export const SPELLS: Spell[] = [
     "description": "The ground in a 20-foot radius centered on a point within range twists and sprouts hard spikes and thorns. The area becomes difficult terrain for the duration. When a creature moves into or within the area, it takes 2d4 piercing damage for every 5 feet it travels.\n\nThe transformation of the ground is camouflaged to look natural. Any creature that can’t see the area at the time the spell is cast must make a Wisdom (Perception) check against your spell save DC to recognize the terrain as hazardous before entering it.",
     "classes": [
       "druid",
-      "ranger"
+      // "ranger"
     ]
   },
   {
@@ -3211,7 +3211,7 @@ export const SPELLS: Spell[] = [
     "description": "You call forth a bestial spirit. It manifests in an unoccupied space that you can see within range. This corporeal form uses the Bestial Spirit stat block. When you cast the spell, choose an environment: Air, Land, or Water. The creature resembles an animal of your choice that is native to the chosen environment, which determines certain traits in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends.\n\nThe creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don’t issue any, it takes the Dodge action and uses its move to avoid danger.\n\nAt Higher Levels. When you cast this spell using a spell slot of 3rd level or higher, use the higher level where the spell’s level appears in the stat block.",
     "classes": [
       "druid",
-      "ranger"
+      // "ranger"
     ]
   },
   {
@@ -3254,7 +3254,7 @@ export const SPELLS: Spell[] = [
     "description": "This spell wards a willing creature you touch and creates a mystic connection between you and the target until the spell ends.\n\nWhile the target is within 60 feet of you, it gains a +1 bonus to AC and saving throws, and it has resistance to all damage. Also, each time it takes damage, you take the same amount of damage.\n\nThe spell ends if you drop to 0 hit points or if you and the target become separated by more than 60 feet. It also ends if the spell is cast again on either of the connected creatures. You can also dismiss the spell as an action.",
     "classes": [
       "cleric",
-      "paladin"
+      // "paladin"
     ]
   },
   {
@@ -3312,7 +3312,7 @@ export const SPELLS: Spell[] = [
     "classes": [
       "bard",
       "cleric",
-      "paladin"
+      // "paladin"
     ]
   }
 ];
