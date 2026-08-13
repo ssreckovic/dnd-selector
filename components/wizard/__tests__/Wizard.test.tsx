@@ -150,7 +150,7 @@ describe("Wizard", () => {
     expect(screen.getByText(/how do you want to handle your spells/i)).toBeInTheDocument();
   });
 
-  it("shows a hint but still allows advancing past ability scores before a method is chosen", async () => {
+  it("allows advancing past ability scores once 'build my own' is chosen", async () => {
     render(<Wizard />);
 
     await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
@@ -163,10 +163,6 @@ describe("Wizard", () => {
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
 
     await userEvent.click(screen.getByRole("button", { name: /build my own/i }));
-    expect(screen.getByRole("button", { name: /next/i })).toBeEnabled();
-    expect(screen.getByText(/choose a method to continue/i)).toBeInTheDocument();
-
-    await userEvent.click(screen.getByRole("button", { name: /standard array/i }));
     expect(screen.getByRole("button", { name: /next/i })).toBeEnabled();
   });
 

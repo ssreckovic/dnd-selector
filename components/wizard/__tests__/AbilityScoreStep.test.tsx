@@ -3,37 +3,53 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import type {
+  AbilityScoreBonusAssignment,
+  AbilityScoreBonusMode,
   AbilityScoreGuidance,
   AbilityScoreMethod,
   AbilityScores,
 } from "@/lib/wizard-storage";
 import { AbilityScoreStep } from "@/components/wizard/AbilityScoreStep";
 
+type ChangePartial = {
+  abilityScoreGuidance?: AbilityScoreGuidance;
+  abilityScoreMethod?: AbilityScoreMethod | null;
+  abilityScores?: AbilityScores | null;
+  abilityScoreBonusMode?: AbilityScoreBonusMode | null;
+  abilityScoreBonusAssignment?: AbilityScoreBonusAssignment | null;
+};
+
 // Wrapper component to simulate parent maintaining state
 function AbilityScoreStepWithState({
   initialGuidance,
   initialMethod,
   initialScores,
+  initialBonusMode = null,
+  initialBonusAssignment = null,
   onChangeSpy,
 }: {
   initialGuidance: AbilityScoreGuidance | null;
   initialMethod: AbilityScoreMethod | null;
   initialScores: AbilityScores | null;
-  onChangeSpy: (partial: {
-    abilityScoreGuidance?: AbilityScoreGuidance;
-    abilityScoreMethod?: AbilityScoreMethod | null;
-    abilityScores?: AbilityScores | null;
-  }) => void;
+  initialBonusMode?: AbilityScoreBonusMode | null;
+  initialBonusAssignment?: AbilityScoreBonusAssignment | null;
+  onChangeSpy: (partial: ChangePartial) => void;
 }) {
   const [guidance, setGuidance] = useState<AbilityScoreGuidance | null>(initialGuidance);
   const [method, setMethod] = useState<AbilityScoreMethod | null>(initialMethod);
   const [scores, setScores] = useState<AbilityScores | null>(initialScores);
+  const [bonusMode, setBonusMode] = useState<AbilityScoreBonusMode | null>(initialBonusMode);
+  const [bonusAssignment, setBonusAssignment] = useState<AbilityScoreBonusAssignment | null>(
+    initialBonusAssignment,
+  );
 
   return (
     <AbilityScoreStep
       abilityScoreGuidance={guidance}
       abilityScoreMethod={method}
       abilityScores={scores}
+      abilityScoreBonusMode={bonusMode}
+      abilityScoreBonusAssignment={bonusAssignment}
       onChange={(partial) => {
         if (partial.abilityScoreGuidance !== undefined) {
           setGuidance(partial.abilityScoreGuidance);
@@ -44,6 +60,12 @@ function AbilityScoreStepWithState({
         if (partial.abilityScores !== undefined) {
           setScores(partial.abilityScores);
         }
+        if (partial.abilityScoreBonusMode !== undefined) {
+          setBonusMode(partial.abilityScoreBonusMode);
+        }
+        if (partial.abilityScoreBonusAssignment !== undefined) {
+          setBonusAssignment(partial.abilityScoreBonusAssignment);
+        }
         onChangeSpy(partial);
       }}
     />
@@ -51,13 +73,15 @@ function AbilityScoreStepWithState({
 }
 
 describe("AbilityScoreStep", () => {
-  it("reports 'auto' guidance and clears method/scores", async () => {
+  it("reports 'auto' guidance and clears method/scores/bonus", async () => {
     const onChange = vi.fn();
     render(
       <AbilityScoreStep
         abilityScoreGuidance={null}
         abilityScoreMethod={null}
         abilityScores={null}
+        abilityScoreBonusMode={null}
+        abilityScoreBonusAssignment={null}
         onChange={onChange}
       />,
     );
@@ -66,50 +90,59 @@ describe("AbilityScoreStep", () => {
       abilityScoreGuidance: "auto",
       abilityScoreMethod: null,
       abilityScores: null,
+      abilityScoreBonusMode: null,
+      abilityScoreBonusAssignment: null,
     });
   });
 
-  it("does not show method or score inputs until 'build my own' or 'walk me through' is chosen", () => {
+  it("does not show the assignment UI until 'build my own' or 'walk me through' is chosen", () => {
     render(
       <AbilityScoreStep
         abilityScoreGuidance={null}
         abilityScoreMethod={null}
         abilityScores={null}
+        abilityScoreBonusMode={null}
+        abilityScoreBonusAssignment={null}
         onChange={vi.fn()}
       />,
     );
-    expect(screen.queryByText(/which method/i)).not.toBeInTheDocument();
     expect(screen.queryByLabelText("STR")).not.toBeInTheDocument();
   });
 
-  it("shows the method row after choosing 'build my own', and reports the chosen method", async () => {
+  it("sets method to standard-array when guidance becomes manual", async () => {
     const onChange = vi.fn();
     render(
       <AbilityScoreStep
-        abilityScoreGuidance="manual"
+        abilityScoreGuidance={null}
         abilityScoreMethod={null}
         abilityScores={null}
+        abilityScoreBonusMode={null}
+        abilityScoreBonusAssignment={null}
         onChange={onChange}
       />,
     );
-    expect(screen.getByText(/which method/i)).toBeInTheDocument();
-    await userEvent.click(screen.getByRole("button", { name: /standard array/i }));
-    expect(onChange).toHaveBeenCalledWith({ abilityScoreMethod: "standard-array" });
+    await userEvent.click(screen.getByRole("button", { name: /build my own/i }));
+    expect(onChange).toHaveBeenCalledWith({
+      abilityScoreGuidance: "manual",
+      abilityScoreMethod: "standard-array",
+    });
   });
 
-  it("shows guided tips for each method only when guidance is 'guided'", () => {
+  it("shows a guided tip only when guidance is 'guided'", () => {
     render(
       <AbilityScoreStep
         abilityScoreGuidance="guided"
-        abilityScoreMethod={null}
+        abilityScoreMethod="standard-array"
         abilityScores={null}
+        abilityScoreBonusMode={null}
+        abilityScoreBonusAssignment={null}
         onChange={vi.fn()}
       />,
     );
-    expect(screen.getByText(/drop the lowest/i)).toBeInTheDocument();
+    expect(screen.getByText(/assign 15, 14, 13, 12, 10, and 8/i)).toBeInTheDocument();
   });
 
-  it("shows the six score inputs once a method is chosen, and reports edits", async () => {
+  it("shows the six ability selects once manual guidance is chosen, and reports edits", async () => {
     const onChange = vi.fn();
     render(
       <AbilityScoreStepWithState
@@ -119,8 +152,8 @@ describe("AbilityScoreStep", () => {
         onChangeSpy={onChange}
       />,
     );
-    const strInput = screen.getByLabelText("STR");
-    await userEvent.type(strInput, "15");
+    const strSelect = screen.getByLabelText("STR");
+    await userEvent.selectOptions(strSelect, "15");
     expect(onChange).toHaveBeenLastCalledWith({
       abilityScores: { str: 15, dex: null, con: null, int: null, wis: null, cha: null },
     });
@@ -136,14 +169,28 @@ describe("AbilityScoreStep", () => {
         onChangeSpy={onChange}
       />,
     );
-    const dexInput = screen.getByLabelText("DEX");
-    await userEvent.type(dexInput, "14");
+    const dexSelect = screen.getByLabelText("DEX");
+    await userEvent.selectOptions(dexSelect, "14");
     expect(onChange).toHaveBeenLastCalledWith({
       abilityScores: { str: 12, dex: 14, con: null, int: null, wis: null, cha: null },
     });
   });
 
-  it("clears a score to null when input is emptied", async () => {
+  it("does not offer a value already assigned to another ability", () => {
+    render(
+      <AbilityScoreStepWithState
+        initialGuidance="manual"
+        initialMethod="standard-array"
+        initialScores={{ str: 15, dex: null, con: null, int: null, wis: null, cha: null }}
+        onChangeSpy={vi.fn()}
+      />,
+    );
+    const dexSelect = screen.getByLabelText("DEX") as HTMLSelectElement;
+    const options = Array.from(dexSelect.options).map((o) => o.value);
+    expect(options).not.toContain("15");
+  });
+
+  it("clears a score to null when reset to the placeholder option", async () => {
     const onChange = vi.fn();
     render(
       <AbilityScoreStepWithState
@@ -153,10 +200,69 @@ describe("AbilityScoreStep", () => {
         onChangeSpy={onChange}
       />,
     );
-    const strInput = screen.getByLabelText("STR") as HTMLInputElement;
-    await userEvent.clear(strInput);
+    const strSelect = screen.getByLabelText("STR") as HTMLSelectElement;
+    await userEvent.selectOptions(strSelect, "");
     expect(onChange).toHaveBeenLastCalledWith({
       abilityScores: { str: null, dex: null, con: null, int: null, wis: null, cha: null },
+    });
+  });
+
+  it("assigns three +1 bonuses to distinct abilities and shows final scores", async () => {
+    const onChange = vi.fn();
+    render(
+      <AbilityScoreStepWithState
+        initialGuidance="manual"
+        initialMethod="standard-array"
+        initialScores={{ str: 15, dex: 14, con: 13, int: 12, wis: 10, cha: 8 }}
+        onChangeSpy={onChange}
+      />,
+    );
+    await userEvent.selectOptions(screen.getByLabelText("Bonus split"), "three-plus-one");
+    await userEvent.selectOptions(screen.getByLabelText("+1 ability #1"), "str");
+    await userEvent.selectOptions(screen.getByLabelText("+1 ability #2"), "dex");
+    await userEvent.selectOptions(screen.getByLabelText("+1 ability #3"), "con");
+
+    expect(onChange).toHaveBeenLastCalledWith({
+      abilityScoreBonusAssignment: [
+        { key: "str", bonus: 1 },
+        { key: "dex", bonus: 1 },
+        { key: "con", bonus: 1 },
+      ],
+    });
+  });
+
+  it("does not offer an ability already picked in another bonus slot", async () => {
+    render(
+      <AbilityScoreStepWithState
+        initialGuidance="manual"
+        initialMethod="standard-array"
+        initialScores={{ str: 15, dex: 14, con: 13, int: 12, wis: 10, cha: 8 }}
+        initialBonusMode="plus-two-plus-one"
+        initialBonusAssignment={[{ key: "str", bonus: 2 }]}
+        onChangeSpy={vi.fn()}
+      />,
+    );
+    const plusOneSelect = screen.getByLabelText("+1 ability") as HTMLSelectElement;
+    const options = Array.from(plusOneSelect.options).map((o) => o.value);
+    expect(options).not.toContain("str");
+  });
+
+  it("clears the prior bonus assignment when switching bonus mode", async () => {
+    const onChange = vi.fn();
+    render(
+      <AbilityScoreStepWithState
+        initialGuidance="manual"
+        initialMethod="standard-array"
+        initialScores={{ str: 15, dex: 14, con: 13, int: 12, wis: 10, cha: 8 }}
+        initialBonusMode="plus-two-plus-one"
+        initialBonusAssignment={[{ key: "str", bonus: 2 }]}
+        onChangeSpy={onChange}
+      />,
+    );
+    await userEvent.selectOptions(screen.getByLabelText("Bonus split"), "three-plus-one");
+    expect(onChange).toHaveBeenCalledWith({
+      abilityScoreBonusMode: "three-plus-one",
+      abilityScoreBonusAssignment: null,
     });
   });
 });

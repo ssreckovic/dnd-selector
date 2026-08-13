@@ -63,8 +63,13 @@ describe("submitConcept", () => {
       ...answers,
       effortLevel: "all",
       abilityScoreGuidance: "manual",
-      abilityScoreMethod: "point-buy",
+      abilityScoreMethod: "standard-array",
       abilityScores: { str: 15, dex: 14, con: 13, int: 12, wis: 10, cha: 8 },
+      abilityScoreBonusMode: "plus-two-plus-one",
+      abilityScoreBonusAssignment: [
+        { key: "str", bonus: 2 },
+        { key: "dex", bonus: 1 },
+      ],
       spellChoiceMode: "own",
     };
 
@@ -76,9 +81,9 @@ describe("submitConcept", () => {
       expect.objectContaining({
         effortLevel: "all",
         abilityScoreGuidance: "manual",
-        abilityScoreMethod: "point-buy",
-        abilityScoreStr: 15,
-        abilityScoreDex: 14,
+        abilityScoreMethod: "standard-array",
+        abilityScoreStr: 17,
+        abilityScoreDex: 15,
         abilityScoreCon: 13,
         abilityScoreInt: 12,
         abilityScoreWis: 10,

@@ -1,4 +1,4 @@
-import type { WizardAnswers } from "@/lib/wizard-storage";
+import { getFinalAbilityScores, type WizardAnswers } from "@/lib/wizard-storage";
 import { getRace, getClass } from "@/lib/dnd-data";
 
 export type SubmitResult = { ok: true } | { ok: false; error: string };
@@ -44,6 +44,7 @@ export async function submitConcept(
   const subrace = race?.subraces?.find((s) => s.id === answers.subraceId);
   const cls = answers.classId ? getClass(answers.classId) : undefined;
   const subclass = cls?.allSubclasses.find((s) => s.id === answers.subclassId);
+  const finalScores = getFinalAbilityScores(answers);
 
   return postToSheets({
     playerName: answers.playerName,
@@ -55,12 +56,12 @@ export async function submitConcept(
     subclass: subclass?.name ?? null,
     abilityScoreGuidance: answers.abilityScoreGuidance ?? null,
     abilityScoreMethod: answers.abilityScoreMethod ?? null,
-    abilityScoreStr: answers.abilityScores?.str ?? null,
-    abilityScoreDex: answers.abilityScores?.dex ?? null,
-    abilityScoreCon: answers.abilityScores?.con ?? null,
-    abilityScoreInt: answers.abilityScores?.int ?? null,
-    abilityScoreWis: answers.abilityScores?.wis ?? null,
-    abilityScoreCha: answers.abilityScores?.cha ?? null,
+    abilityScoreStr: finalScores?.str ?? null,
+    abilityScoreDex: finalScores?.dex ?? null,
+    abilityScoreCon: finalScores?.con ?? null,
+    abilityScoreInt: finalScores?.int ?? null,
+    abilityScoreWis: finalScores?.wis ?? null,
+    abilityScoreCha: finalScores?.cha ?? null,
     spellChoiceMode: answers.spellChoiceMode ?? null,
   });
 }

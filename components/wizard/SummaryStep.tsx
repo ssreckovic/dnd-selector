@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { classGrantsSpellcasting, getClass, getRace } from "@/lib/dnd-data";
-import type {
-  AbilityScoreGuidance,
-  AbilityScoreMethod,
-  AbilityScores,
-  EffortLevel,
-  SpellChoiceMode,
-  WizardAnswers,
+import {
+  getFinalAbilityScores,
+  type AbilityScoreGuidance,
+  type AbilityScores,
+  type EffortLevel,
+  type SpellChoiceMode,
+  type WizardAnswers,
 } from "@/lib/wizard-storage";
 
 type SummaryStepProps = {
@@ -20,12 +20,6 @@ const ABILITY_GUIDANCE_LABELS: Record<AbilityScoreGuidance, string> = {
   auto: "Choose my stats for me",
   manual: "I'll build my own",
   guided: "Walk me through it",
-};
-
-const ABILITY_METHOD_LABELS: Record<AbilityScoreMethod, string> = {
-  "standard-array": "Standard array",
-  roll: "Roll for it (4d6, drop lowest)",
-  "point-buy": "Point buy",
 };
 
 const SPELL_CHOICE_LABELS: Record<SpellChoiceMode, string> = {
@@ -57,9 +51,10 @@ export function SummaryStep({ answers, onCharacterNameChange }: SummaryStepProps
   const subclass = cls?.allSubclasses.find((s) => s.id === answers.subclassId);
   const isCaster = classGrantsSpellcasting(answers.classId, answers.subclassId);
 
-  const scoreValues = ABILITY_FIELD_ORDER.filter(
-    (key) => answers.abilityScores?.[key] != null,
-  ).map((key) => `${ABILITY_FIELD_LABELS[key]} ${answers.abilityScores?.[key]}`);
+  const finalScores = getFinalAbilityScores(answers);
+  const scoreValues = ABILITY_FIELD_ORDER.filter((key) => finalScores?.[key] != null).map(
+    (key) => `${ABILITY_FIELD_LABELS[key]} ${finalScores?.[key]}`,
+  );
 
   return (
     <div className="flex flex-col gap-4">
@@ -76,7 +71,6 @@ export function SummaryStep({ answers, onCharacterNameChange }: SummaryStepProps
         <dt className="font-medium">Ability scores</dt>
         <dd>
           {answers.abilityScoreGuidance ? ABILITY_GUIDANCE_LABELS[answers.abilityScoreGuidance] : "—"}
-          {answers.abilityScoreMethod ? ` — ${ABILITY_METHOD_LABELS[answers.abilityScoreMethod]}` : ""}
           {scoreValues.length > 0 ? ` (${scoreValues.join(", ")})` : ""}
         </dd>
         {isCaster && (

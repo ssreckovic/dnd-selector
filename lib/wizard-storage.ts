@@ -1,5 +1,6 @@
 export type AbilityScoreGuidance = "auto" | "manual" | "guided";
-export type AbilityScoreMethod = "standard-array" | "roll" | "point-buy";
+export type AbilityScoreMethod = "standard-array";
+export type AbilityScoreBonusMode = "three-plus-one" | "plus-two-plus-one";
 export type SpellChoiceMode = "own" | "suggestions" | "auto";
 export type EffortLevel = "minimal" | "some" | "all";
 
@@ -12,6 +13,11 @@ export type AbilityScores = {
   cha: number | null;
 };
 
+export type AbilityScoreBonusAssignment = {
+  key: keyof AbilityScores;
+  bonus: 1 | 2;
+}[];
+
 export type WizardAnswers = {
   playerName: string;
   effortLevel: EffortLevel | null;
@@ -22,6 +28,8 @@ export type WizardAnswers = {
   abilityScoreGuidance: AbilityScoreGuidance | null;
   abilityScoreMethod: AbilityScoreMethod | null;
   abilityScores: AbilityScores | null;
+  abilityScoreBonusMode: AbilityScoreBonusMode | null;
+  abilityScoreBonusAssignment: AbilityScoreBonusAssignment | null;
   spellChoiceMode: SpellChoiceMode | null;
   characterName: string;
 };
@@ -36,9 +44,22 @@ export const EMPTY_ANSWERS: WizardAnswers = {
   abilityScoreGuidance: null,
   abilityScoreMethod: null,
   abilityScores: null,
+  abilityScoreBonusMode: null,
+  abilityScoreBonusAssignment: null,
   spellChoiceMode: null,
   characterName: "",
 };
+
+export function getFinalAbilityScores(answers: WizardAnswers): AbilityScores | null {
+  if (!answers.abilityScores) {
+    return null;
+  }
+  const final = { ...answers.abilityScores };
+  for (const { key, bonus } of answers.abilityScoreBonusAssignment ?? []) {
+    final[key] = (final[key] ?? 0) + bonus;
+  }
+  return final;
+}
 
 const STORAGE_KEY = "dnd-concept-builder:answers";
 

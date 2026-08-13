@@ -38,7 +38,7 @@ describe("SummaryStep", () => {
     expect(onCharacterNameChange).toHaveBeenLastCalledWith("T");
   });
 
-  it("shows the ability score guidance, method, and any entered scores", () => {
+  it("shows the ability score guidance and any entered scores", () => {
     render(
       <SummaryStep
         answers={{
@@ -47,7 +47,7 @@ describe("SummaryStep", () => {
           classId: "barbarian",
           subclassId: "berserker",
           abilityScoreGuidance: "manual",
-          abilityScoreMethod: "point-buy",
+          abilityScoreMethod: "standard-array",
           abilityScores: { str: 15, dex: null, con: 14, int: null, wis: null, cha: null },
         }}
         onCharacterNameChange={vi.fn()}
@@ -55,9 +55,34 @@ describe("SummaryStep", () => {
     );
 
     expect(screen.getByText(/i'll build my own/i)).toBeInTheDocument();
-    expect(screen.getByText(/point buy/i)).toBeInTheDocument();
     expect(screen.getByText(/str 15/i)).toBeInTheDocument();
     expect(screen.getByText(/con 14/i)).toBeInTheDocument();
+  });
+
+  it("shows final scores including any ability score bonus", () => {
+    render(
+      <SummaryStep
+        answers={{
+          ...EMPTY_ANSWERS,
+          raceId: "human",
+          classId: "barbarian",
+          subclassId: "berserker",
+          abilityScoreGuidance: "manual",
+          abilityScoreMethod: "standard-array",
+          abilityScores: { str: 15, dex: 14, con: 13, int: 12, wis: 10, cha: 8 },
+          abilityScoreBonusMode: "plus-two-plus-one",
+          abilityScoreBonusAssignment: [
+            { key: "str", bonus: 2 },
+            { key: "dex", bonus: 1 },
+          ],
+        }}
+        onCharacterNameChange={vi.fn()}
+      />,
+    );
+
+    expect(screen.getByText(/str 17/i)).toBeInTheDocument();
+    expect(screen.getByText(/dex 15/i)).toBeInTheDocument();
+    expect(screen.getByText(/con 13/i)).toBeInTheDocument();
   });
 
   it("shows the spell choice and Silvery Barbs note for a spellcasting class, and hides it for a non-caster", () => {

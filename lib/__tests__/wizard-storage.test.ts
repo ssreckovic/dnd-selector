@@ -4,6 +4,7 @@ import {
   loadAnswers,
   saveAnswers,
   clearAnswers,
+  getFinalAbilityScores,
   WizardAnswers,
 } from "@/lib/wizard-storage";
 
@@ -23,8 +24,14 @@ describe("wizard-storage", () => {
       raceId: "elf",
       subraceId: "wood-elf",
       abilityScoreGuidance: "guided",
-      abilityScoreMethod: "point-buy",
+      abilityScoreMethod: "standard-array",
       abilityScores: { str: 14, dex: 12, con: 13, int: 10, wis: 8, cha: 15 },
+      abilityScoreBonusMode: "three-plus-one",
+      abilityScoreBonusAssignment: [
+        { key: "str", bonus: 1 },
+        { key: "dex", bonus: 1 },
+        { key: "con", bonus: 1 },
+      ],
       spellChoiceMode: "suggestions",
     };
     saveAnswers(answers);
@@ -35,7 +42,33 @@ describe("wizard-storage", () => {
     expect(EMPTY_ANSWERS.abilityScoreGuidance).toBeNull();
     expect(EMPTY_ANSWERS.abilityScoreMethod).toBeNull();
     expect(EMPTY_ANSWERS.abilityScores).toBeNull();
+    expect(EMPTY_ANSWERS.abilityScoreBonusMode).toBeNull();
+    expect(EMPTY_ANSWERS.abilityScoreBonusAssignment).toBeNull();
     expect(EMPTY_ANSWERS.spellChoiceMode).toBeNull();
+  });
+
+  it("getFinalAbilityScores applies the bonus assignment on top of the base scores", () => {
+    const answers: WizardAnswers = {
+      ...EMPTY_ANSWERS,
+      abilityScores: { str: 15, dex: 14, con: 13, int: 12, wis: 10, cha: 8 },
+      abilityScoreBonusMode: "plus-two-plus-one",
+      abilityScoreBonusAssignment: [
+        { key: "str", bonus: 2 },
+        { key: "dex", bonus: 1 },
+      ],
+    };
+    expect(getFinalAbilityScores(answers)).toEqual({
+      str: 17,
+      dex: 15,
+      con: 13,
+      int: 12,
+      wis: 10,
+      cha: 8,
+    });
+  });
+
+  it("getFinalAbilityScores returns null when no base scores are set", () => {
+    expect(getFinalAbilityScores(EMPTY_ANSWERS)).toBeNull();
   });
 
   it("clearAnswers removes stored answers", () => {

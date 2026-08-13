@@ -69,10 +69,7 @@ function validationHint(step: Step, answers: WizardAnswers): string {
     case "spell":
       return "Choose how you'd like to handle spell selection to continue.";
     case "ability-scores":
-      if (!answers.abilityScoreGuidance) {
-        return "Choose how you'd like to determine your ability scores.";
-      }
-      return "Choose a method to continue.";
+      return "Choose how you'd like to determine your ability scores.";
     case "summary":
       return "Enter a character name to continue.";
   }
@@ -236,6 +233,8 @@ export function Wizard() {
           abilityScoreGuidance={answers.abilityScoreGuidance}
           abilityScoreMethod={answers.abilityScoreMethod}
           abilityScores={answers.abilityScores}
+          abilityScoreBonusMode={answers.abilityScoreBonusMode}
+          abilityScoreBonusAssignment={answers.abilityScoreBonusAssignment}
           onChange={(partial) => updateAnswers(partial)}
         />
       )}
