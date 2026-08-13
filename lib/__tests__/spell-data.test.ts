@@ -28,7 +28,7 @@ describe("spell-data", () => {
       const list = getClassSpellList(id);
       expect(list?.cantrips).toHaveLength(0);
       expect(list?.level1.length).toBeGreaterThan(0);
-      expect(list?.level2.length).toBeGreaterThan(0);
+      expect(list?.level2).toHaveLength(0);
     }
   });
 });

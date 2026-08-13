@@ -43,6 +43,6 @@ describe("SpellsExplorer", () => {
   it("shows 'None yet at this level' for paladin's empty cantrip list", () => {
     currentSearchParams = new URLSearchParams({ class: "paladin" });
     render(<SpellsExplorer />);
-    expect(screen.getByText(/none yet at this level/i)).toBeInTheDocument();
+    expect(screen.getByTestId(/paladin-cantrips-none/i)).toBeInTheDocument();
   });
 });

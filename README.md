@@ -37,3 +37,6 @@ Push to `main` — the `deploy.yml` workflow builds a static export
 Make sure GitHub Pages is set to the **GitHub Actions** source under
 Settings > Pages, and that the `NEXT_PUBLIC_SHEETS_ENDPOINT` secret is set
 under Settings > Secrets and variables > Actions.
+
+
+Spell Data from: https://github.com/wjsutton/games_night_viz/blob/main/challenges/9_bonus_challenges/202206_datafamcon_dnd/Dnd%202020%20classes%20and%20subclasses.csv

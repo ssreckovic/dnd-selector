@@ -277,7 +277,7 @@ export function SpellsExplorer () {
 											})}
 										</div>
 									) : (
-										<p className="mt-2 text-sm text-zinc-500">None yet at this level.</p>
+										<p className="mt-2 text-sm text-zinc-500" data-testid={`${selectedClass.name}-${section.key}-none`}>None yet at this level.</p>
 									)}
 								</details>
 							);
