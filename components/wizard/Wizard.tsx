@@ -8,7 +8,7 @@ import { SubclassStep } from "@/components/wizard/SubclassStep";
 import { SpellChoiceStep } from "@/components/wizard/SpellChoiceStep";
 import { AbilityScoreStep } from "@/components/wizard/AbilityScoreStep";
 import { SummaryStep } from "@/components/wizard/SummaryStep";
-import { getClass, getRace, classGrantsSpellcasting } from "@/lib/dnd-data";
+import { getRace, classGrantsSpellcasting } from "@/lib/dnd-data";
 import {
   EMPTY_ANSWERS,
   loadAnswers,
@@ -76,7 +76,7 @@ function validationHint(step: Step, answers: WizardAnswers): string {
 }
 
 function isStepVisible(step: Step, answers: WizardAnswers): boolean {
-  if (step === "subclass" || step === "ability-scores") {
+  if (step === "ability-scores") {
     return answers.effortLevel !== "minimal";
   }
   if (step === "spell") {
@@ -103,15 +103,9 @@ function applyEffortLevel(
   if (effortLevel === "all") {
     return { effortLevel, abilityScoreGuidance: null, spellChoiceMode: null };
   }
-  const cls = answers.classId ? getClass(answers.classId) : undefined;
-  const subclassId =
-    effortLevel === "minimal"
-      ? answers.subclassId ?? cls?.defaultSubclasses[0]?.id ?? null
-      : answers.subclassId;
-  const isCaster = classGrantsSpellcasting(answers.classId, subclassId);
+  const isCaster = classGrantsSpellcasting(answers.classId, answers.subclassId);
   return {
     effortLevel,
-    subclassId,
     abilityScoreGuidance: effortLevel === "minimal" ? "auto" : answers.abilityScoreGuidance,
     spellChoiceMode: isCaster ? "auto" : answers.spellChoiceMode,
   };

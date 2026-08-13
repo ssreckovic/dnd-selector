@@ -258,7 +258,7 @@ describe("Wizard", () => {
     expect(await screen.findByText(/your concept has been submitted/i)).toBeInTheDocument();
   });
 
-  it("at minimal effort, skips subclass/spell/ability-scores and auto-fills them", async () => {
+  it("at minimal effort, still shows subclass but skips spell/ability-scores and auto-fills them", async () => {
     render(<Wizard />);
 
     await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
@@ -271,7 +271,11 @@ describe("Wizard", () => {
     await userEvent.click(screen.getByRole("button", { name: /wizard/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
 
-    // Subclass, spell, and ability-scores steps are all skipped for a caster class.
+    expect(screen.getByText(/choose your wizard subclass/i)).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: /evocation/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+
+    // Spell and ability-scores steps are skipped for minimal effort.
     expect(screen.getByText(/review your concept/i)).toBeInTheDocument();
 
     const stored = JSON.parse(
