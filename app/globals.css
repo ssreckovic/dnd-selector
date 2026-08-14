@@ -16,7 +16,7 @@ body {
   background: #ffffff;
   color: #18181b;
   font-family: Arial, Helvetica, sans-serif;
-  cursor: url('/img/lan-wizard-32x51.png') 16 24, auto;
+  cursor: url('../public/img/lan-wizard-32x51.png') 16 24, auto;
 }
 
 a,
@@ -27,12 +27,12 @@ input[type="radio"],
 select,
 summary,
 label {
-  cursor: url('/img/lan-blade-32x32.png') 16 16, pointer;
+  cursor: url('../public/img/lan-blade-32x32.png') 16 16, pointer;
 }
 
 input[type="text"],
 input[type="search"],
 input:not([type]),
 textarea {
-  cursor: url('/img/lan-gold-32x32.png') 16 16, text;
+  cursor: url('../public/img/lan-gold-32x32.png') 16 16, text;
 }
