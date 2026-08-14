@@ -22,6 +22,8 @@ export type Subclass = {
   easy?: boolean;
 };
 
+export type AbilityKey = "str" | "dex" | "con" | "int" | "wis" | "cha";
+
 export type DndClass = {
   id: string;
   name: string;
@@ -30,6 +32,8 @@ export type DndClass = {
   baseSpellcasting: boolean;
   defaultSubclasses: Subclass[];
   allSubclasses: Subclass[];
+  primaryAbilities: AbilityKey[];
+  spellcastingAbility?: AbilityKey;
 };
 
 export const RACES: Race[] = [
@@ -262,6 +266,7 @@ export const CLASSES: DndClass[] = [
     baseSpellcasting: false,
     defaultSubclasses: [berserker, totemWarrior],
     allSubclasses: [berserker, totemWarrior, ancestralGuardian, stormHerald, zealot],
+    primaryAbilities: ["str", "con"],
   },
   {
     id: "bard",
@@ -271,6 +276,8 @@ export const CLASSES: DndClass[] = [
     baseSpellcasting: true,
     defaultSubclasses: [lore, valor],
     allSubclasses: [lore, valor, glamour, swords, whispers],
+    primaryAbilities: ["cha"],
+    spellcastingAbility: "cha",
   },
   {
     id: "cleric",
@@ -280,6 +287,8 @@ export const CLASSES: DndClass[] = [
     baseSpellcasting: true,
     defaultSubclasses: [life, light, war],
     allSubclasses: [life, light, war, knowledge, nature, tempest, trickery, death, forge, grave],
+    primaryAbilities: ["wis"],
+    spellcastingAbility: "wis",
   },
   {
     id: "druid",
@@ -289,6 +298,8 @@ export const CLASSES: DndClass[] = [
     baseSpellcasting: true,
     defaultSubclasses: [land, moon],
     allSubclasses: [land, moon, dreams, shepherd, spores],
+    primaryAbilities: ["wis"],
+    spellcastingAbility: "wis",
   },
   {
     id: "fighter",
@@ -298,6 +309,7 @@ export const CLASSES: DndClass[] = [
     baseSpellcasting: false,
     defaultSubclasses: [champion, battleMaster, eldritchKnight],
     allSubclasses: [champion, battleMaster, eldritchKnight, arcaneArcher, cavalier, samurai],
+    primaryAbilities: ["str", "dex"],
   },
   {
     id: "monk",
@@ -307,6 +319,7 @@ export const CLASSES: DndClass[] = [
     baseSpellcasting: false,
     defaultSubclasses: [openHand, shadow],
     allSubclasses: [openHand, shadow, fourElements, drunkenMaster, kensei, sunSoul],
+    primaryAbilities: ["dex", "wis"],
   },
   {
     id: "paladin",
@@ -316,6 +329,8 @@ export const CLASSES: DndClass[] = [
     baseSpellcasting: true,
     defaultSubclasses: [devotion, vengeance],
     allSubclasses: [devotion, vengeance, ancients, conquest, redemption],
+    primaryAbilities: ["str", "cha"],
+    spellcastingAbility: "cha",
   },
   {
     id: "ranger",
@@ -325,6 +340,8 @@ export const CLASSES: DndClass[] = [
     baseSpellcasting: true,
     defaultSubclasses: [hunter, beastMaster],
     allSubclasses: [hunter, beastMaster, gloomStalker, horizonWalker, monsterSlayer],
+    primaryAbilities: ["dex", "wis"],
+    spellcastingAbility: "wis",
   },
   {
     id: "rogue",
@@ -334,6 +351,7 @@ export const CLASSES: DndClass[] = [
     baseSpellcasting: false,
     defaultSubclasses: [thief, assassin, arcaneTrickster],
     allSubclasses: [thief, assassin, arcaneTrickster, inquisitive, mastermind, scout, swashbuckler],
+    primaryAbilities: ["dex"],
   },
   {
     id: "sorcerer",
@@ -343,6 +361,8 @@ export const CLASSES: DndClass[] = [
     baseSpellcasting: true,
     defaultSubclasses: [draconicBloodline, wildMagic],
     allSubclasses: [draconicBloodline, wildMagic, divineSoul, shadowMagic, stormSorcery],
+    primaryAbilities: ["cha"],
+    spellcastingAbility: "cha",
   },
   {
     id: "warlock",
@@ -352,6 +372,8 @@ export const CLASSES: DndClass[] = [
     baseSpellcasting: true,
     defaultSubclasses: [fiend, archfey],
     allSubclasses: [fiend, archfey, greatOldOne, celestial, hexblade],
+    primaryAbilities: ["cha"],
+    spellcastingAbility: "cha",
   },
   {
     id: "wizard",
@@ -361,6 +383,8 @@ export const CLASSES: DndClass[] = [
     baseSpellcasting: true,
     defaultSubclasses: [evocation, abjuration],
     allSubclasses: [evocation, abjuration, conjuration, divination, enchantment, illusion, necromancy, warMagic],
+    primaryAbilities: ["int"],
+    spellcastingAbility: "int",
   },
 ];
 

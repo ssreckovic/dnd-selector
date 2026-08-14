@@ -224,6 +224,7 @@ export function Wizard() {
       )}
       {step === "ability-scores" && (
         <AbilityScoreStep
+          classId={answers.classId}
           abilityScoreGuidance={answers.abilityScoreGuidance}
           abilityScoreMethod={answers.abilityScoreMethod}
           abilityScores={answers.abilityScores}

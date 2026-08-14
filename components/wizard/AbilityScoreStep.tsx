@@ -7,8 +7,10 @@ import type {
   AbilityScoreMethod,
   AbilityScores,
 } from "@/lib/wizard-storage";
+import { getClass } from "@/lib/dnd-data";
 
 type AbilityScoreStepProps = {
+  classId: string | null;
   abilityScoreGuidance: AbilityScoreGuidance | null;
   abilityScoreMethod: AbilityScoreMethod | null;
   abilityScores: AbilityScores | null;
@@ -21,6 +23,24 @@ type AbilityScoreStepProps = {
     abilityScoreBonusMode?: AbilityScoreBonusMode | null;
     abilityScoreBonusAssignment?: AbilityScoreBonusAssignment | null;
   }) => void;
+};
+
+const ABILITY_BLURBS: Record<keyof AbilityScores, string> = {
+  str: "Most melee damage and athletic feats.",
+  dex: "Armor class, ranged attacks, and stealth.",
+  con: "How many hit points you have.",
+  int: "Arcane knowledge and investigation.",
+  wis: "Perception, insight, and willpower.",
+  cha: "Persuasion, deception, and leadership.",
+};
+
+const ABILITY_NAMES: Record<keyof AbilityScores, string> = {
+  str: "Strength",
+  dex: "Dexterity",
+  con: "Constitution",
+  int: "Intelligence",
+  wis: "Wisdom",
+  cha: "Charisma",
 };
 
 const EMPTY_SCORES: AbilityScores = {
@@ -44,12 +64,7 @@ const GUIDANCE_OPTIONS: { value: AbilityScoreGuidance; label: string; blurb: str
     value: "manual",
     label: "I'll build my own",
     blurb: "You'll assign the standard array yourself.",
-  },
-  {
-    value: "guided",
-    label: "Walk me through it",
-    blurb: "The wizard will explain the standard array as you go.",
-  },
+  }
 ];
 
 const ABILITY_FIELDS: { key: keyof AbilityScores; label: string }[] = [
@@ -77,6 +92,7 @@ const BONUS_SLOT_AMOUNTS: Record<AbilityScoreBonusMode, (1 | 2)[]> = {
 };
 
 export function AbilityScoreStep({
+  classId,
   abilityScoreGuidance,
   abilityScoreMethod,
   abilityScores,
@@ -84,7 +100,8 @@ export function AbilityScoreStep({
   abilityScoreBonusAssignment,
   onChange,
 }: AbilityScoreStepProps) {
-  const showAssignment = abilityScoreGuidance === "manual" || abilityScoreGuidance === "guided";
+  const showAssignment = abilityScoreGuidance === "manual";
+  const dndClass = classId ? getClass(classId) : undefined;
 
   function selectGuidance(value: AbilityScoreGuidance) {
     if (value === "auto") {
@@ -165,13 +182,45 @@ export function AbilityScoreStep({
         ))}
       </div>
 
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+        {ABILITY_FIELDS.map((field) => (
+          <div key={field.key} className="rounded border border-zinc-200 p-2">
+            <div className="text-sm font-medium">{ABILITY_NAMES[field.key]}</div>
+            <div className="text-xs text-zinc-600">{ABILITY_BLURBS[field.key]}</div>
+          </div>
+        ))}
+      </div>
+
+      {dndClass && dndClass.primaryAbilities.length > 0 && (
+        <div className="rounded border border-amber-300 bg-amber-50 p-3 text-sm">
+          <span className="font-medium">
+            As a {dndClass.name}, {dndClass.primaryAbilities.map((key) => ABILITY_NAMES[key]).join(" and ")}{" "}
+            {dndClass.primaryAbilities.length > 1 ? "matter" : "matters"} most for you.
+          </span>
+          {dndClass.spellcastingAbility && (
+            <>
+              <span>
+                {" "}
+                {ABILITY_NAMES[dndClass.spellcastingAbility]} is your spellcasting ability - 
+                so a higher score makes your spells harder to resist and more likely to hit.
+              </span>
+              {(dndClass.id === "ranger" || dndClass.id === "paladin") && 
+                <span>
+                  <br/><br/>
+                  {dndClass.name}s have both martial and spellcasting abilities, so you might not necessarily want to have your spellcasting ability 
+                  as your highest score
+                </span>
+              }
+            </>
+          )}
+        </div>
+      )}
+
       {showAssignment && (
         <>
-          {abilityScoreGuidance === "guided" && (
-            <p className="text-sm text-zinc-600">
-              Assign 15, 14, 13, 12, 10, and 8 across your six abilities, one score per ability.
-            </p>
-          )}
+          <p className="text-sm text-zinc-600">
+            Assign 15, 14, 13, 12, 10, and 8 across your six abilities, one score per ability.
+          </p>
           <div className="flex flex-col gap-3">
             <h3 className="font-medium">Assign the standard array</h3>
             <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
@@ -201,6 +250,9 @@ export function AbilityScoreStep({
             </div>
           </div>
 
+          <div className="rounded border border-red-300 bg-red-50 p-3 text-sm">
+              Aim for even numbers! Only bumping a value up to an even number gives you extra stats (e.g. 14 and 15 give the same stats), so don&apos;t waste points bumping something up from even to odd!
+          </div>
           <div className="flex flex-col gap-3">
             <h3 className="font-medium">Ability score bonus</h3>
             <label className="flex flex-col gap-1">

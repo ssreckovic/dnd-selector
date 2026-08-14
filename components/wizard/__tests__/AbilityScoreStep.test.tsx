@@ -45,6 +45,7 @@ function AbilityScoreStepWithState({
 
   return (
     <AbilityScoreStep
+      classId={null}
       abilityScoreGuidance={guidance}
       abilityScoreMethod={method}
       abilityScores={scores}
@@ -77,6 +78,7 @@ describe("AbilityScoreStep", () => {
     const onChange = vi.fn();
     render(
       <AbilityScoreStep
+        classId={null}
         abilityScoreGuidance={null}
         abilityScoreMethod={null}
         abilityScores={null}
@@ -98,6 +100,7 @@ describe("AbilityScoreStep", () => {
   it("does not show the assignment UI until 'build my own' or 'walk me through' is chosen", () => {
     render(
       <AbilityScoreStep
+        classId={null}
         abilityScoreGuidance={null}
         abilityScoreMethod={null}
         abilityScores={null}
@@ -113,6 +116,7 @@ describe("AbilityScoreStep", () => {
     const onChange = vi.fn();
     render(
       <AbilityScoreStep
+        classId={null}
         abilityScoreGuidance={null}
         abilityScoreMethod={null}
         abilityScores={null}
@@ -131,6 +135,7 @@ describe("AbilityScoreStep", () => {
   it("shows a guided tip only when guidance is 'guided'", () => {
     render(
       <AbilityScoreStep
+        classId={null}
         abilityScoreGuidance="guided"
         abilityScoreMethod="standard-array"
         abilityScores={null}
@@ -245,6 +250,40 @@ describe("AbilityScoreStep", () => {
     const plusOneSelect = screen.getByLabelText("+1 ability") as HTMLSelectElement;
     const options = Array.from(plusOneSelect.options).map((o) => o.value);
     expect(options).not.toContain("str");
+  });
+
+  it("shows the class's primary abilities and spellcasting explanation when a class is chosen", () => {
+    render(
+      <AbilityScoreStep
+        classId="wizard"
+        abilityScoreGuidance={null}
+        abilityScoreMethod={null}
+        abilityScores={null}
+        abilityScoreBonusMode={null}
+        abilityScoreBonusAssignment={null}
+        onChange={vi.fn()}
+      />,
+    );
+    expect(screen.getByText(/as a wizard, intelligence matters most for you/i)).toBeInTheDocument();
+    expect(screen.getByText(/spellcasting ability/i)).toBeInTheDocument();
+  });
+
+  it("does not show a spellcasting explanation for non-caster classes", () => {
+    render(
+      <AbilityScoreStep
+        classId="barbarian"
+        abilityScoreGuidance={null}
+        abilityScoreMethod={null}
+        abilityScores={null}
+        abilityScoreBonusMode={null}
+        abilityScoreBonusAssignment={null}
+        onChange={vi.fn()}
+      />,
+    );
+    expect(
+      screen.getByText(/as a barbarian, strength and constitution matter most for you/i),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/spellcasting ability/i)).not.toBeInTheDocument();
   });
 
   it("clears the prior bonus assignment when switching bonus mode", async () => {
