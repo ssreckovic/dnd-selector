@@ -132,11 +132,11 @@ describe("AbilityScoreStep", () => {
     });
   });
 
-  it("shows a guided tip only when guidance is 'guided'", () => {
+  it("shows a guided tip once manual guidance is chosen", () => {
     render(
       <AbilityScoreStep
         classId={null}
-        abilityScoreGuidance="guided"
+        abilityScoreGuidance="manual"
         abilityScoreMethod="standard-array"
         abilityScores={null}
         abilityScoreBonusMode={null}
