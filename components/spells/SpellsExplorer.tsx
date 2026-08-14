@@ -36,6 +36,7 @@ export function SpellsExplorer () {
 	const limits = classId ? SPELL_LIMITS[classId] : undefined;
 
 	const [selections, setSelections] = useState<Record<string, string[]>>({});
+	const [expandedSpells, setExpandedSpells] = useState<Set<string>>(new Set());
 	const [copyState, setCopyState] = useState<"idle" | "copied">("idle");
 	const [sheetsState, setSheetsState] = useState<"idle" | "sending" | "sent" | "error">("idle");
 	const [playerName, setPlayerName] = useState("");
@@ -86,6 +87,18 @@ export function SpellsExplorer () {
 		});
 	}
 
+	function toggleExpanded (spellName: string) {
+		setExpandedSpells((prev) => {
+			const next = new Set(prev);
+			if (next.has(spellName)) {
+				next.delete(spellName);
+			} else {
+				next.add(spellName);
+			}
+			return next;
+		});
+	}
+
 	function clearSelections () {
 		if (!classId) return;
 		setSelections((prev) => ({ ...prev, [classId]: [] }));
@@ -122,6 +135,10 @@ export function SpellsExplorer () {
 
 	return (
 		<div className="flex flex-col gap-6">
+			<div className="h-32">
+				<img src="/img/lan-wizard.png" className="h-auto"/>
+				<img src="/img/sticks.png" className="ml-12 h-auto"/>
+			</div>
 			<h1 className="text-2xl font-semibold">Class spells</h1>
 			<p className="text-zinc-600">
 				A quick reference for what each spellcasting class has access to, from cantrips through
@@ -236,9 +253,22 @@ export function SpellsExplorer () {
 											<div className="mt-2 flex flex-col md:grid grid-cols-2 lg:grid-cols-3 gap-2">
 												{spellList[section.key].map((spell) => {
 													const isSelected = selected.includes(spell.name);
+													const isExpanded = expandedSpells.has(spell.name);
 													return (
-														<details key={spell.name} className="rounded border border-zinc-200 p-2 h-min">
-															<summary className="flex items-center justify-between gap-2 text-sm font-medium">
+														<div
+															key={spell.name}
+															role="button"
+															tabIndex={0}
+															onClick={() => toggleExpanded(spell.name)}
+															onKeyDown={(e) => {
+																if (e.key === "Enter" || e.key === " ") {
+																	e.preventDefault();
+																	toggleExpanded(spell.name);
+																}
+															}}
+															className="cursor-pointer rounded border border-zinc-200 p-2 h-min"
+														>
+															<div className="flex items-center justify-between gap-2 text-sm font-medium">
 																<span>
 																	{spell.name}
 																	<span className="ml-2 font-normal text-zinc-500">{spell.school}</span>
@@ -251,30 +281,30 @@ export function SpellsExplorer () {
 																	onClick={(e) => e.stopPropagation()}
 																	onChange={() => toggleSpell(spell.name, isCantrip)}
 																/>
-															</summary>
-															<dl className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2 text-xs text-zinc-600 sm:grid-cols-3">
-																<div>
-																	<dt className="font-bold">Cast time</dt>
-																	<dd>{spell.castTime}</dd>
-																</div>
-																<div>
-																	<dt className="font-bold">Range</dt>
-																	<dd>{spell.range}</dd>
-																</div>
-																<div>
-																	<dt className="font-bold">Duration</dt>
-																	<dd>{spell.duration}</dd>
-																</div>
-																{/* <div>
-																	<dt className="font-medium">Components</dt>
-																	<dd>{spell.components}</dd>
-																</div> */}
-															</dl>
-															<hr className="my-1"/>
-															<p className="mt-2 whitespace-pre-line text-sm text-zinc-700">
-																{spell.description}
-															</p>
-														</details>
+															</div>
+															{isExpanded && (
+																<>
+																	<dl className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2 text-xs text-zinc-600 sm:grid-cols-3">
+																		<div>
+																			<dt className="font-bold">Cast time</dt>
+																			<dd>{spell.castTime}</dd>
+																		</div>
+																		<div>
+																			<dt className="font-bold">Range</dt>
+																			<dd>{spell.range}</dd>
+																		</div>
+																		<div>
+																			<dt className="font-bold">Duration</dt>
+																			<dd>{spell.duration}</dd>
+																		</div>
+																	</dl>
+																	<hr className="my-1"/>
+																	<p className="mt-2 whitespace-pre-line text-sm text-zinc-700">
+																		{spell.description}
+																	</p>
+																</>
+															)}
+														</div>
 													);
 												})}
 											</div>
