@@ -1,3 +1,5 @@
+import { assetPath } from "@/lib/asset-path";
+
 const CLASS_IMAGES: Record<string, string> = {
    barbarian: "/img/lan-blade.png",
    bard: "/img/lan-gold.png",
@@ -19,7 +21,7 @@ export default function ClassImages({ className }: { className: string }) {
 
    return (
       <img
-         src={src}
+         src={assetPath(src)}
          alt={className}
          className="h-40 w-fit object-contain"
       />
