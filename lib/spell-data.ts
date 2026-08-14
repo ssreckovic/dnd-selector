@@ -295,19 +295,19 @@ export const SPELLS: Spell[] = [
       "wizard"
     ]
   },
-  {
-    "name": "Hand of Radiance (UA)",
-    "level": 0,
-    "school": "Evocation",
-    "castTime": "1 Action",
-    "range": "5 feet",
-    "duration": "Instantaneous",
-    "components": "V, S",
-    "description": "You raise your hand, and burning radiance erupts from it. Each creature of your choice that you can see within 5 feet of you must succeed on a Constitution saving throw or take 1d6 radiant damage.\n\nAt Higher Levels: The spell's damage increases by 1d6 when you reach 5th level (2d6), 11th level (3d6), and 17th level (4d8).",
-    "classes": [
-      "cleric"
-    ]
-  },
+  // {
+  //   "name": "Hand of Radiance (UA)",
+  //   "level": 0,
+  //   "school": "Evocation",
+  //   "castTime": "1 Action",
+  //   "range": "5 feet",
+  //   "duration": "Instantaneous",
+  //   "components": "V, S",
+  //   "description": "You raise your hand, and burning radiance erupts from it. Each creature of your choice that you can see within 5 feet of you must succeed on a Constitution saving throw or take 1d6 radiant damage.\n\nAt Higher Levels: The spell's damage increases by 1d6 when you reach 5th level (2d6), 11th level (3d6), and 17th level (4d8).",
+  //   "classes": [
+  //     "cleric"
+  //   ]
+  // },
   {
     "name": "Infestation",
     "level": 0,
@@ -463,21 +463,21 @@ export const SPELLS: Spell[] = [
       "wizard"
     ]
   },
-  {
-    "name": "On/Off (UA)",
-    "level": 0,
-    "school": "Transmutation",
-    "castTime": "1 Action",
-    "range": "60 Feet",
-    "duration": "Instantaneous",
-    "components": "V, S",
-    "description": "This cantrip allows you to activate or deactivate any electronic device within range, as long as the device has a clearly defined on or off function that can be easily accessed from the outside of the device. Any device that requires a software-based shutdown sequence to activate or deactivate cannot be affected by On/Off.",
-    "classes": [
-      "sorcerer",
-      "warlock",
-      "wizard"
-    ]
-  },
+  // {
+  //   "name": "On/Off (UA)",
+  //   "level": 0,
+  //   "school": "Transmutation",
+  //   "castTime": "1 Action",
+  //   "range": "60 Feet",
+  //   "duration": "Instantaneous",
+  //   "components": "V, S",
+  //   "description": "This cantrip allows you to activate or deactivate any electronic device within range, as long as the device has a clearly defined on or off function that can be easily accessed from the outside of the device. Any device that requires a software-based shutdown sequence to activate or deactivate cannot be affected by On/Off.",
+  //   "classes": [
+  //     "sorcerer",
+  //     "warlock",
+  //     "wizard"
+  //   ]
+  // },
   {
     "name": "Poison Spray",
     "level": 0,
@@ -747,19 +747,19 @@ export const SPELLS: Spell[] = [
       "bard"
     ]
   },
-  {
-    "name": "Virtue (UA)",
-    "level": 0,
-    "school": "Abjuration",
-    "castTime": "1 Action",
-    "range": "Touch",
-    "duration": "1 round",
-    "components": "V, S",
-    "description": "You touch one creature, imbuing it with vitality. If the target has at least 1 hit point, it gains a number of temporary hit points equal to 1d4 + your spellcasting ability modifier. The temporary hit points are lost when the spell ends.",
-    "classes": [
-      "cleric"
-    ]
-  },
+  // {
+  //   "name": "Virtue (UA)",
+  //   "level": 0,
+  //   "school": "Abjuration",
+  //   "castTime": "1 Action",
+  //   "range": "Touch",
+  //   "duration": "1 round",
+  //   "components": "V, S",
+  //   "description": "You touch one creature, imbuing it with vitality. If the target has at least 1 hit point, it gains a number of temporary hit points equal to 1d4 + your spellcasting ability modifier. The temporary hit points are lost when the spell ends.",
+  //   "classes": [
+  //     "cleric"
+  //   ]
+  // },
   {
     "name": "Word of Radiance",
     "level": 0,
@@ -789,20 +789,20 @@ export const SPELLS: Spell[] = [
       "wizard"
     ]
   },
-  {
-    "name": "Acid Stream (UA)",
-    "level": 1,
-    "school": "Evocation",
-    "castTime": "1 Action",
-    "range": "Self (30-foot line)",
-    "duration": "Concentration, up to 1 minute",
-    "components": "V, S, M (a bit of rotten food)",
-    "description": "A stream of acid emanates from you in a line 30 feet long and 5 feet wide in a direction you choose. Each creature in the line must succeed on a Dexterity saving throw or be covered in acid for the spell’s duration or until a creature uses its action to scrape or wash the acid off itself or another creature. A creature covered in the acid takes 3d4 acid damage at the start of each of its turns.\n\nAt Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d4 for each slot level above 1st.",
-    "classes": [
-      "sorcerer",
-      "wizard"
-    ]
-  },
+  // {
+  //   "name": "Acid Stream (UA)",
+  //   "level": 1,
+  //   "school": "Evocation",
+  //   "castTime": "1 Action",
+  //   "range": "Self (30-foot line)",
+  //   "duration": "Concentration, up to 1 minute",
+  //   "components": "V, S, M (a bit of rotten food)",
+  //   "description": "A stream of acid emanates from you in a line 30 feet long and 5 feet wide in a direction you choose. Each creature in the line must succeed on a Dexterity saving throw or be covered in acid for the spell’s duration or until a creature uses its action to scrape or wash the acid off itself or another creature. A creature covered in the acid takes 3d4 acid damage at the start of each of its turns.\n\nAt Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d4 for each slot level above 1st.",
+  //   "classes": [
+  //     "sorcerer",
+  //     "wizard"
+  //   ]
+  // },
   {
     "name": "Alarm",
     "level": 1,
@@ -1393,22 +1393,22 @@ export const SPELLS: Spell[] = [
       "cleric"
     ]
   },
-  {
-    "name": "Guiding Hand (UA)",
-    "level": 1,
-    "school": "Divination",
-    "castTime": "1 Minute",
-    "range": "5 feet",
-    "duration": "Concentration, up to 8 hours",
-    "components": "V, S",
-    "description": "You create a Tiny incorporeal hand of shimmering light in an unoccupied space you can see within range. The hand exists for the duration, but it disappears if you teleport or you travel to a different plane of existence.\n\nWhen the hand appears, you name one major landmark, such as a city, mountain, castle, or battlefield on the same plane of existence as you. Someone in history must have visited the site and mapped it. If the landmark appears on no map in existence, the spell fails. Otherwise, whenever you move toward the hand, it moves away from you at the same speed you moved, and it moves in the direction of the landmark, always remaining 5 feet away from you.\n\nIf you don’t move toward the hand, it remains in place until you do and beckons for you to follow once every 1d4 minutes.",
-    "classes": [
-      "bard",
-      "cleric",
-      "druid",
-      "wizard"
-    ]
-  },
+  // {
+  //   "name": "Guiding Hand (UA)",
+  //   "level": 1,
+  //   "school": "Divination",
+  //   "castTime": "1 Minute",
+  //   "range": "5 feet",
+  //   "duration": "Concentration, up to 8 hours",
+  //   "components": "V, S",
+  //   "description": "You create a Tiny incorporeal hand of shimmering light in an unoccupied space you can see within range. The hand exists for the duration, but it disappears if you teleport or you travel to a different plane of existence.\n\nWhen the hand appears, you name one major landmark, such as a city, mountain, castle, or battlefield on the same plane of existence as you. Someone in history must have visited the site and mapped it. If the landmark appears on no map in existence, the spell fails. Otherwise, whenever you move toward the hand, it moves away from you at the same speed you moved, and it moves in the direction of the landmark, always remaining 5 feet away from you.\n\nIf you don’t move toward the hand, it remains in place until you do and beckons for you to follow once every 1d4 minutes.",
+  //   "classes": [
+  //     "bard",
+  //     "cleric",
+  //     "druid",
+  //     "wizard"
+  //   ]
+  // },
   {
     "name": "Hail of Thorns",
     "level": 1,
@@ -1422,20 +1422,20 @@ export const SPELLS: Spell[] = [
       "ranger"
     ]
   },
-  {
-    "name": "Healing Elixir (UA)",
-    "level": 1,
-    "school": "Conjuration",
-    "castTime": "1 Minute",
-    "range": "Self",
-    "duration": "24 hours",
-    "components": "V, S, M (alchemist’s supplies)",
-    "description": "You create a healing elixir in a simple vial that appears in your hand. The elixir retains its potency for the duration or until it’s consumed, at which point the vial vanishes.\n\nAs an action, a creature can drink the elixir or administer it to another creature. The drinker regains 2d4 + 2 hit points.",
-    "classes": [
-      "warlock",
-      "wizard"
-    ]
-  },
+  // {
+  //   "name": "Healing Elixir (UA)",
+  //   "level": 1,
+  //   "school": "Conjuration",
+  //   "castTime": "1 Minute",
+  //   "range": "Self",
+  //   "duration": "24 hours",
+  //   "components": "V, S, M (alchemist’s supplies)",
+  //   "description": "You create a healing elixir in a simple vial that appears in your hand. The elixir retains its potency for the duration or until it’s consumed, at which point the vial vanishes.\n\nAs an action, a creature can drink the elixir or administer it to another creature. The drinker regains 2d4 + 2 hit points.",
+  //   "classes": [
+  //     "warlock",
+  //     "wizard"
+  //   ]
+  // },
   {
     "name": "Healing Word",
     "level": 1,
@@ -1519,21 +1519,21 @@ export const SPELLS: Spell[] = [
       "wizard"
     ]
   },
-  {
-    "name": "Id Insinuation (UA)",
-    "level": 1,
-    "school": "Enchantment",
-    "castTime": "1 Action",
-    "range": "60 Feet",
-    "duration": "Concentration, up to 1 minute",
-    "components": "V, S",
-    "description": "You unleash a torrent of conflicting desires in the mind of one creature you can see within range, impairing its ability to make decisions. The target must succeed on a Wisdom saving throw or be incapacitated. At the end of each of its turns, it takes 1d12 psychic damage, and it can then make another Wisdom saving throw. On a success, the spell ends on the target.",
-    "classes": [
-      "sorcerer",
-      "warlock",
-      "wizard"
-    ]
-  },
+  // {
+  //   "name": "Id Insinuation (UA)",
+  //   "level": 1,
+  //   "school": "Enchantment",
+  //   "castTime": "1 Action",
+  //   "range": "60 Feet",
+  //   "duration": "Concentration, up to 1 minute",
+  //   "components": "V, S",
+  //   "description": "You unleash a torrent of conflicting desires in the mind of one creature you can see within range, impairing its ability to make decisions. The target must succeed on a Wisdom saving throw or be incapacitated. At the end of each of its turns, it takes 1d12 psychic damage, and it can then make another Wisdom saving throw. On a success, the spell ends on the target.",
+  //   "classes": [
+  //     "sorcerer",
+  //     "warlock",
+  //     "wizard"
+  //   ]
+  // },
   {
     "name": "Identify",
     "level": 1,
@@ -1563,21 +1563,21 @@ export const SPELLS: Spell[] = [
       "wizard"
     ]
   },
-  {
-    "name": "Infallible Relay (UA)",
-    "level": 1,
-    "school": "Divination",
-    "castTime": "1 Minute",
-    "range": "Self",
-    "duration": "Concentration, up to 10 minutes",
-    "components": "V, S, M (a mobile phone)",
-    "description": "With this spell, you can target any creature with whom you have spoken previously, as long as the two of you are on the same plane of existence. When you cast the spell, the nearest functioning telephone or similar communications device within 100 feet of the target begins to ring. If there is no suitable device close enough to the target, the spell fails.\n\nThe target must make a successful Charisma saving throw or be compelled to answer your call. Once the connection is established, the call is crystal clear and cannot be dropped until the conversation has ended or the spell’s duration ends. You can end the conversation at any time, but a target must succeed on a Charisma saving throw to end the conversation.",
-    "classes": [
-      "sorcerer",
-      "warlock",
-      "wizard"
-    ]
-  },
+  // {
+  //   "name": "Infallible Relay (UA)",
+  //   "level": 1,
+  //   "school": "Divination",
+  //   "castTime": "1 Minute",
+  //   "range": "Self",
+  //   "duration": "Concentration, up to 10 minutes",
+  //   "components": "V, S, M (a mobile phone)",
+  //   "description": "With this spell, you can target any creature with whom you have spoken previously, as long as the two of you are on the same plane of existence. When you cast the spell, the nearest functioning telephone or similar communications device within 100 feet of the target begins to ring. If there is no suitable device close enough to the target, the spell fails.\n\nThe target must make a successful Charisma saving throw or be compelled to answer your call. Once the connection is established, the call is crystal clear and cannot be dropped until the conversation has ended or the spell’s duration ends. You can end the conversation at any time, but a target must succeed on a Charisma saving throw to end the conversation.",
+  //   "classes": [
+  //     "sorcerer",
+  //     "warlock",
+  //     "wizard"
+  //   ]
+  // },
   {
     "name": "Inflict Wounds",
     "level": 1,
@@ -1694,21 +1694,21 @@ export const SPELLS: Spell[] = [
       "wizard"
     ]
   },
-  {
-    "name": "Puppet (UA)",
-    "level": 1,
-    "school": "Enchantment",
-    "castTime": "1 Action",
-    "range": "120 Feet",
-    "duration": "Instantaneous",
-    "components": "V",
-    "description": "Your gesture forces one humanoid you can see within range to make a Constitution saving throw. On a failed save, the target must move up to its speed in a direction you choose. In addition, you can cause the target to drop whatever it is holding. This spell has no effect on a humanoid that is immune to being charmed.",
-    "classes": [
-      "bard",
-      "warlock",
-      "wizard"
-    ]
-  },
+  // {
+  //   "name": "Puppet (UA)",
+  //   "level": 1,
+  //   "school": "Enchantment",
+  //   "castTime": "1 Action",
+  //   "range": "120 Feet",
+  //   "duration": "Instantaneous",
+  //   "components": "V",
+  //   "description": "Your gesture forces one humanoid you can see within range to make a Constitution saving throw. On a failed save, the target must move up to its speed in a direction you choose. In addition, you can cause the target to drop whatever it is holding. This spell has no effect on a humanoid that is immune to being charmed.",
+  //   "classes": [
+  //     "bard",
+  //     "warlock",
+  //     "wizard"
+  //   ]
+  // },
   {
     "name": "Purify Food and Drink",
     "level": 1,
@@ -1738,21 +1738,21 @@ export const SPELLS: Spell[] = [
       "wizard"
     ]
   },
-  {
-    "name": "Remote Access (UA)",
-    "level": 1,
-    "school": "Transmutation",
-    "castTime": "1 Action",
-    "range": "120 Feet",
-    "duration": "10 minutes",
-    "components": "V, S",
-    "description": "You can use any electronic device within range as if it were in your hands. This is not a telekinesis effect. Rather, this spell allows you to simulate a device's mechanical functions electronically. You are able to access only functions that a person using the device manually would be able to access. You can use remote access with only one device at a time.",
-    "classes": [
-      "sorcerer",
-      "warlock",
-      "wizard"
-    ]
-  },
+  // {
+  //   "name": "Remote Access (UA)",
+  //   "level": 1,
+  //   "school": "Transmutation",
+  //   "castTime": "1 Action",
+  //   "range": "120 Feet",
+  //   "duration": "10 minutes",
+  //   "components": "V, S",
+  //   "description": "You can use any electronic device within range as if it were in your hands. This is not a telekinesis effect. Rather, this spell allows you to simulate a device's mechanical functions electronically. You are able to access only functions that a person using the device manually would be able to access. You can use remote access with only one device at a time.",
+  //   "classes": [
+  //     "sorcerer",
+  //     "warlock",
+  //     "wizard"
+  //   ]
+  // },
   {
     "name": "Sanctuary",
     "level": 1,
@@ -1780,21 +1780,21 @@ export const SPELLS: Spell[] = [
       "ranger"
     ]
   },
-  {
-    "name": "Sense Emotion (UA)",
-    "level": 1,
-    "school": "Divination",
-    "castTime": "1 Action",
-    "range": "Self",
-    "duration": "Concentration, up to 1 minute",
-    "components": "V, S",
-    "description": "You attune your senses to pick up the emotions of others for the duration. When you cast the spell, and as your action on each turn until the spell ends, you can focus your senses on one humanoid you can see within 30 feet of you. You instantly learn the target’s prevailing emotion, whether it’s love, anger, pain, fear, calm, or something else. If the target isn’t actually humanoid or it is immune to being charmed, you sense that it is calm.",
-    "classes": [
-      "bard",
-      "warlock",
-      "wizard"
-    ]
-  },
+  // {
+  //   "name": "Sense Emotion (UA)",
+  //   "level": 1,
+  //   "school": "Divination",
+  //   "castTime": "1 Action",
+  //   "range": "Self",
+  //   "duration": "Concentration, up to 1 minute",
+  //   "components": "V, S",
+  //   "description": "You attune your senses to pick up the emotions of others for the duration. When you cast the spell, and as your action on each turn until the spell ends, you can focus your senses on one humanoid you can see within 30 feet of you. You instantly learn the target’s prevailing emotion, whether it’s love, anger, pain, fear, calm, or something else. If the target isn’t actually humanoid or it is immune to being charmed, you sense that it is calm.",
+  //   "classes": [
+  //     "bard",
+  //     "warlock",
+  //     "wizard"
+  //   ]
+  // },
   {
     "name": "Shield",
     "level": 1,
@@ -1883,22 +1883,22 @@ export const SPELLS: Spell[] = [
       "ranger"
     ]
   },
-  {
-    "name": "Sudden Awakening (UA)",
-    "level": 1,
-    "school": "Enchantment",
-    "castTime": "1 Bonus Action",
-    "range": "10 feet",
-    "duration": "Instantaneous",
-    "components": "V",
-    "description": "Each sleeping creature you choose within range awakens, and then each prone creature within range can stand up without expending any movement.",
-    "classes": [
-      "bard",
-      "ranger",
-      "sorcerer",
-      "wizard"
-    ]
-  },
+  // {
+  //   "name": "Sudden Awakening (UA)",
+  //   "level": 1,
+  //   "school": "Enchantment",
+  //   "castTime": "1 Bonus Action",
+  //   "range": "10 feet",
+  //   "duration": "Instantaneous",
+  //   "components": "V",
+  //   "description": "Each sleeping creature you choose within range awakens, and then each prone creature within range can stand up without expending any movement.",
+  //   "classes": [
+  //     "bard",
+  //     "ranger",
+  //     "sorcerer",
+  //     "wizard"
+  //   ]
+  // },
   {
     "name": "Tasha's Caustic Brew",
     "level": 1,
@@ -1969,19 +1969,19 @@ export const SPELLS: Spell[] = [
       "wizard"
     ]
   },
-  {
-    "name": "Unearthly Chorus (UA)",
-    "level": 1,
-    "school": "Illusion",
-    "castTime": "1 Action",
-    "range": "Self (30-foot radius)",
-    "duration": "Concentration, up to 10 minutes",
-    "components": "V",
-    "description": "Music of a style you choose fills the air around you in a 30-foot radius. The music spreads around corners and can be heard from up to 100 feet away. The music moves with you, centered on you for the duration.\n\nUntil the spell ends, you make Charisma (Performance) checks with advantage. In addition, you can use a bonus action on each of your turns to beguile one creature you choose within 30 feet of you that can see you and hear the music. The creature must make a Charisma saving throw. If you or your companions are attacking it, the creature automatically succeeds on the saving throw. On a failure, the creature becomes friendly to you for as long as it can hear the music and for 1 hour thereafter. You make Charisma (Deception) checks and Charisma (Persuasion) checks against creatures made friendly by this spell with advantage.",
-    "classes": [
-      "bard"
-    ]
-  },
+  // {
+  //   "name": "Unearthly Chorus (UA)",
+  //   "level": 1,
+  //   "school": "Illusion",
+  //   "castTime": "1 Action",
+  //   "range": "Self (30-foot radius)",
+  //   "duration": "Concentration, up to 10 minutes",
+  //   "components": "V",
+  //   "description": "Music of a style you choose fills the air around you in a 30-foot radius. The music spreads around corners and can be heard from up to 100 feet away. The music moves with you, centered on you for the duration.\n\nUntil the spell ends, you make Charisma (Performance) checks with advantage. In addition, you can use a bonus action on each of your turns to beguile one creature you choose within 30 feet of you that can see you and hear the music. The creature must make a Charisma saving throw. If you or your companions are attacking it, the creature automatically succeeds on the saving throw. On a failure, the creature becomes friendly to you for as long as it can hear the music and for 1 hour thereafter. You make Charisma (Deception) checks and Charisma (Persuasion) checks against creatures made friendly by this spell with advantage.",
+  //   "classes": [
+  //     "bard"
+  //   ]
+  // },
   {
     "name": "Unseen Servant",
     "level": 1,
@@ -1997,20 +1997,20 @@ export const SPELLS: Spell[] = [
       "wizard"
     ]
   },
-  {
-    "name": "Wild Cunning (UA)",
-    "level": 1,
-    "school": "Transmutation",
-    "castTime": "1 Action",
-    "range": "120 Feet",
-    "duration": "Instantaneous",
-    "components": "V, S",
-    "description": "You call out to the spirits of nature to aid you. When you cast this spell, choose one of the following effects:\n\nIf there are any tracks on the ground within range, you know where they are, and you make Wisdom (Survival) checks to follow these tracks with advantage for 1 hour or until you cast this spell again.\nIf there is edible forage within range, you know it and where to find it.\nIf there is clean drinking water within range, you know it and where to find it.\nIf there is suitable shelter for you and your companions within range, you know it and where to find it.\nSend the spirits to bring back wood for a fire and to set up a campsite in the area using your supplies. The spirits build the fire in a circle of stones, put up tents, unroll bedrolls, and put out any rations and water for consumption.\nHave the spirits instantly break down a campsite, which includes putting out a fire, taking down tents, packing up bags, and burying any rubbish.",
-    "classes": [
-      "druid",
-      "ranger"
-    ]
-  },
+  // {
+  //   "name": "Wild Cunning (UA)",
+  //   "level": 1,
+  //   "school": "Transmutation",
+  //   "castTime": "1 Action",
+  //   "range": "120 Feet",
+  //   "duration": "Instantaneous",
+  //   "components": "V, S",
+  //   "description": "You call out to the spirits of nature to aid you. When you cast this spell, choose one of the following effects:\n\nIf there are any tracks on the ground within range, you know where they are, and you make Wisdom (Survival) checks to follow these tracks with advantage for 1 hour or until you cast this spell again.\nIf there is edible forage within range, you know it and where to find it.\nIf there is clean drinking water within range, you know it and where to find it.\nIf there is suitable shelter for you and your companions within range, you know it and where to find it.\nSend the spirits to bring back wood for a fire and to set up a campsite in the area using your supplies. The spirits build the fire in a circle of stones, put up tents, unroll bedrolls, and put out any rations and water for consumption.\nHave the spirits instantly break down a campsite, which includes putting out a fire, taking down tents, packing up bags, and burying any rubbish.",
+  //   "classes": [
+  //     "druid",
+  //     "ranger"
+  //   ]
+  // },
   {
     "name": "Witch Bolt",
     "level": 1,
@@ -2111,21 +2111,21 @@ export const SPELLS: Spell[] = [
       // "ranger"
     ]
   },
-  {
-    "name": "Arcane Hacking (UA)",
-    "level": 2,
-    "school": "Transmutation",
-    "castTime": "1 Action",
-    "range": "Self",
-    "duration": "Concentration, up to 1 hour",
-    "components": "V, S, M (hacking tools)",
-    "description": "You gain advantage on all Intelligence checks using hacking tools to break software encryption or online security when using a foreign system.\n\nThis spell also allows you to break 2nd level and lower protective spells such as Arcane Lock or Glyph of Warding by making an Intelligence check using hacking tools against the spell save DC of the spell’s caster.\n\nAt Higher Levels. When you cast this spell using a spell slot of 3rd level or higher, you can attempt to counteract a spell set to secure the foreign system if the spell’s level is equal to or less than the level of the spell slot you used.",
-    "classes": [
-      "sorcerer",
-      "warlock",
-      "wizard"
-    ]
-  },
+  // {
+  //   "name": "Arcane Hacking (UA)",
+  //   "level": 2,
+  //   "school": "Transmutation",
+  //   "castTime": "1 Action",
+  //   "range": "Self",
+  //   "duration": "Concentration, up to 1 hour",
+  //   "components": "V, S, M (hacking tools)",
+  //   "description": "You gain advantage on all Intelligence checks using hacking tools to break software encryption or online security when using a foreign system.\n\nThis spell also allows you to break 2nd level and lower protective spells such as Arcane Lock or Glyph of Warding by making an Intelligence check using hacking tools against the spell save DC of the spell’s caster.\n\nAt Higher Levels. When you cast this spell using a spell slot of 3rd level or higher, you can attempt to counteract a spell set to secure the foreign system if the spell’s level is equal to or less than the level of the spell slot you used.",
+  //   "classes": [
+  //     "sorcerer",
+  //     "warlock",
+  //     "wizard"
+  //   ]
+  // },
   {
     "name": "Arcane Lock",
     "level": 2,
@@ -2345,21 +2345,21 @@ export const SPELLS: Spell[] = [
       "wizard"
     ]
   },
-  {
-    "name": "Digital Phantom (UA)",
-    "level": 2,
-    "school": "Abjuration",
-    "castTime": "1 Action",
-    "range": "Self",
-    "duration": "Concentration, up to 1 hour",
-    "components": "V, S, M (a small piece of copper wire)",
-    "description": "This spell works to actively hide your presence within a computer system. For the spell’s duration, you and any other users you choose on your local network gain a +10 bonus to Intelligence checks to avoid detection by administrators, knowbots, tracking software, and the like. Whenever you and your chosen users leave any computer system you are working in while this spell is in effect, all trace of your previous presence in that system is erased.",
-    "classes": [
-      "sorcerer",
-      "warlock",
-      "wizard"
-    ]
-  },
+  // {
+  //   "name": "Digital Phantom (UA)",
+  //   "level": 2,
+  //   "school": "Abjuration",
+  //   "castTime": "1 Action",
+  //   "range": "Self",
+  //   "duration": "Concentration, up to 1 hour",
+  //   "components": "V, S, M (a small piece of copper wire)",
+  //   "description": "This spell works to actively hide your presence within a computer system. For the spell’s duration, you and any other users you choose on your local network gain a +10 bonus to Intelligence checks to avoid detection by administrators, knowbots, tracking software, and the like. Whenever you and your chosen users leave any computer system you are working in while this spell is in effect, all trace of your previous presence in that system is erased.",
+  //   "classes": [
+  //     "sorcerer",
+  //     "warlock",
+  //     "wizard"
+  //   ]
+  // },
   {
     "name": "Dragon's Breath",
     "level": 2,
@@ -2481,22 +2481,22 @@ export const SPELLS: Spell[] = [
       // "ranger"
     ]
   },
-  {
-    "name": "Find Vehicle (UA)",
-    "level": 2,
-    "school": "Conjuration",
-    "castTime": "10 Minutes",
-    "range": "30 Feet",
-    "duration": "8 hours",
-    "components": "V, S",
-    "description": "You summon a spirit that assumes the form of a nonmilitary land vehicle of your choice, appearing in an unoccupied space within range. The vehicle has the statistics of a normal vehicle of its sort, though it is celestial, fey, or fiendish (your choice in origin). The physical characteristics of the vehicle reflect its origin to some degree. For example, a fiendish SUV might be jet black in color, with tinted windows and a sinister-looking front grille.\n\nYou have a supernatural bond with the conjured vehicle that allows you to drive beyond your normal ability. While driving the conjured vehicle, you are considered proficient with vehicles of its type, and you add double your proficiency bonus to ability checks related to driving the vehicle. While driving the vehicle, you can make any spell you cast that targets only you also target the vehicle.\n\nIf the vehicle drops to 0 hit points, it disappears, leaving behind no physical form. You can also dismiss the vehicle at any time as an action, causing it to disappear.\n\nYou can't have more than one vehicle bonded by this spell at a time. As an action, you can release the vehicle from its bond at any time, causing it to disappear.\n\nAt Higher Levels. When you cast this spell using a spell slot of 3rd level or higher, you can conjure a nonmilitary water vehicle large enough to carry six Medium creatures. When you cast this spell using a spell slot of 5th level or higher, you can conjure a nonmilitary air vehicle large enough to carry ten Medium creatures. When you cast this spell using a spell slot of 7th level or higher, you can conjure any type of vehicle, subject to the DM's approval.",
-    "classes": [
-      // "paladin",
-      "sorcerer",
-      "warlock",
-      "wizard"
-    ]
-  },
+  // {
+  //   "name": "Find Vehicle (UA)",
+  //   "level": 2,
+  //   "school": "Conjuration",
+  //   "castTime": "10 Minutes",
+  //   "range": "30 Feet",
+  //   "duration": "8 hours",
+  //   "components": "V, S",
+  //   "description": "You summon a spirit that assumes the form of a nonmilitary land vehicle of your choice, appearing in an unoccupied space within range. The vehicle has the statistics of a normal vehicle of its sort, though it is celestial, fey, or fiendish (your choice in origin). The physical characteristics of the vehicle reflect its origin to some degree. For example, a fiendish SUV might be jet black in color, with tinted windows and a sinister-looking front grille.\n\nYou have a supernatural bond with the conjured vehicle that allows you to drive beyond your normal ability. While driving the conjured vehicle, you are considered proficient with vehicles of its type, and you add double your proficiency bonus to ability checks related to driving the vehicle. While driving the vehicle, you can make any spell you cast that targets only you also target the vehicle.\n\nIf the vehicle drops to 0 hit points, it disappears, leaving behind no physical form. You can also dismiss the vehicle at any time as an action, causing it to disappear.\n\nYou can't have more than one vehicle bonded by this spell at a time. As an action, you can release the vehicle from its bond at any time, causing it to disappear.\n\nAt Higher Levels. When you cast this spell using a spell slot of 3rd level or higher, you can conjure a nonmilitary water vehicle large enough to carry six Medium creatures. When you cast this spell using a spell slot of 5th level or higher, you can conjure a nonmilitary air vehicle large enough to carry ten Medium creatures. When you cast this spell using a spell slot of 7th level or higher, you can conjure any type of vehicle, subject to the DM's approval.",
+  //   "classes": [
+  //     // "paladin",
+  //     "sorcerer",
+  //     "warlock",
+  //     "wizard"
+  //   ]
+  // },
   {
     "name": "Flame Blade",
     "level": 2,
@@ -2644,20 +2644,20 @@ export const SPELLS: Spell[] = [
       "wizard"
     ]
   },
-  {
-    "name": "Icingdeath's Frost (UA)",
-    "level": 2,
-    "school": "Evocation",
-    "castTime": "1 Action",
-    "range": "Self (15-foot cone)",
-    "duration": "Instantaneous",
-    "components": "S, M (a vial of meltwater)",
-    "description": "A burst of icy cold energy emanates from you in a 30-foot cone. Each creature in that area must make a Constitution saving throw. On a failed save, a creature takes 3d8 cold damage and is covered in ice for 1 minute or until a creature uses its action to break the ice off itself or another creature. A creature covered in ice has its speed reduced to 0. On a successful save, a creature takes half as much damage with no additional effects.\n\nAt Higher Levels. When you cast this spell using a spell slot of 3rd level or higher, increase the cold damage by 1d8 for each slot level above 2nd.",
-    "classes": [
-      "sorcerer",
-      "wizard"
-    ]
-  },
+  // {
+  //   "name": "Icingdeath's Frost (UA)",
+  //   "level": 2,
+  //   "school": "Evocation",
+  //   "castTime": "1 Action",
+  //   "range": "Self (15-foot cone)",
+  //   "duration": "Instantaneous",
+  //   "components": "S, M (a vial of meltwater)",
+  //   "description": "A burst of icy cold energy emanates from you in a 30-foot cone. Each creature in that area must make a Constitution saving throw. On a failed save, a creature takes 3d8 cold damage and is covered in ice for 1 minute or until a creature uses its action to break the ice off itself or another creature. A creature covered in ice has its speed reduced to 0. On a successful save, a creature takes half as much damage with no additional effects.\n\nAt Higher Levels. When you cast this spell using a spell slot of 3rd level or higher, increase the cold damage by 1d8 for each slot level above 2nd.",
+  //   "classes": [
+  //     "sorcerer",
+  //     "wizard"
+  //   ]
+  // },
   {
     "name": "Immovable Object",
     "level": 2,
@@ -2836,21 +2836,21 @@ export const SPELLS: Spell[] = [
       "wizard"
     ]
   },
-  {
-    "name": "Mental Barrier (UA)",
-    "level": 2,
-    "school": "Abjuration",
-    "castTime": "1 Reaction",
-    "range": "Self",
-    "duration": "1 round",
-    "components": "V",
-    "description": "You protect your mind with a wall of looping, repetitive thought. Until the start of your next turn, you have advantage on Intelligence, Wisdom, and Charisma saving throws, and you have resistance to psychic damage.",
-    "classes": [
-      "sorcerer",
-      "warlock",
-      "wizard"
-    ]
-  },
+  // {
+  //   "name": "Mental Barrier (UA)",
+  //   "level": 2,
+  //   "school": "Abjuration",
+  //   "castTime": "1 Reaction",
+  //   "range": "Self",
+  //   "duration": "1 round",
+  //   "components": "V",
+  //   "description": "You protect your mind with a wall of looping, repetitive thought. Until the start of your next turn, you have advantage on Intelligence, Wisdom, and Charisma saving throws, and you have resistance to psychic damage.",
+  //   "classes": [
+  //     "sorcerer",
+  //     "warlock",
+  //     "wizard"
+  //   ]
+  // },
   {
     "name": "Mind Spike",
     "level": 2,
@@ -2866,21 +2866,21 @@ export const SPELLS: Spell[] = [
       "wizard"
     ]
   },
-  {
-    "name": "Mind Thrust (UA)",
-    "level": 2,
-    "school": "Enchantment",
-    "castTime": "1 Bonus Action",
-    "range": "60 Feet",
-    "duration": "1 round",
-    "components": "V, S",
-    "description": "You thrust a lance of psychic disruption into the mind of one creature you can see within range. The target must make an Intelligence saving throw. On a failed save, the target takes 3d6 psychic damage, and it can’t take a reaction until the end of its next turn. Moreover, on its next turn, it must choose whether it gets a move, an action, or a bonus action; it gets only one of the three. On a successful save, the target takes half as much damage and suffers none of the spell’s other effects.\n\nAt Higher Levels. When you cast this spell using a spell slot of 3rd level or higher, you can target one additional creature for each slot level above 2nd. The creatures must be within 30 feet of each other when you target them.",
-    "classes": [
-      "sorcerer",
-      "warlock",
-      "wizard"
-    ]
-  },
+  // {
+  //   "name": "Mind Thrust (UA)",
+  //   "level": 2,
+  //   "school": "Enchantment",
+  //   "castTime": "1 Bonus Action",
+  //   "range": "60 Feet",
+  //   "duration": "1 round",
+  //   "components": "V, S",
+  //   "description": "You thrust a lance of psychic disruption into the mind of one creature you can see within range. The target must make an Intelligence saving throw. On a failed save, the target takes 3d6 psychic damage, and it can’t take a reaction until the end of its next turn. Moreover, on its next turn, it must choose whether it gets a move, an action, or a bonus action; it gets only one of the three. On a successful save, the target takes half as much damage and suffers none of the spell’s other effects.\n\nAt Higher Levels. When you cast this spell using a spell slot of 3rd level or higher, you can target one additional creature for each slot level above 2nd. The creatures must be within 30 feet of each other when you target them.",
+  //   "classes": [
+  //     "sorcerer",
+  //     "warlock",
+  //     "wizard"
+  //   ]
+  // },
   {
     "name": "Mirror Image",
     "level": 2,
@@ -2925,21 +2925,21 @@ export const SPELLS: Spell[] = [
       "druid"
     ]
   },
-  {
-    "name": "Nathair's Mischief (UA)",
-    "level": 2,
-    "school": "Illusion",
-    "castTime": "1 Action",
-    "range": "60 Feet",
-    "duration": "Concentration, up to 1 minute",
-    "components": "S, M (a piece of crust from an apple pie)",
-    "description": "You fill a 20-foot cube centered on a point you choose within range with fey and draconic magic. Roll on the Mischievous Surge table to determine the magical effect produced. At the start of each of your turns, you can move the cube up to 10 feet and reroll on the table.\n\nMischievous Surge\nd4\tEffect\n1\tThe smell of apple pie fills the air, and each creature in the cube must succeed on a Wisdom saving throw or become charmed by you until the start of your next turn.\n2\tBouquets of flowers appear all around, and each creature in the cube must succeed on a Dexterity saving throw or be blinded until the start of your next turn as the flowers spray water in their faces.\n3\tEach creature in the cube must succeed on a Wisdom saving throw or begin giggling until the start of your next turn. A giggling creature is incapacitated and uses all its movement to move in a random direction.\n4\tDrops of molasses appear and hover in the cube, turning it into difficult terrain until the start of your next turn.",
-    "classes": [
-      "bard",
-      "sorcerer",
-      "wizard"
-    ]
-  },
+  // {
+  //   "name": "Nathair's Mischief (UA)",
+  //   "level": 2,
+  //   "school": "Illusion",
+  //   "castTime": "1 Action",
+  //   "range": "60 Feet",
+  //   "duration": "Concentration, up to 1 minute",
+  //   "components": "S, M (a piece of crust from an apple pie)",
+  //   "description": "You fill a 20-foot cube centered on a point you choose within range with fey and draconic magic. Roll on the Mischievous Surge table to determine the magical effect produced. At the start of each of your turns, you can move the cube up to 10 feet and reroll on the table.\n\nMischievous Surge\nd4\tEffect\n1\tThe smell of apple pie fills the air, and each creature in the cube must succeed on a Wisdom saving throw or become charmed by you until the start of your next turn.\n2\tBouquets of flowers appear all around, and each creature in the cube must succeed on a Dexterity saving throw or be blinded until the start of your next turn as the flowers spray water in their faces.\n3\tEach creature in the cube must succeed on a Wisdom saving throw or begin giggling until the start of your next turn. A giggling creature is incapacitated and uses all its movement to move in a random direction.\n4\tDrops of molasses appear and hover in the cube, turning it into difficult terrain until the start of your next turn.",
+  //   "classes": [
+  //     "bard",
+  //     "sorcerer",
+  //     "wizard"
+  //   ]
+  // },
   {
     "name": "Nystul's Magic Aura",
     "level": 2,
@@ -3244,21 +3244,21 @@ export const SPELLS: Spell[] = [
       "wizard"
     ]
   },
-  {
-    "name": "Thought Shield (UA)",
-    "level": 2,
-    "school": "Abjuration",
-    "castTime": "1 Action",
-    "range": "Touch",
-    "duration": "8 hours",
-    "components": "V, S",
-    "description": "You weave a clouding veil over the mind of one creature you touch. For the duration, the target’s mind can’t be read or detected, creatures can’t telepathically communicate with the target unless the target allows it, and the target has advantage on saving throws against any effect that would determine whether it is telling the truth.",
-    "classes": [
-      "sorcerer",
-      "warlock",
-      "wizard"
-    ]
-  },
+  // {
+  //   "name": "Thought Shield (UA)",
+  //   "level": 2,
+  //   "school": "Abjuration",
+  //   "castTime": "1 Action",
+  //   "range": "Touch",
+  //   "duration": "8 hours",
+  //   "components": "V, S",
+  //   "description": "You weave a clouding veil over the mind of one creature you touch. For the duration, the target’s mind can’t be read or detected, creatures can’t telepathically communicate with the target unless the target allows it, and the target has advantage on saving throws against any effect that would determine whether it is telling the truth.",
+  //   "classes": [
+  //     "sorcerer",
+  //     "warlock",
+  //     "wizard"
+  //   ]
+  // },
   {
     "name": "Warding Bond",
     "level": 2,
