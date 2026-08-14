@@ -4,29 +4,20 @@ import userEvent from "@testing-library/user-event";
 import { SubclassStep } from "@/components/wizard/SubclassStep";
 
 describe("SubclassStep", () => {
-  it("shows only the default subclasses initially", () => {
+  it("shows all subclasses", () => {
     render(
       <SubclassStep classId="fighter" subclassId={null} onSelectSubclass={vi.fn()} />,
     );
     expect(screen.getByRole("button", { name: /champion/i })).toBeInTheDocument();
-    expect(
-      screen.queryByRole("button", { name: /arcane archer/i }),
-    ).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /arcane archer/i })).toBeInTheDocument();
   });
 
-  it("reveals all subclasses after clicking the show-all toggle", async () => {
+  it("tags the first subclass as easy", () => {
     render(
       <SubclassStep classId="fighter" subclassId={null} onSelectSubclass={vi.fn()} />,
     );
-    await userEvent.click(screen.getByRole("button", { name: /show all subclasses/i }));
-    expect(screen.getByRole("button", { name: /arcane archer/i })).toBeInTheDocument();
-  });
-
-  it("shows all subclasses immediately when the selected subclass is not a default", () => {
-    render(
-      <SubclassStep classId="fighter" subclassId="arcane-archer" onSelectSubclass={vi.fn()} />,
-    );
-    expect(screen.getByRole("button", { name: /arcane archer/i })).toBeInTheDocument();
+    const champion = screen.getByRole("button", { name: /champion/i });
+    expect(champion).toHaveTextContent(/easy/i);
   });
 
   it("reports the selected subclass", async () => {

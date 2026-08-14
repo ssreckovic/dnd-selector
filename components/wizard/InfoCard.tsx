@@ -10,6 +10,7 @@ type InfoCardProps = {
   onSelect: () => void;
   padding?: "sm" | "md";
   footer?: ReactNode;
+  cornerTag?: ReactNode;
 };
 
 export function InfoCard({
@@ -20,6 +21,7 @@ export function InfoCard({
   onSelect,
   padding = "md",
   footer,
+  cornerTag,
 }: InfoCardProps) {
   const [showInfo, setShowInfo] = useState(false);
 
@@ -36,10 +38,11 @@ export function InfoCard({
       }}
       aria-pressed={selected}
       aria-label={name}
-      className={`rounded border text-left transition-colors ${padding === "sm" ? "p-3" : "p-4"} ${
+      className={`relative rounded border text-left transition-colors ${padding === "sm" ? "p-3" : "p-4"} ${
         selected ? "border-amber-600 bg-amber-50" : "border-zinc-300 hover:bg-zinc-50"
       }`}
     >
+      {cornerTag}
       <div className="flex items-center gap-2">
         <span className="font-medium">{name}</span>
       </div>
