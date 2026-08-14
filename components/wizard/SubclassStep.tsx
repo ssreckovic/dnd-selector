@@ -1,6 +1,6 @@
 "use client";
 
-import { getClass } from "@/lib/dnd-data";
+import { getClass, getSubclassWikiUrl } from "@/lib/dnd-data";
 import { InfoCard } from "@/components/wizard/InfoCard";
 import { CornerTag } from "@/components/wizard/CornerTag";
 
@@ -30,6 +30,7 @@ export function SubclassStep({ classId, subclassId, onSelectSubclass }: Subclass
             selected={subclass.id === subclassId}
             onSelect={() => onSelectSubclass(subclass.id)}
             cornerTag={subclass.easy ? <CornerTag>Easy</CornerTag> : undefined}
+            wikiUrl={getSubclassWikiUrl(cls.id, subclass.id)}
           />
         ))}
       </div>

@@ -11,6 +11,7 @@ type InfoCardProps = {
   padding?: "sm" | "md";
   footer?: ReactNode;
   cornerTag?: ReactNode;
+  wikiUrl?: string;
 };
 
 export function InfoCard({
@@ -22,6 +23,7 @@ export function InfoCard({
   padding = "md",
   footer,
   cornerTag,
+  wikiUrl,
 }: InfoCardProps) {
   const [showInfo, setShowInfo] = useState(false);
 
@@ -63,6 +65,19 @@ export function InfoCard({
           {detail.map((point) => (
             <li key={point}>{point}</li>
           ))}
+          {wikiUrl && (
+            <li className="list-none pl-0 -ml-4 mt-1">
+              <a
+                href={wikiUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="text-amber-700 underline"
+              >
+                View on D&D 5e Wiki
+              </a>
+            </li>
+          )}
         </ul>
       )}
       {footer && (

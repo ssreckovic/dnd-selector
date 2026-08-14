@@ -28,4 +28,17 @@ describe("SubclassStep", () => {
     await userEvent.click(screen.getByRole("button", { name: /champion/i }));
     expect(onSelectSubclass).toHaveBeenCalledWith("champion");
   });
+
+  it("links to the subclass's dnd5e wiki page in the info panel", async () => {
+    render(
+      <SubclassStep classId="fighter" subclassId={null} onSelectSubclass={vi.fn()} />,
+    );
+    const champion = screen.getByRole("button", { name: /champion/i });
+    await userEvent.click(
+      screen.getAllByRole("button", { name: /show info/i })[0],
+      { pointerEventsCheck: 0 },
+    );
+    const link = champion.querySelector("a");
+    expect(link).toHaveAttribute("href", "https://dnd5e.wikidot.com/fighter:champion");
+  });
 });
