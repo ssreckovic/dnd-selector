@@ -24,6 +24,8 @@ export type Subclass = {
 
 export type AbilityKey = "str" | "dex" | "con" | "int" | "wis" | "cha";
 
+export type ClassRole = "martial" | "caster" | "support" | "martial-caster";
+
 export type DndClass = {
   id: string;
   name: string;
@@ -34,6 +36,7 @@ export type DndClass = {
   allSubclasses: Subclass[];
   primaryAbilities: AbilityKey[];
   spellcastingAbility?: AbilityKey;
+  role: ClassRole;
 };
 
 export const RACES: Race[] = [
@@ -267,6 +270,7 @@ export const CLASSES: DndClass[] = [
     defaultSubclasses: [berserker, totemWarrior],
     allSubclasses: [berserker, totemWarrior, ancestralGuardian, stormHerald, zealot],
     primaryAbilities: ["str", "con"],
+    role: "martial",
   },
   {
     id: "bard",
@@ -278,6 +282,7 @@ export const CLASSES: DndClass[] = [
     allSubclasses: [lore, valor, glamour, swords, whispers],
     primaryAbilities: ["cha"],
     spellcastingAbility: "cha",
+    role: "support",
   },
   {
     id: "cleric",
@@ -289,6 +294,7 @@ export const CLASSES: DndClass[] = [
     allSubclasses: [life, light, war, knowledge, nature, tempest, trickery, death, forge, grave],
     primaryAbilities: ["wis"],
     spellcastingAbility: "wis",
+    role: "support",
   },
   {
     id: "druid",
@@ -300,6 +306,7 @@ export const CLASSES: DndClass[] = [
     allSubclasses: [land, moon, dreams, shepherd, spores],
     primaryAbilities: ["wis"],
     spellcastingAbility: "wis",
+    role: "caster",
   },
   {
     id: "fighter",
@@ -310,6 +317,7 @@ export const CLASSES: DndClass[] = [
     defaultSubclasses: [champion, battleMaster, eldritchKnight],
     allSubclasses: [champion, battleMaster, eldritchKnight, arcaneArcher, cavalier, samurai],
     primaryAbilities: ["str", "dex"],
+    role: "martial",
   },
   {
     id: "monk",
@@ -320,6 +328,7 @@ export const CLASSES: DndClass[] = [
     defaultSubclasses: [openHand, shadow],
     allSubclasses: [openHand, shadow, fourElements, drunkenMaster, kensei, sunSoul],
     primaryAbilities: ["dex", "wis"],
+    role: "martial",
   },
   {
     id: "paladin",
@@ -331,6 +340,7 @@ export const CLASSES: DndClass[] = [
     allSubclasses: [devotion, vengeance, ancients, conquest, redemption],
     primaryAbilities: ["str", "cha"],
     spellcastingAbility: "cha",
+    role: "martial-caster",
   },
   {
     id: "ranger",
@@ -342,6 +352,7 @@ export const CLASSES: DndClass[] = [
     allSubclasses: [hunter, beastMaster, gloomStalker, horizonWalker, monsterSlayer],
     primaryAbilities: ["dex", "wis"],
     spellcastingAbility: "wis",
+    role: "martial-caster",
   },
   {
     id: "rogue",
@@ -352,6 +363,7 @@ export const CLASSES: DndClass[] = [
     defaultSubclasses: [thief, assassin, arcaneTrickster],
     allSubclasses: [thief, assassin, arcaneTrickster, inquisitive, mastermind, scout, swashbuckler],
     primaryAbilities: ["dex"],
+    role: "martial",
   },
   {
     id: "sorcerer",
@@ -363,6 +375,7 @@ export const CLASSES: DndClass[] = [
     allSubclasses: [draconicBloodline, wildMagic, divineSoul, shadowMagic, stormSorcery],
     primaryAbilities: ["cha"],
     spellcastingAbility: "cha",
+    role: "caster",
   },
   {
     id: "warlock",
@@ -374,6 +387,7 @@ export const CLASSES: DndClass[] = [
     allSubclasses: [fiend, archfey, greatOldOne, celestial, hexblade],
     primaryAbilities: ["cha"],
     spellcastingAbility: "cha",
+    role: "caster",
   },
   {
     id: "wizard",
@@ -385,6 +399,7 @@ export const CLASSES: DndClass[] = [
     allSubclasses: [evocation, abjuration, conjuration, divination, enchantment, illusion, necromancy, warMagic],
     primaryAbilities: ["int"],
     spellcastingAbility: "int",
+    role: "caster",
   },
 ];
 

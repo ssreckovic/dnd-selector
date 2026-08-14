@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { CLASSES, getClass, getClassWikiUrl } from "@/lib/dnd-data";
+import { CLASSES, getClass, getClassWikiUrl, type ClassRole } from "@/lib/dnd-data";
 import { InfoCard } from "@/components/wizard/InfoCard";
 
 type ClassStepProps = {
@@ -9,14 +10,44 @@ type ClassStepProps = {
   onSelectClass: (classId: string) => void;
 };
 
+type RoleFilter = ClassRole | "all";
+
+const ROLE_FILTERS: { value: RoleFilter; label: string }[] = [
+  { value: "all", label: "All" },
+  { value: "martial", label: "Martial" },
+  { value: "caster", label: "Caster" },
+  { value: "support", label: "Support" },
+  { value: "martial-caster", label: "Martial Caster" },
+];
+
 export function ClassStep({ classId, onSelectClass }: ClassStepProps) {
   const selectedClass = classId ? getClass(classId) : undefined;
+  const [roleFilter, setRoleFilter] = useState<RoleFilter>("all");
+  const visibleClasses = CLASSES.filter(
+    (cls) => roleFilter === "all" || cls.role === roleFilter,
+  );
 
   return (
     <div className="flex flex-col gap-4">
       <h2 className="text-xl font-semibold">Choose your class</h2>
+      <div className="flex flex-wrap gap-2">
+        {ROLE_FILTERS.map((filter) => (
+          <button
+            key={filter.value}
+            type="button"
+            onClick={() => setRoleFilter(filter.value)}
+            className={`rounded-full border px-3 py-1 text-sm font-medium transition-colors ${
+              roleFilter === filter.value
+                ? "border-amber-600 bg-amber-600 text-white"
+                : "border-amber-300 bg-white text-amber-800 hover:bg-amber-50"
+            }`}
+          >
+            {filter.label}
+          </button>
+        ))}
+      </div>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {CLASSES.map((cls) => (
+        {visibleClasses.map((cls) => (
           <InfoCard
             key={cls.id}
             name={cls.name}
