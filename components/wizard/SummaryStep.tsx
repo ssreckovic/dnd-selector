@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import ClassImages from "@/components/people/ClassImages";
 import { classGrantsSpellcasting, getClass, getRace } from "@/lib/dnd-data";
 import {
   getFinalAbilityScores,
@@ -59,6 +60,11 @@ export function SummaryStep({ answers, onCharacterNameChange }: SummaryStepProps
   return (
     <div className="flex flex-col gap-4">
       <h2 className="text-xl font-semibold">Review your concept</h2>
+      {answers.classId && (
+        <div className="flex justify-center">
+          <ClassImages className={answers.classId} />
+        </div>
+      )}
       <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2">
         <dt className="font-medium">Effort level</dt>
         <dd>{answers.effortLevel ? EFFORT_LABELS[answers.effortLevel] : "—"}</dd>

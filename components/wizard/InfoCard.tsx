@@ -25,19 +25,31 @@ export function InfoCard({
 
   return (
     <div
-      className={`rounded border transition-colors ${padding === "sm" ? "p-3" : "p-4"} ${
+      role="button"
+      tabIndex={0}
+      onClick={onSelect}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onSelect();
+        }
+      }}
+      aria-pressed={selected}
+      aria-label={name}
+      className={`rounded border text-left transition-colors ${padding === "sm" ? "p-3" : "p-4"} ${
         selected ? "border-amber-600 bg-amber-50" : "border-zinc-300 hover:bg-zinc-50"
       }`}
     >
-      <button type="button" onClick={onSelect} aria-label={name} className="block w-full text-left">
-        <div className="flex items-center gap-2">
-          <span className="font-medium">{name}</span>
-        </div>
-        <div className="text-sm text-zinc-600">{blurb}</div>
-      </button>
+      <div className="flex items-center gap-2">
+        <span className="font-medium">{name}</span>
+      </div>
+      <div className={`text-sm text-zinc-600 hidden lg:block ${showInfo &&  "block!"}`}>{blurb}</div>
       <button
         type="button"
-        onClick={() => setShowInfo((prev) => !prev)}
+        onClick={(e) => {
+          e.stopPropagation();
+          setShowInfo((prev) => !prev);
+        }}
         aria-pressed={showInfo}
         className="mt-2 text-xs font-medium text-amber-700 underline"
       >
@@ -50,7 +62,9 @@ export function InfoCard({
           ))}
         </ul>
       )}
-      {footer}
+      {footer && (
+        <div onClick={(e) => e.stopPropagation()}>{footer}</div>
+      )}
     </div>
   );
 }
