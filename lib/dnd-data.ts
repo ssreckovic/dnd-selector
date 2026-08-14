@@ -372,6 +372,10 @@ export function getClass(id: string): DndClass | undefined {
   return CLASSES.find((c) => c.id === id);
 }
 
+export function getClassWikiUrl(classId: string): string {
+  return `https://dnd5e.wikidot.com/${classId}`;
+}
+
 export function getSubclassWikiUrl(classId: string, subclassId: string): string {
   return `https://dnd5e.wikidot.com/${classId}:${subclassId}`;
 }

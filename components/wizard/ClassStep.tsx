@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { CLASSES, getClass } from "@/lib/dnd-data";
+import { CLASSES, getClass, getClassWikiUrl } from "@/lib/dnd-data";
 import { InfoCard } from "@/components/wizard/InfoCard";
 
 type ClassStepProps = {
@@ -24,6 +24,7 @@ export function ClassStep({ classId, onSelectClass }: ClassStepProps) {
             detail={cls.detail}
             selected={cls.id === classId}
             onSelect={() => onSelectClass(cls.id)}
+            wikiUrl={getClassWikiUrl(cls.id)}
             footer={
               cls.baseSpellcasting && (
                 <Link

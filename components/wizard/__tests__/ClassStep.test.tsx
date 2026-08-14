@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ClassStep } from "@/components/wizard/ClassStep";
 
@@ -46,5 +46,15 @@ describe("ClassStep", () => {
   it("shows no spells link for a non-caster class", () => {
     render(<ClassStep classId={null} onSelectClass={vi.fn()} />);
     expect(screen.queryByRole("link", { name: /see barbarian spells/i })).not.toBeInTheDocument();
+  });
+
+  it("links to the class's dnd5e wiki page in the info panel", async () => {
+    render(<ClassStep classId={null} onSelectClass={vi.fn()} />);
+    const wizard = screen.getByRole("button", { name: /wizard/i });
+    await userEvent.click(within(wizard).getByRole("button", { name: /show info/i }), {
+      pointerEventsCheck: 0,
+    });
+    const link = within(wizard).getByRole("link", { name: /view on d&d 5e wiki/i });
+    expect(link).toHaveAttribute("href", "https://dnd5e.wikidot.com/wizard");
   });
 });
