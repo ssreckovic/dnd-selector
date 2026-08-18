@@ -6,7 +6,6 @@ import { CLASSES, getClass } from "@/lib/dnd-data";
 import { getClassSpellList, SPELL_LIMITS } from "@/lib/spell-data";
 import { decodeSpellList, encodeSpellList } from "@/lib/spell-list-share";
 import { submitSpellList } from "@/lib/submit";
-import WizardIain from "../people/WizardIain";
 
 const CASTER_CLASSES = CLASSES.filter((cls) => cls.baseSpellcasting);
 
@@ -136,12 +135,6 @@ export function SpellsExplorer () {
 
 	return (
 		<div className="flex flex-col gap-6">
-			<div className="flex">
-				<WizardIain className="h-32" flip/>
-				<WizardIain className="h-48" flip/>
-				<WizardIain className="h-64" flip/>
-				<WizardIain className="h-96" flip/>
-			</div>
 			<h1 className="text-2xl font-semibold">Class spells</h1>
 			<p className="text-zinc-600">
 				A quick reference for what each spellcasting class has access to, from cantrips through

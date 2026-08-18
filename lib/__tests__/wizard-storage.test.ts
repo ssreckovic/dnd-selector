@@ -33,6 +33,7 @@ describe("wizard-storage", () => {
         { key: "con", bonus: 1 },
       ],
       spellChoiceMode: "suggestions",
+      enemyHook: "Skipped out on a debt to the Ashfall Cartel",
     };
     saveAnswers(answers);
     expect(loadAnswers()).toEqual(answers);
@@ -45,6 +46,10 @@ describe("wizard-storage", () => {
     expect(EMPTY_ANSWERS.abilityScoreBonusMode).toBeNull();
     expect(EMPTY_ANSWERS.abilityScoreBonusAssignment).toBeNull();
     expect(EMPTY_ANSWERS.spellChoiceMode).toBeNull();
+  });
+
+  it("defaults enemyHook to an empty string", () => {
+    expect(EMPTY_ANSWERS.enemyHook).toBe("");
   });
 
   it("getFinalAbilityScores applies the bonus assignment on top of the base scores", () => {

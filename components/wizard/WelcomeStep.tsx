@@ -38,10 +38,11 @@ export function WelcomeStep({
     <div className="flex flex-col gap-4">
       <h1 className="text-2xl font-semibold">Build your character concept</h1>
       <p className="text-zinc-600">
-        Answer a few questions about the kind of hero you want to play. No
-        rules knowledge needed — we&apos;ll turn your answers into a race,
-        class, and subclass for your GM to finish building your level 3
-        character sheet.
+        I just need crumbs of a character, the minimal option is fine! Most of it won&apos;t be set in stone
+        <br/><br/>
+        Your characters will be level 3
+        <br/><br/>
+        I will spend 10 min with each person to properly build your character at some point before the game!
       </p>
       <label className="flex flex-col gap-1" htmlFor="player-name">
         <span className="font-medium">Your name</span>

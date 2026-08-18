@@ -25,6 +25,23 @@ describe("SummaryStep", () => {
     expect(screen.getByText(/hunter/i)).toBeInTheDocument();
   });
 
+  // it("shows the entered enemy hook", () => {
+  //   render(
+  //     <SummaryStep
+  //       answers={{
+  //         ...EMPTY_ANSWERS,
+  //         raceId: "elf",
+  //         classId: "ranger",
+  //         subclassId: "hunter",
+  //         enemyHook: "Skipped out on a debt to the Ashfall Cartel",
+  //       }}
+  //       onCharacterNameChange={vi.fn()}
+  //     />,
+  //   );
+
+  //   expect(screen.getByText(/skipped out on a debt to the ashfall cartel/i)).toBeInTheDocument();
+  // });
+
   it("reports character name changes", async () => {
     const onCharacterNameChange = vi.fn();
     render(

@@ -9,6 +9,7 @@ const answers: WizardAnswers = {
   raceId: "halfling",
   classId: "rogue",
   subclassId: "thief",
+  enemyHook: "Skipped out on a debt to the Ashfall Cartel",
 };
 
 describe("submitConcept", () => {
@@ -43,6 +44,7 @@ describe("submitConcept", () => {
       subrace: null,
       class: "Rogue",
       subclass: "Thief",
+      enemyHook: "Skipped out on a debt to the Ashfall Cartel",
       abilityScoreGuidance: null,
       abilityScoreMethod: null,
       abilityScoreStr: null,

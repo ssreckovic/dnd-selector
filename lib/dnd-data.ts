@@ -45,7 +45,7 @@ export const RACES: Race[] = [
     name: "Human",
     blurb:
       "Adaptable and ambitious, humans are the most common folk in most worlds — quick to learn any path and comfortable anywhere.",
-    detail: ["+1 to every ability score", "One extra language of your choice"],
+    detail: ["Gain Heroic Inspiration after long rest", "One extra skill of your choice", "Gain an origin feat of your choice"],
   },
   {
     id: "elf",
@@ -128,6 +128,7 @@ export const RACES: Race[] = [
       "Lucky: reroll any natural 1 on an attack, ability check, or save",
       "Brave: advantage on saves vs. being frightened",
       "Halfling Nimbleness: can move through the space of a larger creature",
+      "Naturally Stealthy. You can take the Hide action even when you are obscured only by a creature that is at least one size larger than you."
     ],
   },
   {
@@ -183,7 +184,7 @@ const stormHerald: Subclass = { id: "storm-herald", name: "Path of the Storm Her
 const zealot: Subclass = { id: "zealot", name: "Path of the Zealot", blurb: "Fights with the fearless conviction of a holy crusader.", detail: ["Divine Fury: extra necrotic or radiant damage on your first hit each turn", "Warrior of the Gods: easier to bring back from death"] };
 
 const lore: Subclass = { id: "lore", name: "College of Lore", blurb: "A jack-of-all-trades who collects secrets and useful tricks.", detail: ["Bonus Proficiencies: three extra skill proficiencies", "Cutting Words: spend Bardic Inspiration to subtract from an enemy's roll"], easy: true };
-const valor: Subclass = { id: "valor", name: "College of Valor", blurb: "A battle-bard who inspires allies and fights alongside them.", detail: ["Combat Inspiration: Bardic Inspiration die can boost damage or AC", "Extra Attack: attack twice when you take the Attack action"] };
+const valor: Subclass = { id: "valor", name: "College of Valor", blurb: "A battle-bard who inspires allies and fights alongside them.", detail: ["Combat Inspiration: Bardic Inspiration die can boost damage or AC", "Extra Attack: attack twice when you take the Attack action"], easy:true };
 const glamour: Subclass = { id: "glamour", name: "College of Glamour", blurb: "Uses fey-touched charm to captivate and command a room.", detail: ["Mantle of Inspiration: grants temporary HP and free movement to allies", "Enthralling Performance: can charm an audience after performing"] };
 const swords: Subclass = { id: "swords", name: "College of Swords", blurb: "A blade-dancing performer who fights with flair.", detail: ["Fighting Style plus Blade Flourish: extra effects when you attack with a bonus action", "Bonus Proficiency: gains proficiency with medium armor and scimitars"] };
 const whispers: Subclass = { id: "whispers", name: "College of Whispers", blurb: "Uses fear and secrets as instruments, in the shadows of the stage.", detail: ["Psychic Blades: extra psychic damage on a hit using Bardic Inspiration", "Words of Terror: can plant creeping fear in a conversation partner"] };

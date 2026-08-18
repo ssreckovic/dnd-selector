@@ -5,6 +5,14 @@ import { Wizard } from "@/components/wizard/Wizard";
 import * as submitModule from "@/lib/submit";
 import { EMPTY_ANSWERS, saveAnswers } from "@/lib/wizard-storage";
 
+async function completeEnemyHook() {
+  await userEvent.type(
+    screen.getByLabelText(/what did your character do/i),
+    "Skipped out on a debt to the Ashfall Cartel",
+  );
+  await userEvent.click(screen.getByRole("button", { name: /next/i }));
+}
+
 async function completeAbilityScoresWithAuto() {
   await userEvent.click(screen.getByRole("button", { name: /choose my stats for me/i }));
   await userEvent.click(screen.getByRole("button", { name: /next/i }));
@@ -47,6 +55,33 @@ describe("Wizard", () => {
     expect(screen.getByLabelText(/your name/i)).toHaveValue("Restored");
   });
 
+  it("shows an inline validation hint on the enemy step until something is entered", async () => {
+    render(<Wizard />);
+
+    await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /^human$/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /fighter/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await userEvent.click(screen.getByRole("button", { name: /champion/i }));
+    await userEvent.click(screen.getByRole("button", { name: /next/i }));
+
+    expect(screen.getByText(/made some enemies/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/describe what your character did to make an enemy to continue/i),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /next/i })).toBeEnabled();
+
+    await userEvent.type(
+      screen.getByLabelText(/what did your character do/i),
+      "Skipped out on a debt to the Ashfall Cartel",
+    );
+    expect(
+      screen.queryByText(/describe what your character did to make an enemy to continue/i),
+    ).not.toBeInTheDocument();
+  });
+
   it("clears localStorage after a successful submission", async () => {
     vi.spyOn(submitModule, "submitConcept").mockResolvedValue({ ok: true });
     render(<Wizard />);
@@ -59,6 +94,7 @@ describe("Wizard", () => {
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /champion/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await completeEnemyHook();
     await completeAbilityScoresWithAuto();
 
     await userEvent.type(screen.getByLabelText(/character name/i), "Torren");
@@ -68,7 +104,7 @@ describe("Wizard", () => {
     expect(window.localStorage.getItem("dnd-concept-builder:answers")).toBeNull();
   });
 
-  it("walks forward through race, class, subclass, and ability scores to the summary, and back again", async () => {
+  it("walks forward through race, class, subclass, enemy, and ability scores to the summary, and back again", async () => {
     render(<Wizard />);
 
     await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
@@ -85,6 +121,9 @@ describe("Wizard", () => {
     // Subclass step (Champion doesn't cast, so the spell step should be skipped)
     await userEvent.click(screen.getByRole("button", { name: /champion/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    expect(screen.getByText(/made some enemies/i)).toBeInTheDocument();
+
+    await completeEnemyHook();
     expect(
       screen.getByText(/how do you want to determine your ability scores/i),
     ).toBeInTheDocument();
@@ -96,6 +135,9 @@ describe("Wizard", () => {
     expect(
       screen.getByText(/how do you want to determine your ability scores/i),
     ).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole("button", { name: /back/i }));
+    expect(screen.getByText(/made some enemies/i)).toBeInTheDocument();
 
     await userEvent.click(screen.getByRole("button", { name: /back/i }));
     expect(screen.getByText(/choose your fighter subclass/i)).toBeInTheDocument();
@@ -112,6 +154,7 @@ describe("Wizard", () => {
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /evocation/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await completeEnemyHook();
 
     expect(screen.getByText(/how do you want to handle your spells/i)).toBeInTheDocument();
     expect(screen.getByText(/silvery barbs/i)).toBeInTheDocument();
@@ -146,6 +189,7 @@ describe("Wizard", () => {
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /eldritch knight/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await completeEnemyHook();
 
     expect(screen.getByText(/how do you want to handle your spells/i)).toBeInTheDocument();
   });
@@ -161,6 +205,7 @@ describe("Wizard", () => {
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /champion/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await completeEnemyHook();
 
     await userEvent.click(screen.getByRole("button", { name: /build my own/i }));
     expect(screen.getByRole("button", { name: /next/i })).toBeEnabled();
@@ -179,6 +224,7 @@ describe("Wizard", () => {
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /evocation/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await completeEnemyHook();
     await userEvent.click(
       screen.getByRole("button", { name: /i'll choose all my own spells/i }),
     );
@@ -189,12 +235,14 @@ describe("Wizard", () => {
     expect(stored.spellChoiceMode).toBe("own");
 
     // Go back to the class step and switch to a non-caster class.
-    await userEvent.click(screen.getByRole("button", { name: /back/i }));
-    await userEvent.click(screen.getByRole("button", { name: /back/i }));
+    await userEvent.click(screen.getByRole("button", { name: /back/i })); // -> enemy
+    await userEvent.click(screen.getByRole("button", { name: /back/i })); // -> subclass
+    await userEvent.click(screen.getByRole("button", { name: /back/i })); // -> class
     await userEvent.click(screen.getByRole("button", { name: /barbarian/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /berserker/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await completeEnemyHook();
 
     // The spell step should be skipped entirely for a non-caster.
     expect(
@@ -219,6 +267,7 @@ describe("Wizard", () => {
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /champion/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await completeEnemyHook();
     await completeAbilityScoresWithAuto();
 
     await userEvent.type(screen.getByLabelText(/character name/i), "Torren");
@@ -241,6 +290,7 @@ describe("Wizard", () => {
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
     await userEvent.click(screen.getByRole("button", { name: /champion/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await completeEnemyHook();
     await completeAbilityScoresWithAuto();
 
     await userEvent.type(screen.getByLabelText(/character name/i), "Torren");
@@ -258,7 +308,7 @@ describe("Wizard", () => {
     expect(await screen.findByText(/your concept has been submitted/i)).toBeInTheDocument();
   });
 
-  it("at minimal effort, still shows subclass but skips spell/ability-scores and auto-fills them", async () => {
+  it("at minimal effort, still shows subclass and the mandatory enemy step but skips spell/ability-scores", async () => {
     render(<Wizard />);
 
     await userEvent.type(screen.getByLabelText(/your name/i), "Sasha");
@@ -275,6 +325,9 @@ describe("Wizard", () => {
     await userEvent.click(screen.getByRole("button", { name: /evocation/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
 
+    expect(screen.getByText(/made some enemies/i)).toBeInTheDocument();
+    await completeEnemyHook();
+
     // Spell and ability-scores steps are skipped for minimal effort.
     expect(screen.getByText(/review your concept/i)).toBeInTheDocument();
 
@@ -284,6 +337,7 @@ describe("Wizard", () => {
     expect(stored.subclassId).toBe("evocation");
     expect(stored.abilityScoreGuidance).toBe("auto");
     expect(stored.spellChoiceMode).toBe("auto");
+    expect(stored.enemyHook).toBe("Skipped out on a debt to the Ashfall Cartel");
   });
 
   it("at some effort, still shows subclass and ability-scores, and pre-selects auto spell choice", async () => {
@@ -302,6 +356,7 @@ describe("Wizard", () => {
     expect(screen.getByText(/choose your wizard subclass/i)).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: /evocation/i }));
     await userEvent.click(screen.getByRole("button", { name: /next/i }));
+    await completeEnemyHook();
 
     expect(screen.getByText(/how do you want to handle your spells/i)).toBeInTheDocument();
     expect(

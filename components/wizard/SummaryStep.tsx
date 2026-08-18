@@ -74,6 +74,8 @@ export function SummaryStep({ answers, onCharacterNameChange }: SummaryStepProps
         <dd>{cls?.name ?? "—"}</dd>
         <dt className="font-medium">Subclass</dt>
         <dd>{subclass?.name ?? "—"}</dd>
+        {/* <dt className="font-medium">Made an enemy of</dt>
+        <dd>{answers.enemyHook || "—"}</dd> */}
         <dt className="font-medium">Ability scores</dt>
         <dd>
           {answers.abilityScoreGuidance ? ABILITY_GUIDANCE_LABELS[answers.abilityScoreGuidance] : "—"}
@@ -106,7 +108,7 @@ export function SummaryStep({ answers, onCharacterNameChange }: SummaryStepProps
           className="rounded border border-zinc-300 px-3 py-2"
           value={answers.characterName}
           onChange={(e) => onCharacterNameChange(e.target.value)}
-          placeholder="e.g. Thistle Fernwhisper"
+          placeholder="e.g. Duster Dirter, Dildo Gaggins"
         />
       </label>
     </div>

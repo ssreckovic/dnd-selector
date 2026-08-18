@@ -54,6 +54,7 @@ export async function submitConcept(
     subrace: subrace?.name ?? null,
     class: cls?.name ?? null,
     subclass: subclass?.name ?? null,
+    enemyHook: answers.enemyHook,
     abilityScoreGuidance: answers.abilityScoreGuidance ?? null,
     abilityScoreMethod: answers.abilityScoreMethod ?? null,
     abilityScoreStr: finalScores?.str ?? null,

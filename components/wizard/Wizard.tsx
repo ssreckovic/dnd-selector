@@ -5,6 +5,7 @@ import { WelcomeStep } from "@/components/wizard/WelcomeStep";
 import { RaceStep } from "@/components/wizard/RaceStep";
 import { ClassStep } from "@/components/wizard/ClassStep";
 import { SubclassStep } from "@/components/wizard/SubclassStep";
+import { EnemyHookStep } from "@/components/wizard/EnemyHookStep";
 import { SpellChoiceStep } from "@/components/wizard/SpellChoiceStep";
 import { AbilityScoreStep } from "@/components/wizard/AbilityScoreStep";
 import { SummaryStep } from "@/components/wizard/SummaryStep";
@@ -24,6 +25,7 @@ const STEPS = [
   "race",
   "class",
   "subclass",
+  "enemy",
   "spell",
   "ability-scores",
   "summary",
@@ -43,6 +45,8 @@ function isStepComplete(step: Step, answers: WizardAnswers): boolean {
       return Boolean(answers.classId);
     case "subclass":
       return Boolean(answers.subclassId);
+    case "enemy":
+      return answers.enemyHook.trim().length > 0;
     case "spell":
       return Boolean(answers.spellChoiceMode);
     case "ability-scores":
@@ -66,6 +70,8 @@ function validationHint(step: Step, answers: WizardAnswers): string {
       return "Choose a class to continue.";
     case "subclass":
       return "Choose a subclass to continue.";
+    case "enemy":
+      return "Describe what your character did to make an enemy to continue.";
     case "spell":
       return "Choose how you'd like to handle spell selection to continue.";
     case "ability-scores":
@@ -213,6 +219,12 @@ export function Wizard() {
                 : { spellChoiceMode: null }),
             })
           }
+        />
+      )}
+      {step === "enemy" && (
+        <EnemyHookStep
+          enemyHook={answers.enemyHook}
+          onEnemyHookChange={(enemyHook) => updateAnswers({ enemyHook })}
         />
       )}
       {step === "spell" && classGrantsSpellcasting(answers.classId, answers.subclassId) && (

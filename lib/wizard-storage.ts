@@ -31,6 +31,7 @@ export type WizardAnswers = {
   abilityScoreBonusMode: AbilityScoreBonusMode | null;
   abilityScoreBonusAssignment: AbilityScoreBonusAssignment | null;
   spellChoiceMode: SpellChoiceMode | null;
+  enemyHook: string;
   characterName: string;
 };
 
@@ -47,6 +48,7 @@ export const EMPTY_ANSWERS: WizardAnswers = {
   abilityScoreBonusMode: null,
   abilityScoreBonusAssignment: null,
   spellChoiceMode: null,
+  enemyHook: "",
   characterName: "",
 };
 
