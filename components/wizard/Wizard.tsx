@@ -171,6 +171,13 @@ export function Wizard() {
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-semibold">Thanks, {answers.playerName}!</h1>
         <p>Your concept has been submitted. Your GM will follow up with your full character sheet.</p>
+        <a
+          href={`/spells`}
+          target="_blank"
+          className="self-start text-sm font-medium text-amber-700 underline"
+        >
+          See spell options
+        </a>
       </div>
     );
   }
