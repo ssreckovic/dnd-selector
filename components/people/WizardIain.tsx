@@ -5,7 +5,7 @@ export default function WizardIain({ flip=false, className, headClass }: { flip?
       <div className={`flex flex-col w-fit ${className}`}>
          <img
             src={assetPath("/img/lan-wizard.png")}
-            className={`h-full w-fit object-contain ${flip ? "ml-[17%]" : "ml-[4%]"} ${headClass || ""}`}
+            className={`h-full w-fit object-contain ${flip ? "ml-[17%] animate-wizard-tilt-forward" : "ml-[4%] animate-wizard-tilt-backward"} ${headClass || ""}`}
          />
          <img
             src={assetPath("/img/sticks.png")}

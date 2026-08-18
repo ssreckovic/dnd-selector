@@ -36,3 +36,23 @@ input:not([type]),
 textarea {
   cursor: url('../public/img/lan-gold-32x32.png') 16 16, text;
 }
+
+@keyframes wizard-tilt-forward {
+  0%, 100% { transform: rotate(5deg); }
+  50% { transform: rotate(-30deg); }
+}
+
+@keyframes wizard-tilt-backward {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(30deg); }
+}
+
+.animate-wizard-tilt-forward {
+  transform-origin: bottom center;
+  animation: wizard-tilt-forward 4s ease-in-out infinite;
+}
+
+.animate-wizard-tilt-backward {
+  transform-origin: bottom center;
+  animation: wizard-tilt-backward 4s ease-in-out infinite;
+}
