@@ -25,7 +25,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body>
-        <div className="2xl:absolute w-full flex space-between px-4 pt-4">
+        <div className="2xl:absolute w-full flex space-between px-4 pt-4 z-[-1]">
           <WizardIain className="h-64 mr-auto"/>
           <WizardIain className="h-64 items-end" headClass="mr-[5%]" flip/>
         </div>
