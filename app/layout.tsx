@@ -24,11 +24,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <div className="2xl:absolute w-full flex space-between px-4 pt-4">
-        <WizardIain className="h-64 mr-auto"/>
-        <WizardIain className="h-64 items-end" headClass="mr-[5%]" flip/>
-      </div>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body>
+        <div className="2xl:absolute w-full flex space-between px-4 pt-4">
+          <WizardIain className="h-64 mr-auto"/>
+          <WizardIain className="h-64 items-end" headClass="mr-[5%]" flip/>
+        </div>
+        <div className="min-h-full flex flex-col">
+          {children}
+        </div>
+      </body>
     </html>
   );
 }
