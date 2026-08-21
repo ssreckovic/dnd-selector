@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CLASSES, getClass } from "@/lib/dnd-data";
-import { getClassSpellList, SPELL_LIMITS } from "@/lib/spell-data";
+import { getClassSpellList, SPELL_LIMITS, type Spell } from "@/lib/spell-data";
 import { decodeSpellList, encodeSpellList } from "@/lib/spell-list-share";
 import { submitSpellList } from "@/lib/submit";
 
@@ -27,6 +27,21 @@ function loadSelections (): Record<string, string[]> {
 	}
 }
 
+function useIsMobile () {
+	const [isMobile, setIsMobile] = useState(false);
+
+	useEffect(() => {
+		if (typeof window.matchMedia !== "function") return;
+		const mq = window.matchMedia("(max-width: 639px)");
+		setIsMobile(mq.matches);
+		const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+		mq.addEventListener("change", handler);
+		return () => mq.removeEventListener("change", handler);
+	}, []);
+
+	return isMobile;
+}
+
 export function SpellsExplorer () {
 	const router = useRouter();
 	const searchParams = useSearchParams();
@@ -40,7 +55,17 @@ export function SpellsExplorer () {
 	const [copyState, setCopyState] = useState<"idle" | "copied">("idle");
 	const [sheetsState, setSheetsState] = useState<"idle" | "sending" | "sent" | "error">("idle");
 	const [playerName, setPlayerName] = useState("");
+	const [hoveredSpell, setHoveredSpell] = useState<Spell | null>(null);
+	const [popoverPos, setPopoverPos] = useState({ top: 0, left: 0 });
+	const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 	const hydrated = useRef(false);
+	const isMobile = useIsMobile();
+
+	useEffect(() => {
+		return () => {
+			if (closeTimer.current) clearTimeout(closeTimer.current);
+		};
+	}, []);
 
 	useEffect(() => {
 		const loaded = loadSelections();
@@ -97,6 +122,32 @@ export function SpellsExplorer () {
 			}
 			return next;
 		});
+	}
+
+	function openSpell (spell: Spell) {
+		if (isMobile) {
+			toggleExpanded(spell.name);
+		}
+	}
+
+	const POPOVER_WIDTH = 320;
+
+	function showPopover (spell: Spell, target: HTMLElement) {
+		if (isMobile) return;
+		if (closeTimer.current) {
+			clearTimeout(closeTimer.current);
+			closeTimer.current = null;
+		}
+		const rect = target.getBoundingClientRect();
+		const left = Math.min(rect.right + 8, window.innerWidth - POPOVER_WIDTH - 8);
+		const top = Math.max(8, Math.min(rect.top, window.innerHeight - 320));
+		setPopoverPos({ top, left: Math.max(8, left) });
+		setHoveredSpell(spell);
+	}
+
+	function scheduleHidePopover () {
+		if (closeTimer.current) clearTimeout(closeTimer.current);
+		closeTimer.current = setTimeout(() => setHoveredSpell(null), 150);
 	}
 
 	function clearSelections () {
@@ -249,20 +300,24 @@ export function SpellsExplorer () {
 											<div className="mt-2 flex flex-col md:grid grid-cols-2 lg:grid-cols-3 gap-2">
 												{spellList[section.key].map((spell) => {
 													const isSelected = selected.includes(spell.name);
-													const isExpanded = expandedSpells.has(spell.name);
+													const isExpanded = isMobile && expandedSpells.has(spell.name);
 													return (
 														<div
 															key={spell.name}
 															role="button"
 															tabIndex={0}
-															onClick={() => toggleExpanded(spell.name)}
+															onClick={() => openSpell(spell)}
 															onKeyDown={(e) => {
 																if (e.key === "Enter" || e.key === " ") {
 																	e.preventDefault();
-																	toggleExpanded(spell.name);
+																	openSpell(spell);
 																}
 															}}
-															className="cursor-pointer rounded border border-zinc-200 p-2 h-min"
+															onMouseEnter={(e) => showPopover(spell, e.currentTarget)}
+															onMouseLeave={scheduleHidePopover}
+															onFocus={(e) => showPopover(spell, e.currentTarget)}
+															onBlur={scheduleHidePopover}
+															className="cursor-pointer rounded border border-zinc-200 p-2 h-min transition-colors hover:bg-zinc-100"
 														>
 															<div className="flex items-center justify-between gap-2 text-sm font-medium">
 																<span>
@@ -314,6 +369,40 @@ export function SpellsExplorer () {
 					</div>
 				)}
 			{/* </div> */}
+			{hoveredSpell && !isMobile && (
+				<div
+					style={{ top: popoverPos.top, left: popoverPos.left, width: 320 }}
+					onMouseEnter={() => {
+						if (closeTimer.current) {
+							clearTimeout(closeTimer.current);
+							closeTimer.current = null;
+						}
+					}}
+					onMouseLeave={scheduleHidePopover}
+					className="fixed z-50 max-h-[70vh] overflow-y-auto rounded-md border border-zinc-200 bg-white p-4 shadow-lg"
+				>
+					<h3 className="text-sm font-semibold">
+						{hoveredSpell.name}
+						<span className="ml-2 text-xs font-normal text-zinc-500">{hoveredSpell.school}</span>
+					</h3>
+					<dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-xs text-zinc-600 sm:grid-cols-3">
+						<div>
+							<dt className="font-bold">Cast time</dt>
+							<dd>{hoveredSpell.castTime}</dd>
+						</div>
+						<div>
+							<dt className="font-bold">Range</dt>
+							<dd>{hoveredSpell.range}</dd>
+						</div>
+						<div>
+							<dt className="font-bold">Duration</dt>
+							<dd>{hoveredSpell.duration}</dd>
+						</div>
+					</dl>
+					<hr className="my-2" />
+					<p className="mt-2 whitespace-pre-line text-sm text-zinc-700">{hoveredSpell.description}</p>
+				</div>
+			)}
 		</div>
 	);
 }
